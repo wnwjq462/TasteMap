@@ -105,7 +105,8 @@ dist
 
 # TasteMap Setting
 .DS_Store
-
+*.csv
+chromedriver
 
 
 
