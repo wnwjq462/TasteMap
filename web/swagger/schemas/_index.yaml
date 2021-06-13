@@ -1,0 +1,8 @@
+user:
+  $ref: "./userSchema.yaml"
+
+400Error:
+  $ref: "./400Error.yaml"
+
+dining:
+  $ref: "./diningSchema.yaml"

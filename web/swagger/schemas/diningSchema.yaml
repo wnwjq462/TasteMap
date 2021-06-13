@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  totalScore:
+    type: number
+  tasteScore:
+    type: number
+  priceScore:
+    type: number
+  serviceScore:
+    type: number
+  moodScore:
+    type: number
+  address:
+    type: string
+  contact:
+    type: string
+  operatingHour:
+    type: string
+  keywords:
+    type: array
+    items:
+      keyword: string
