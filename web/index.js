@@ -4,11 +4,21 @@ const dotenv = require("dotenv");
 const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const yaml = require("yamljs");
+const { sequelize } = require("./models");
 
 dotenv.config();
 const app = express();
 const swaggerSpec = yaml.load(path.join(__dirname, "./swagger/build.yaml"));
 app.set("port", process.env.PORT || 3000);
+
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("DB Connection Completed");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
