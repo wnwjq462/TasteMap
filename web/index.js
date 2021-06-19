@@ -1,13 +1,20 @@
 const express = require("express");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const dotenv = require("dotenv");
+const passport = require("passport");
 const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const yaml = require("yamljs");
 const { sequelize } = require("./models");
 
+const authRouter = require("./routes/auth");
+
 dotenv.config();
+const passportConfig = require("./passport");
 const app = express();
+passportConfig();
 const swaggerSpec = yaml.load(path.join(__dirname, "./swagger/build.yaml"));
 app.set("port", process.env.PORT || 3000);
 
@@ -24,10 +31,26 @@ app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.send("main page");
 });
+app.use("/auth", authRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use((req, res, next) => {
@@ -38,7 +61,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render("error");
+  res.json(err).send("error.html");
 });
 
 app.listen(app.get("port"), () => {
