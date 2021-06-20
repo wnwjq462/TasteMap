@@ -33,7 +33,16 @@ paths:
       summary: Returns information of user
       description: '내 정보 수정 페이지에서 유저 기본 정보를 가져올 때 사용됨. 고유식별아이디, 회원아이디, 관심 키워드를 리턴'
       requestBody:
-        description: 로그인한 회원 정보가 req.
+        description: 로그인한 회원 정보가 req.user에 담겨져 있음.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                account:
+                  type: string
       responses:
         '200':
           description: 아이디와 관심 키워드 배열이 json 형태로 주어진다.
@@ -93,7 +102,7 @@ paths:
       summary: Returns user's like-keyword list
       description: '관심 키워드와 유저 정보에서 호출함, 유저의 관심 키워드 목록을 반환한다.'
       requestBody:
-        description: 유저 정보를 req.userId 형태로 받는다.
+        $ref: '#/paths/~1user/get/requestBody'
       responses:
         '200':
           description: '호출 성공, 유저의 관심 키워드 목록 반환'
@@ -118,6 +127,8 @@ paths:
         - user
       summary: Returns user-like dining list
       description: '유저가 찜한 식당 목록을 페이지,점수에 따라 다르게 가져온다. /dining 과 상당히 유사함.'
+      requestBody:
+        $ref: '#/paths/~1user/get/requestBody'
       parameters:
         - name: page
           in: query
@@ -154,6 +165,8 @@ paths:
         - user
       summary: Saves user-like dining
       description: 식당 목록에서 하트 버튼을 눌렀을 때 찜한 식당에 저장
+      requestBody:
+        $ref: '#/paths/~1user/get/requestBody'
       parameters:
         - name: diningId
           in: path
@@ -175,6 +188,8 @@ paths:
         - user
       summary: Deletes user-like dining
       description: 식당 목록에서 눌려져있는 하트 버튼을 눌렀을 때 찜한 식당에서 삭제
+      requestBody:
+        $ref: '#/paths/~1user/get/requestBody'
       parameters:
         - name: diningId
           in: path

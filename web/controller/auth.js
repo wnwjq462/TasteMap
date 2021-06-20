@@ -29,7 +29,7 @@ exports.postJoin = async (req, res, next) => {
 };
 
 exports.getLogin = (req, res) => {
-  res.json({ error: req.query.error || null }).send("login.html");
+  res.json({ error: req.query.error || null }).send("../views/login.html");
   //res.render("login", { error: req.query.error || null });
 };
 
