@@ -10,6 +10,9 @@ const yaml = require("yamljs");
 const { sequelize } = require("./models");
 
 const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
+const diningRouter = require("./routes/dining");
+const keywordRouter = require("./routes/keyword");
 
 dotenv.config();
 const passportConfig = require("./passport");
@@ -51,6 +54,9 @@ app.get("/", (req, res) => {
   res.send("main page");
 });
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use("/dining", diningRouter);
+app.use("/keyword", keywordRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use((req, res, next) => {
