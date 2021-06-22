@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TasteMap</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <!-- 웹 폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+    <!-- kakaomap api -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bbe25b33a22112fe71e17584ce53c75b"
+    ></script>
+
+    <!-- js -->
+    <script src="../public/main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="info-container">
+        <div class="logo-box">
+          <img src="../public/img/logo1.png" class="logo" />
+          <span class="tastemap">Taste<strong>Map</strong></span>
+        </div>
+
+        <div class="dropdown">
+          <button
+            class="dropbtn button kwmenu"
+            onclick="location.href='/keyword'"
+          >
+            <span class="buttontext"><b>연세대</b> 의 키워드</span>
+          </button>
+          <div class="dropdown-content">
+            <button
+              class="button kwmenu"
+              onclick="location.href='/user/keyword'"
+            >
+              <span class="buttontext"><b>관심</b> 키워드</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="keyword_wc"></div>
+        <div class="etc"></div>
+        <div class="etc_keyword">
+          <div class="cbox-container">
+            <div class="cboxsection1">
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+            </div>
+            <div class="cboxsection2">
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+              <button
+                class="button keyword_plus"
+                onclick="location.href='/dining'"
+              >
+                <span>냉면</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-container">
+        <div class="dropdown scoremenu">
+          <button
+            class="dropbtn button score-dropdown"
+            onclick="location.href='/dining'"
+          >
+            <span class="buttontext"
+              ><img src="../public/img/total.png" class="icon" /> 종합</span
+            >
+          </button>
+          <div class="dropdown-content">
+            <button
+              class="button score-dropdown"
+              onclick="location.href='/dining'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/dish.png" class="icon" /> 맛</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="location.href='/dining'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/price.png" class="icon" /> 가격</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="location.href='/dining'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/service.png" class="icon" />
+                서비스</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="location.href='/dining'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/coffee.png" class="icon" />
+                분위기</span
+              >
+            </button>
+          </div>
+        </div>
+        <div class="loginsection">
+          {% if isLoggedIn %}
+          <div class="modify-user">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/userInfo.png" class="icon" /> 정보
+                수정</span
+              >
+            </button>
+          </div>
+          <div class="dining-like">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user/like'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/like.png" class="icon" /> 찜한
+                식당</span
+              >
+            </button>
+          </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/logout'"
+            >
+              <span class="buttontext">로그아웃</span>
+            </button>
+          </div>
+          {% else %}
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/login'"
+            >
+              <span class="buttontext">로그인</span>
+            </button>
+          </div>
+          {% endif %}
+        </div>
+        <div id="map" class="map" style="width: 100%; height: 100%"></div>
+      </div>
+    </div>
+    <script>
+      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+    </script>
+  </body>
+</html>
