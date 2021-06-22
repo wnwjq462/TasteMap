@@ -13,9 +13,12 @@ module.exports = () => {
       },
       async (account, password, done) => {
         try {
+          console.log(account, password);
           const exUser = await User.findOne({ where: { account } });
+          console.log(exUser);
           if (exUser) {
-            const result = await bcrypt.compare(password.exUser.password);
+            const result = await bcrypt.compare(password, exUser.password);
+            console.log(result);
             if (result) {
               done(null, exUser);
             } else {

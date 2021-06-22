@@ -37,10 +37,8 @@
           <div class="inner-login-container">
             <div class="container">
               <form
-                method="post"
                 id="FormLogin"
                 name="FormLogin"
-                onsubmit="return logincheck();"
               >
                 <div class="box-upper">
                   <div class="logo-box">
@@ -80,7 +78,7 @@
                 <div class="box-lower">
                   <div class="bumper" id="bumper"></div>
                   <div>
-                    <button type="submit" class="button signin">
+                    <button type="button" class="button signin" onclick="return logincheck();">
                       <span class="sign-in">Sign in</span>
                     </button>
                     <button type="button" class="button signup" onclick="">
