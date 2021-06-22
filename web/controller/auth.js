@@ -13,7 +13,7 @@ exports.getJoin = (req, res) => {
 exports.postJoin = async (req, res, next) => {
   const { account, password, keywords } = req.body;
   try {
-    const exUser = await User.findOne({ where: { acoount } });
+    const exUser = await User.findOne({ where: { account } });
     if (exUser) {
       return res.status(400).json({ message: "이미 존재하는 회원입니다." });
     }
