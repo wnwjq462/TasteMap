@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 const passport = require("passport");
 const path = require("path");
@@ -20,6 +21,11 @@ const app = express();
 passportConfig();
 const swaggerSpec = yaml.load(path.join(__dirname, "./swagger/build.yaml"));
 app.set("port", process.env.PORT || 3000);
+app.set("view engine", "html");
+nunjucks.configure("views", {
+  express: app,
+  watch: true,
+});
 
 sequelize
   .sync({ force: false })
@@ -31,7 +37,7 @@ sequelize
   });
 
 app.use(morgan("dev"));
-app.use("/", express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(__dirname, ""))); //TODO: 왜 이렇게 되는지? 확인
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -67,6 +73,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
+  console.log(err);
   res.json(err).send("error.html");
 });
 

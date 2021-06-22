@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 exports.getJoin = (req, res) => {
-  res.json({ error: req.query.error || null }).send("join.html");
-  //res.render("join", { error: req.query.error || null });
+  //res.json({ error: req.query.error || null }).send("join.html");
+  res.render("signup", {});
 };
 
 exports.postJoin = async (req, res, next) => {
@@ -14,14 +14,14 @@ exports.postJoin = async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { acoount } });
     if (exUser) {
-      return res.status(400).redirect("/join?error=exist");
+      return res.status(400).redirect("../views/signup?error=exist");
     }
     const hash = await bcrypt.hash(password, 12);
     await User.create({
       account,
       password: hash,
     });
-    return res.status(200).redirect("/login");
+    return res.status(200).redirect("/");
   } catch (error) {
     console.error(error);
     return next(error);
@@ -29,8 +29,9 @@ exports.postJoin = async (req, res, next) => {
 };
 
 exports.getLogin = (req, res) => {
-  res.json({ error: req.query.error || null }).send("../views/login.html");
-  //res.render("login", { error: req.query.error || null });
+  //res.json({ error: req.query.error || null }).send("../views/login.html");
+  //console.log(req.query.loginError);
+  res.render("login");
 };
 
 exports.postLogin = (req, res, next) => {
@@ -40,7 +41,7 @@ exports.postLogin = (req, res, next) => {
       return next(loginError);
     }
     if (!user) {
-      return res.status(400).redirect(`/login?loginError=${info.message}`);
+      return res.status(400).send(info.message);
     }
     return req.login(user, (loginError) => {
       if (loginError) {
