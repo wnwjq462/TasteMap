@@ -36,10 +36,7 @@
         <div class="login-container">
           <div class="inner-login-container">
             <div class="container">
-              <form
-                id="FormLogin"
-                name="FormLogin"
-              >
+              <form id="FormLogin" name="FormLogin">
                 <div class="box-upper">
                   <div class="logo-box">
                     <img src="../public/img/logo1.png" class="logo" />
@@ -78,10 +75,18 @@
                 <div class="box-lower">
                   <div class="bumper" id="bumper"></div>
                   <div>
-                    <button type="button" class="button signin" onclick="return logincheck();">
+                    <button
+                      type="button"
+                      class="button signin"
+                      onclick="return logincheck();"
+                    >
                       <span class="sign-in">Sign in</span>
                     </button>
-                    <button type="button" class="button signup" onclick="">
+                    <button
+                      type="button"
+                      class="button signup"
+                      onclick="location.href='/auth/join'"
+                    >
                       <span class="sign-in">Sign up</span>
                     </button>
                   </div>

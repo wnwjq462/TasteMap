@@ -36,12 +36,7 @@
         <div class="login-container">
           <div class="inner-login-container">
             <div class="container">
-              <form
-                method="post"
-                id="FormSignup"
-                name="FormSignup"
-                onsubmit="return signupcheck();"
-              >
+              <form id="FormSignup" name="FormSignup">
                 <div class="box-upper-signup">
                   <div class="logo-box">
                     <img src="../public/img/logo1.png" class="logo" />
@@ -82,165 +77,169 @@
                     <div class="cbox-textbox">
                       관심 키워드 <b>(최대 9개)</b>
                     </div>
-                    <!-- <div class="cboxsection1"> -->
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxOne"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="냉면"
-                      /><label for="checkboxOne">냉면</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxTwo"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="쫄면"
-                      /><label for="checkboxTwo">쫄면</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxThree"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="가성비"
-                      /><label for="checkboxThree">가성비</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxFour"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="스파게티"
-                      /><label for="checkboxFour">스파게티</label>
-                    </li>
-                    <!-- </div> -->
-                    <!-- <div class="cboxsection2"> -->
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxFive"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="데이트"
-                      /><label for="checkboxFive">데이트</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxSix"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="분위기"
-                      /><label for="checkboxSix">분위기</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxSeven"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="초밥"
-                      /><label for="checkboxSeven">초밥</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxEight"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="짜장면"
-                      /><label for="checkboxEight">짜장면</label>
-                    </li>
-                    <!-- </div> -->
-                    <!-- <div class="cboxsection3"> -->
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxNine"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="조용한"
-                      /><label for="checkboxNine">조용한</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxTen"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="돈까스"
-                      /><label for="checkboxTen">돈까스</label>
-                    </li>
-                    <li class="ks-selected">
-                      <input
-                        type="checkbox"
-                        id="checkboxEleven"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="아이스크림"
-                      /><label for="checkboxEleven">아이스크림</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxTwelve"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="카페"
-                      /><label for="checkboxTwelve">카페</label>
-                    </li>
-                    <!-- </div> -->
-                    <!-- <div class="cboxsection4"> -->
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxThirteen"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="한식"
-                      /><label for="checkboxThirteen">한식</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxFourteen"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="타코"
-                      /><label for="checkboxFourteen">타코</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxFifteen"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="치킨"
-                      /><label for="checkboxFifteen">치킨</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="checkboxSixteen"
-                        name="keyword-like"
-                        onclick="getCheckedCnt()"
-                        value="피자"
-                      /><label for="checkboxSixteen">피자</label>
-                    </li>
-                    <!-- </div> -->
+                    <div class="cboxsection1">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxOne"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="맛"
+                        /><label for="checkboxOne">맛</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTwo"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="친절"
+                        /><label for="checkboxTwo">친절</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxThree"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="커피"
+                        /><label for="checkboxThree">커피</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFour"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="분위기"
+                        /><label for="checkboxFour">분위기</label>
+                      </li>
+                    </div>
+                    <div class="cboxsection2">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFive"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="사장"
+                        /><label for="checkboxFive">사장</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSix"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="파스타"
+                        /><label for="checkboxSix">파스타</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSeven"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="가격"
+                        /><label for="checkboxSeven">가격</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxEight"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="카페"
+                        /><label for="checkboxEight">카페</label>
+                      </li>
+                    </div>
+                    <div class="cboxsection3">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxNine"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="밥"
+                        /><label for="checkboxNine">밥</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="고기"
+                        /><label for="checkboxTen">고기</label>
+                      </li>
+                      <li class="ks-selected">
+                        <input
+                          type="checkbox"
+                          id="checkboxEleven"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="직원"
+                        /><label for="checkboxEleven">직원</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTwelve"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="연희동"
+                        /><label for="checkboxTwelve">연희동</label>
+                      </li>
+                    </div>
+                    <div class="cboxsection4">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxThirteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="추천"
+                        /><label for="checkboxThirteen">추천</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFourteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="크림"
+                        /><label for="checkboxFourteen">크림</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFifteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="연어"
+                        /><label for="checkboxFifteen">연어</label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSixteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="빵"
+                        /><label for="checkboxSixteen">빵</label>
+                      </li>
+                    </div>
                   </ul>
                 </div>
                 <div class="box-lower-signup">
                   <div class="bumper1" id="bumper1"></div>
                   <div class="bumper2" id="bumper2"></div>
                   <div>
-                    <button type="submit" class="button signup" onclick="">
+                    <button
+                      type="button"
+                      class="button signup"
+                      onclick="return signupcheck();"
+                    >
                       <span class="sign-in">Sign up</span>
                     </button>
                   </div>
