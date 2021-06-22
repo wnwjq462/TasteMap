@@ -3,24 +3,34 @@ const passport = require("passport");
 const bcrypt = require("bcrypt");
 
 const User = require("../models/user");
+const Keyword = require("../models/keyword");
 
 exports.getJoin = (req, res) => {
   //res.json({ error: req.query.error || null }).send("join.html");
-  res.render("signup", {});
+  res.render("signup");
 };
 
 exports.postJoin = async (req, res, next) => {
-  const { account, password } = req.body;
+  const { account, password, keywords } = req.body;
   try {
     const exUser = await User.findOne({ where: { acoount } });
     if (exUser) {
-      return res.status(400).redirect("../views/signup?error=exist");
+      return res.status(400).json({ message: "이미 존재하는 회원입니다." });
     }
+
     const hash = await bcrypt.hash(password, 12);
-    await User.create({
+    const user = await User.create({
       account,
       password: hash,
     });
+    for (const keyword of keywords) {
+      const exKeyword = await Keyword.findOne({ where: { name: keyword } });
+      if (!exKeyword)
+        return res.status(400).json({ message: "DB에 없는 키워드 입니다" });
+
+      await user.addKeyword(exKeyword);
+    }
+
     return res.status(200).redirect("/");
   } catch (error) {
     console.error(error);
