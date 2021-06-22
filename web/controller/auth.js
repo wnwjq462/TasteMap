@@ -23,10 +23,13 @@ exports.postJoin = async (req, res, next) => {
       account,
       password: hash,
     });
+    console.log(keywords);
     for (const keyword of keywords) {
       const exKeyword = await Keyword.findOne({ where: { name: keyword } });
-      if (!exKeyword)
+      if (!exKeyword) {
+        await User.destroy({ where: user });
         return res.status(400).json({ message: "DB에 없는 키워드 입니다" });
+      }
 
       await user.addKeyword(exKeyword);
     }
