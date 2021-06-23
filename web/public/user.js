@@ -27,23 +27,13 @@ function logincheck() {
       },
       error: function (request, status, error) {
         if (request.status == 400) {
-          alert(
-            "code = " +
-              request.status +
-              " message = " +
-              request.responseText +
-              " error = " +
-              error
-          );
-
           // 실패 시 처리
-          document.getElementById("bumper").innerText =
-            "아이디 혹은 패스워드가 존재하지 않거나 틀렸습니다.";
+          document.getElementById("bumper").innerText = request.responseText;
           document.getElementById("FormLogin").reset();
         }
       },
       success: function (response) {
-        return true;
+        location.href = "/dining";
       },
     });
   }
@@ -52,25 +42,23 @@ function logincheck() {
 function signupcheck() {
   var id = document.getElementById("idinput").value;
   var pw = document.getElementById("pwinput").value;
-  var keywordarray = []
+  var keywordarray = [];
 
-
-  $("input:checkbox[name='keyword-like']:checked").each(function(){
+  $("input:checkbox[name='keyword-like']:checked").each(function () {
     var checkeditem = $(this).val();
     keywordarray.push(checkeditem);
-    });
-
+  });
 
   if (document.getElementById("bumper2").innerText != "") {
     return false;
   }
   if (id == "" || pw == "") {
     document.getElementById("bumper1").innerText =
-    "아이디, 패스워드를 입력해주세요.";
+      "아이디, 패스워드를 입력해주세요.";
     return false;
   } else {
     console.log(keywordarray);
-    document.getElementById("bumper1").innerText = '';
+    document.getElementById("bumper1").innerText = "";
     $.ajax({
       type: "post",
       url: "/auth/join",
@@ -84,15 +72,18 @@ function signupcheck() {
 
       error: function (request, status, error) {
         if (request.status == 400) {
+          var errortext = request.responseText;
+          var errormsg = errortext
+            .replace('{"message":"', "")
+            .replace('"}', "");
           // 실패 시 처리
-          document.getElementById("bumper1").innerText =
-            request.responseText;
+          document.getElementById("bumper1").innerText = errormsg;
         }
       },
 
-
       success: function (response) {
-        return true;
+        alert("회원가입에 성공했습니다.");
+        location.href = "/auth/login";
       },
     });
   }
