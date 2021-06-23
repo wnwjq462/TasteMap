@@ -52,37 +52,45 @@ function logincheck() {
 function signupcheck() {
   var id = document.getElementById("idinput").value;
   var pw = document.getElementById("pwinput").value;
-  const query = 'input[name="keyword-like"]:checked';
-  const selectedElements = document.querySelectorAll(query);
+  var keywordarray = []
+
+
+  $("input:checkbox[name='keyword-like']:checked").each(function(){
+    var checkeditem = $(this).val();
+    keywordarray.push(checkeditem);
+    });
+
 
   if (document.getElementById("bumper2").innerText != "") {
     return false;
   }
   if (id == "" || pw == "") {
+    document.getElementById("bumper1").innerText =
+    "아이디, 패스워드를 입력해주세요.";
     return false;
   } else {
+    console.log(keywordarray);
+    document.getElementById("bumper1").innerText = '';
     $.ajax({
       type: "post",
       url: "/auth/join",
+      dataType: "json",
+      traditional: true,
       data: {
-        userid: id,
-        userpw: pw,
-        keywords: selectedElements,
+        account: id,
+        password: pw,
+        keywords: keywordarray,
       },
+
       error: function (request, status, error) {
-        alert(
-          "code = " +
-            request.status +
-            " message = " +
-            request.responseText +
-            " error = " +
-            error
-        ); // 실패 시 처리
-        if (request.status == 404) {
+        if (request.status == 400) {
+          // 실패 시 처리
           document.getElementById("bumper1").innerText =
-            "이미 존재하는 아이디입니다.";
+            request.responseText;
         }
       },
+
+
       success: function (response) {
         return true;
       },
