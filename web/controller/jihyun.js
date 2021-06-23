@@ -2,6 +2,7 @@ const express = require("express");
 const Dining = require("../models/dining");
 const Keyword = require("../models/keyword");
 
+// 'score' query string 파싱
 const getScore = (score) => {
   if (score == "total") {
     return "totalScore";
@@ -16,11 +17,14 @@ const getScore = (score) => {
   }
 };
 
+// page offset 계산
 const getOffset = (page, user) => {
   const limit = 5;
   let offset = 0;
   let totalNum = 0;
+
   if (user) {
+    // /user/like
     try {
       totalNum = user.getDinings.count();
     } catch (err) {
@@ -28,6 +32,7 @@ const getOffset = (page, user) => {
       return next(err);
     }
   } else {
+    // /dining
     try {
       totalNum = Dining.count();
     } catch (err) {
@@ -35,7 +40,11 @@ const getOffset = (page, user) => {
       return next(err);
     }
   }
+
+  // 마지막 페이지 계산
   const lastPage = Math.ceil(totalNum / limit);
+
+  // offset 계산
   if (page) {
     const pageNum = parseInt(page);
     if (pageNum > lastPage) {
@@ -47,11 +56,13 @@ const getOffset = (page, user) => {
   return offset;
 };
 
+// /dining
 exports.getDining = (req, res, next) => {
   const offset = getOffset(req.query.page, undefined);
   const score = getScore(req.query.score);
   const keyword = req.query.keyword;
   let dinings;
+
   try {
     if (keyword) {
       dinings = Dining.findAll({
@@ -78,8 +89,10 @@ exports.getDining = (req, res, next) => {
   }
 };
 
+// /user/like
 exports.getUserLike = (req, res, next) => {
   const score = getScore(req.query.score);
+
   try {
     const user = User.findOne({ where: { id: req.user.id } });
     if (user) {
