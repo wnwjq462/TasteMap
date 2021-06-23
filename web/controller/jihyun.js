@@ -22,6 +22,7 @@ const getOffset = async (page, user) => {
   const limit = 6;
   let offset = 0;
   let totalNum = 0;
+  let pageNum = 0;
 
   if (user) {
     // /user/like
@@ -44,12 +45,17 @@ const getOffset = async (page, user) => {
   // 마지막 페이지 계산
   const lastPage = Math.ceil(totalNum / limit);
 
-  // offset 계산
   if (page) {
-    const pageNum = parseInt(page);
-    if (pageNum > lastPage) {
-      offset = (lastPage - 1) * limit;
-    } else {
+    pageNum = parseInt(page);
+  }
+
+  // offset 계산
+  if (pageNum > lastPage) {
+    // 마지막 페이지보다 크면 마지막 페이지로
+    offset = (lastPage - 1) * limit;
+  } else {
+    // 첫번째 페이지보다 작으면 첫번째 페이지로
+    if (pageNum > 1) {
       offset = (pageNum - 1) * limit;
     }
   }
@@ -58,8 +64,8 @@ const getOffset = async (page, user) => {
 
 // /dining
 exports.getDining = async (req, res, next) => {
-  const offset = getOffset(req.query.page, undefined);
-  const score = getScore(req.query.score);
+  const offset = await getOffset(req.query.page, undefined);
+  const score = await getScore(req.query.score);
   const keyword = req.query.keyword;
   let dinings;
 
@@ -91,12 +97,12 @@ exports.getDining = async (req, res, next) => {
 
 // /user/like
 exports.getUserLike = async (req, res, next) => {
-  const score = getScore(req.query.score);
+  const score = await getScore(req.query.score);
 
   try {
     const user = await User.findOne({ where: { id: req.user.id } });
     if (user) {
-      const offset = getOffset(req.query.page, user);
+      const offset = await getOffset(req.query.page, user);
       const dinings = await user.getDinings({
         include: { model: Keyword },
         order: [[score, "DESC"]],
