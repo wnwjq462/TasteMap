@@ -33,12 +33,12 @@ module.exports = class User extends Sequelize.Model {
 
   static associate(db) {
     db.User.belongsToMany(db.Keyword, {
-      foreignKey: "keywordId",
+      foreignKey: "userId",
       through: "user_keyword",
       timestamps: false,
     });
     db.User.belongsToMany(db.Dining, {
-      foreignKey: "diningId",
+      foreignKey: "userId",
       through: "like_dining",
       timestamps: false,
     });
