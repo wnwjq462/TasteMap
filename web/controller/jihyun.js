@@ -18,7 +18,7 @@ const getScore = (score) => {
 };
 
 // page offset 계산
-const getOffset = (page, user) => {
+const getOffset = async (page, user) => {
   const limit = 6;
   let offset = 0;
   let totalNum = 0;
@@ -26,7 +26,7 @@ const getOffset = (page, user) => {
   if (user) {
     // /user/like
     try {
-      totalNum = user.getDinings.count();
+      totalNum = await user.getDinings.count();
     } catch (err) {
       console.error(err);
       return next(err);
@@ -34,7 +34,7 @@ const getOffset = (page, user) => {
   } else {
     // /dining
     try {
-      totalNum = Dining.count();
+      totalNum = await Dining.count();
     } catch (err) {
       console.error(err);
       return next(err);
@@ -57,7 +57,7 @@ const getOffset = (page, user) => {
 };
 
 // /dining
-exports.getDining = (req, res, next) => {
+exports.getDining = async (req, res, next) => {
   const offset = getOffset(req.query.page, undefined);
   const score = getScore(req.query.score);
   const keyword = req.query.keyword;
@@ -65,7 +65,7 @@ exports.getDining = (req, res, next) => {
 
   try {
     if (keyword) {
-      dinings = Dining.findAll({
+      dinings = await Dining.findAll({
         include: {
           model: Keyword,
           where: { name: keyword },
@@ -75,7 +75,7 @@ exports.getDining = (req, res, next) => {
         offset: offset,
       });
     } else {
-      dinings = Dining.findAll({
+      dinings = await Dining.findAll({
         include: { model: Keyword },
         order: [[score, "DESC"]],
         limit: 6,
@@ -90,14 +90,14 @@ exports.getDining = (req, res, next) => {
 };
 
 // /user/like
-exports.getUserLike = (req, res, next) => {
+exports.getUserLike = async (req, res, next) => {
   const score = getScore(req.query.score);
 
   try {
-    const user = User.findOne({ where: { id: req.user.id } });
+    const user = await User.findOne({ where: { id: req.user.id } });
     if (user) {
       const offset = getOffset(req.query.page, user);
-      const dinings = user.getDinings({
+      const dinings = await user.getDinings({
         include: { model: Keyword },
         order: [[score, "DESC"]],
         limit: 6,
