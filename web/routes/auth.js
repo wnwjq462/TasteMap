@@ -5,14 +5,14 @@ const router = express.Router();
 const authController = require("../controller/auth");
 
 router
-  .route("/join", isNotLoggedIn)
-  .get(authController.getJoin)
-  .post(authController.postJoin);
+  .route("/join")
+  .get(isNotLoggedIn, authController.getJoin)
+  .post(isNotLoggedIn, authController.postJoin);
 
 router
   .route("/login", isNotLoggedIn)
-  .get(authController.getLogin)
-  .post(authController.postLogin);
+  .get(isNotLoggedIn, authController.getLogin)
+  .post(isNotLoggedIn, authController.postLogin);
 
 router.get("/logout", isLoggedIn, authController.getLogout);
 
