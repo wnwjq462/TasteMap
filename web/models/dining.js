@@ -25,6 +25,7 @@ module.exports = class Dining extends Sequelize.Model {
       {
         sequelize,
         underscored: true,
+        timestamps: false,
         modelName: "Dining",
         tableName: "dining",
         charset: "utf8mb4",
@@ -37,10 +38,12 @@ module.exports = class Dining extends Sequelize.Model {
     db.Dining.belongsToMany(db.User, {
       foreignKey: "userId",
       through: "like_dining",
+      timestamps: false,
     });
     db.Dining.belongsToMany(db.Keyword, {
       foreignKey: "keywordId",
       through: "dining_keyword",
+      timestamps: false,
     });
   }
 };
