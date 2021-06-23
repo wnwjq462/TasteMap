@@ -4,12 +4,6 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router();
 const authController = require("../controller/auth");
 
-router.use((req, res, next) => {
-  res.locals.user = req.user;
-  res.locals.likeDining = [];
-  next();
-});
-
 router
   .route("/join", isNotLoggedIn)
   .get(authController.getJoin)

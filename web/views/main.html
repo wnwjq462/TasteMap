@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TasteMap</title>
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="../public/main.css" />
     <!-- 웹 폰트 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
@@ -67,25 +67,29 @@
             <div class="cboxsection1">
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
@@ -93,25 +97,29 @@
             <div class="cboxsection2">
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
               <button
                 class="button keyword_plus"
-                onclick="location.href='/dining'"
+                onclick="getPlacesandDisplay(this.value)"
+                value="냉면"
               >
                 <span>냉면</span>
               </button>
@@ -123,7 +131,8 @@
         <div class="dropdown scoremenu">
           <button
             class="dropbtn button score-dropdown"
-            onclick="location.href='/dining'"
+            onclick="getPlacesandDisplay(this.value)"
+            value="total"
           >
             <span class="buttontext"
               ><img src="../public/img/total.png" class="icon" /> 종합</span
@@ -132,7 +141,8 @@
           <div class="dropdown-content">
             <button
               class="button score-dropdown"
-              onclick="location.href='/dining'"
+              onclick="return getPlacesandDisplay(this.value)"
+              value="taste"
             >
               <span class="buttontext"
                 ><img src="../public/img/dish.png" class="icon" /> 맛</span
@@ -140,7 +150,8 @@
             </button>
             <button
               class="button score-dropdown"
-              onclick="location.href='/dining'"
+              onclick="getPlacesandDisplay(this.value)"
+              value="price"
             >
               <span class="buttontext"
                 ><img src="../public/img/price.png" class="icon" /> 가격</span
@@ -148,7 +159,8 @@
             </button>
             <button
               class="button score-dropdown"
-              onclick="location.href='/dining'"
+              onclick="getPlacesandDisplay(this.value)"
+              value="service"
             >
               <span class="buttontext"
                 ><img src="../public/img/service.png" class="icon" />
@@ -157,7 +169,8 @@
             </button>
             <button
               class="button score-dropdown"
-              onclick="location.href='/dining'"
+              onclick="getPlacesandDisplay(this.value)"
+              value="mood"
             >
               <span class="buttontext"
                 ><img src="../public/img/coffee.png" class="icon" />
@@ -167,50 +180,50 @@
           </div>
         </div>
         <div class="loginsection">
-          {% if isLoggedIn %}
-          <div class="modify-user">
-            <button
-              class="dropbtn button loginsectionbtn"
-              style="width: 95px"
-              onclick="location.href='/user'"
-            >
-              <span class="buttontext"
-                ><img src="../public/img/userInfo.png" class="icon" /> 정보
-                수정</span
+          {% if user and user.id %}
+            <div class="modify-user">
+              <button
+                class="dropbtn button loginsectionbtn"
+                style="width: 95px"
+                onclick="location.href='/user'"
               >
-            </button>
-          </div>
-          <div class="dining-like">
-            <button
-              class="dropbtn button loginsectionbtn"
-              style="width: 95px"
-              onclick="location.href='/user/like'"
-            >
-              <span class="buttontext"
-                ><img src="../public/img/like.png" class="icon" /> 찜한
-                식당</span
+                <span class="buttontext"
+                  ><img src="../public/img/userInfo.png" class="icon" /> 정보
+                  수정</span
+                >
+              </button>
+            </div>
+            <div class="dining-like">
+              <button
+                class="dropbtn button loginsectionbtn"
+                style="width: 95px"
+                onclick="location.href='/user/like'"
               >
-            </button>
-          </div>
-          <div class="loginout">
-            <button
-              class="dropbtn button loginsectionbtn"
-              style="width: 80px"
-              onclick="location.href='/auth/logout'"
-            >
-              <span class="buttontext">로그아웃</span>
-            </button>
-          </div>
+                <span class="buttontext"
+                  ><img src="../public/img/like.png" class="icon" /> 찜한
+                  식당</span
+                >
+              </button>
+            </div>
+            <div class="loginout">
+              <button
+                class="dropbtn button loginsectionbtn"
+                style="width: 80px"
+                onclick="location.href='/auth/logout'"
+              >
+                <span class="buttontext">로그아웃</span>
+              </button>
+            </div>
           {% else %}
-          <div class="loginout">
-            <button
-              class="dropbtn button loginsectionbtn"
-              style="width: 80px"
-              onclick="location.href='/auth/login'"
-            >
-              <span class="buttontext">로그인</span>
-            </button>
-          </div>
+            <div class="loginout">
+              <button
+                class="dropbtn button loginsectionbtn"
+                style="width: 80px"
+                onclick="location.href='/auth/login'"
+              >
+                <span class="buttontext">로그인</span>
+              </button>
+            </div>
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
@@ -219,11 +232,139 @@
     <script>
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+          center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
         };
       // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
       var map = new kakao.maps.Map(mapContainer, mapOption);
+    </script>
+
+    <script>
+      function getQueryStringObject() {
+        var a = window.location.search.substr(1).split("&");
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+          var p = a[i].split("=", 2);
+          if (p.length == 1) b[p[0]] = "";
+          else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+      }
+
+      function getPlacesandDisplay(val) {
+        var basicpage = 1;
+        var basickeyword = "전체";
+        var basicscore = "total";
+
+        var qs = getQueryStringObject();
+        var page = qs.page;
+        var keyword = qs.keyword;
+        var score = qs.score;
+
+        var pattern_num = /[0-9]/; // 숫자
+        var pattern_eng = /[a-zA-Z]/; // 문자
+        var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글체크
+
+        if (pattern_num.test(val)) {
+          page = val;
+        } else if (pattern_eng.test(val)) {
+          score = val;
+        } else if (pattern_kor.test(val)) {
+          keyword = val;
+        }
+
+        if (!page) {
+          page = basicpage;
+        }
+        if (!keyword) {
+          keyword = basickeyword;
+        }
+        if (!score) {
+          score = basicscore;
+        }
+
+        var Parms = "?";
+        Parms += "page=" + page;
+        Parms += "&keyword=" + keyword;
+        Parms += "&score=" + score;
+
+        console.log(Parms);
+
+        $.ajax({
+          type: "get",
+          url: "/dining" + Parms,
+          error: function (request, status, error) {
+            if (request.status == 400) {
+              // 실패 시 처리, responseText 반환
+              alert(request.responseText);
+            }
+          },
+          success: function (response) {
+            console.log(response);
+            markers = [];
+            var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
+            removeMarker(markers);
+
+            for (var i = 0; i < 6; i++) {
+              //마커를 생성하고 지도에 표시
+              var placePosition = new kakao.maps.LatLng(
+                37.55710538856513,
+                126.93662151811871
+              );
+              var placewholeScore = 0;
+              var marker = displayMarker(placePosition, i, placewholeScore);
+
+              //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
+              bounds.extend(placePosition);
+            }
+            map.setBounds(bounds);
+          },
+        });
+      }
+
+      // MakrerImage 객체를 생성하여 반환하는 함수입니다
+      function createMarkerImage(spriteOrigin) {
+        var markerImage = new kakao.maps.MarkerImage(
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 스프라이트 마커 이미지 URL
+          new kakao.maps.Size(36, 37), // 마커의 크기
+          {
+            spriteOrigin: spriteOrigin, // 스트라이프 이미지 중 사용할 영역의 좌상단 좌표
+            spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+          }
+        );
+
+        return markerImage;
+      }
+
+      //마커를 생성하고 지도 위에 마커를 표시하는 함수
+      function displayMarker(position, idx, score) {
+        var normalOrigin = new kakao.maps.Point(0, idx * 46 + 10), //스프라이트 이미지 중 사용할 영역 좌표. idx에는 0~5가 들어가면 됨.
+          markerImage = createMarkerImage(normalOrigin),
+          marker = new kakao.maps.Marker({
+            map: map,
+            position: position, //마커 위치. displayMarker 함수의 파라미터로 받아옵니다.
+            image: markerImage,
+          });
+        marker.setMap(map); //지도 위에 마커를 표시합니다.
+        // displayInfowindow(marker, score); //지도 위에 인포윈도우를 표시합니다.
+        markers.push(marker); //선언한 배열 markers =[];에 생성된 마커를 추가
+      }
+
+      // 지도 위에 표시되고 있는 마커를 모두 제거하는 함수
+      function removeMarker(markers) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+
+      //인포윈도우를 표시하는 함수입니다. 마커 생성 함수(displayMarker)안에서 호출됩니다.
+      function displayInfowindow(marker, score) {
+        var scorecontent = "<div>" + score + "</div>";
+        var infowindow = new kakao.maps.infowindow({ content: scorecontent });
+        infowindow.open(map, marker);
+      }
     </script>
   </body>
 </html>
