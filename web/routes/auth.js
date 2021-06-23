@@ -3,9 +3,8 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 const authController = require("../controller/auth");
-const { route } = require("./user");
 
-route.use((req, res, next) => {
+router.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.likeDining = [];
   next();
