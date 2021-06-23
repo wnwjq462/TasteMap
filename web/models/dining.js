@@ -20,7 +20,7 @@ module.exports = class Dining extends Sequelize.Model {
         moodScore: Sequelize.DECIMAL(3, 2),
         address: Sequelize.STRING(100),
         contact: Sequelize.STRING(100),
-        operatingHours: Sequelize.STRING(200),
+        operatingHour: Sequelize.STRING(200),
       },
       {
         sequelize,
