@@ -19,7 +19,7 @@ const getScore = (score) => {
 
 // page offset 계산
 const getOffset = (page, user) => {
-  const limit = 5;
+  const limit = 6;
   let offset = 0;
   let totalNum = 0;
 
@@ -71,18 +71,18 @@ exports.getDining = (req, res, next) => {
           where: { name: keyword },
         },
         order: [[score, "DESC"]],
-        limit: 5,
+        limit: 6,
         offset: offset,
       });
     } else {
       dinings = Dining.findAll({
         include: { model: Keyword },
         order: [[score, "DESC"]],
-        limit: 5,
+        limit: 6,
         offset: offset,
       });
     }
-    res.json(dinings);
+    res.status(200).json(dinings);
   } catch (error) {
     console.error(error);
     return next(error);
@@ -100,10 +100,10 @@ exports.getUserLike = (req, res, next) => {
       const dinings = user.getDinings({
         include: { model: Keyword },
         order: [[score, "DESC"]],
-        limit: 5,
+        limit: 6,
         offset: offset,
       });
-      res.json(dinings);
+      res.status(200).json(dinings);
     } else {
       res.status(404).send("사용자가 존재하지 않습니다.");
     }
