@@ -12,6 +12,7 @@ exports.getJoin = (req, res) => {
 
 exports.postJoin = async (req, res, next) => {
   const { account, password, keywords } = req.body;
+  const url = require("url");
   try {
     const exUser = await User.findOne({ where: { account } });
     if (exUser) {
@@ -23,7 +24,7 @@ exports.postJoin = async (req, res, next) => {
       account,
       password: hash,
     });
-    console.log(keywords);
+
     for (const keyword of keywords) {
       const exKeyword = await Keyword.findOne({ where: { name: keyword } });
       if (!exKeyword) {
@@ -34,7 +35,7 @@ exports.postJoin = async (req, res, next) => {
       await user.addKeyword(exKeyword);
     }
 
-    return res.status(200).redirect("/");
+    return res.status(200).json({ message: "회원가입이 성공하였습니다." });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -61,7 +62,7 @@ exports.postLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.status(200).redirect("/");
+      return res.status(200).json({ message: "로그인이 성공했습니다." });
     });
   })(req, res, next);
 };
