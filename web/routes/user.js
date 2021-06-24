@@ -3,7 +3,7 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const router = express.Router();
 const suyongController = require("../controller/suyong");
-const jihyeonController = require("../controller/jihyeon");
+const jihyunController = require("../controller/jihyun");
 const hyeongooController = require("../controller/hyeongoo");
 
 router
@@ -13,7 +13,7 @@ router
 
 router.get("/keyword", isLoggedIn, hyeongooController.getUserKeyword);
 
-router.get("/like", isLoggedIn, jihyeonController.getUserLike);
+router.get("/like", isLoggedIn, jihyunController.getUserLike);
 
 router
   .route("/like/:diningId")

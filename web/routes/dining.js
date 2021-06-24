@@ -1,10 +1,8 @@
 const express = require("express");
 
 const router = express.Router();
-const jihyeonController = require("../controller/jihyeon");
+const jihyunController = require("../controller/jihyun");
 
-router.get("/", (req, res, next) => {
-  res.render("main");
-});
+router.get("/", jihyunController.getDining);
 
 module.exports = router;
