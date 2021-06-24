@@ -13,7 +13,7 @@ exports.postUserLike = async (req, res, next) => {
 
     if(user) {
       const dining = await Dining.findOne({
-        where: {dining_id: req.params.dining_id}
+        where: {id: req.params.diningId}
       });
       await user.addDining(dining);
     }
@@ -36,7 +36,7 @@ exports.deleteUserLike = async (req, res, next) => {
 
     if(user) {
       const dining = await Dining.findOne({
-        where: {dining_id: req.params.dining_id}
+        where: {id: req.params.diningId}
       });
       await user.removeDinings(dining);
     }
