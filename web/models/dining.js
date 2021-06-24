@@ -21,6 +21,8 @@ module.exports = class Dining extends Sequelize.Model {
         address: Sequelize.STRING(100),
         contact: Sequelize.STRING(100),
         operatingHour: Sequelize.STRING(200),
+        latitude: Sequelize.DECIMAL(12, 10),
+        longitude: Sequelize.DECIMAL(13, 10),
       },
       {
         sequelize,

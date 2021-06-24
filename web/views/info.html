@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TasteMap</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../public/user.css" />
+    <!-- 웹 폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+
+    <!-- js -->
+    <script src="../public/user.js"></script>
+  </head>
+  <body>
+    <div class="bgcontainer">
+      <div class="outer-container">
+        <div class="login-container">
+          <div class="inner-login-container">
+            <div class="container">
+              <form id="FormSignup" name="FormSignup">
+                <div class="box-upper-signup">
+                  <div class="logo-box">
+                    <img src="../public/img/logo1.png" class="logo" />
+                    <span class="tastemap">Taste<strong>Map</strong></span>
+                  </div>
+                  <div class="input-box">
+                    <div class="omrs-input-group">
+                      <label class="omrs-input-underlined">
+                        <input
+                          class="idinput"
+                          id="idinput"
+                          type="text"
+                          value="{{userInfo.account}}"
+                          disabled
+                        />
+                      </label>
+                    </div>
+                    <div class="omrs-input-group">
+                      <label class="omrs-input-underlined">
+                        <input class="pwinput" id="pwinput" type="password" />
+                        <span class="omrs-input-label"
+                          >패스워드를 입력해주세요</span
+                        >
+                        <i class="fa fa-eye fa-lg pweyes"></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="cbox-container">
+                  <ul class="ks-cboxtags">
+                    <div class="cbox-textbox">
+                      관심 키워드 <b>(최대 9개)</b>
+                    </div>
+                    <div class="cboxsection1">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxOne"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="맛"
+                        />
+                        <label for="checkboxOne">맛</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "맛" %}
+                        <script>
+                          document
+                            .getElementById("checkboxOne")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTwo"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="친절"
+                        /><label for="checkboxTwo">친절</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "친절" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTwo")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxThree"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="커피"
+                        /><label for="checkboxThree">커피</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "커피" %}
+                        <script>
+                          document
+                            .getElementById("checkboxThree")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFour"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="분위기"
+                        /><label for="checkboxFour">분위기</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "분위기" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFour")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                    </div>
+                    <div class="cboxsection2">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFive"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="사장"
+                        /><label for="checkboxFive">사장</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "사장" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFive")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSix"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="파스타"
+                        /><label for="checkboxSix">파스타</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "파스타" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSix")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSeven"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="가격"
+                        /><label for="checkboxSeven">가격</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "가격" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSeven")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxEight"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="카페"
+                        /><label for="checkboxEight">카페</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "카페" %}
+                        <script>
+                          document
+                            .getElementById("checkboxEight")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                    </div>
+                    <div class="cboxsection3">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxNine"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="밥"
+                        /><label for="checkboxNine">밥</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "밥" %}
+                        <script>
+                          document
+                            .getElementById("checkboxNine")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="고기"
+                        /><label for="checkboxTen">고기</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "고기" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li class="ks-selected">
+                        <input
+                          type="checkbox"
+                          id="checkboxEleven"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="직원"
+                        /><label for="checkboxEleven">직원</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "직원" %}
+                        <script>
+                          document
+                            .getElementById("checkboxEleven")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxTwelve"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="연희동"
+                        /><label for="checkboxTwelve">연희동</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "연희동" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTwelve")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                    </div>
+                    <div class="cboxsection4">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxThirteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="추천"
+                        /><label for="checkboxThirteen">추천</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "추천" %}
+                        <script>
+                          document
+                            .getElementById("checkboxThirteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFourteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="크림"
+                        /><label for="checkboxFourteen">크림</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "크림" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFourteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxFifteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="연어"
+                        /><label for="checkboxFifteen">연어</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "연어" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFifteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="checkboxSixteen"
+                          name="keyword-like"
+                          onclick="getCheckedCnt()"
+                          value="빵"
+                        /><label for="checkboxSixteen">빵</label>
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "빵" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSixteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+                <div class="box-lower-signup">
+                  <div class="bumper1" id="bumper1"></div>
+                  <div class="bumper2" id="bumper2"></div>
+                  <div>
+                    <button
+                      type="button"
+                      class="button signup"
+                      onclick="return modifyuserinfo();"
+                    >
+                      <span class="sign-in">정보 수정</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="info-text-box">
+          <div class="text-container">
+            <div>당신이 가는 어디든</div>
+            <div><strong>맛집과 함께</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

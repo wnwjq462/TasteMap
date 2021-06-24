@@ -105,3 +105,59 @@ function getCheckedCnt() {
     document.getElementById("bumper2").innerText = "";
   }
 }
+
+function modifyuserinfo() {
+  var pw = document.getElementById("pwinput").value;
+  var keywordarray = [];
+
+  $("input:checkbox[name='keyword-like']:checked").each(function () {
+    var checkeditem = $(this).val();
+    keywordarray.push(checkeditem);
+  });
+
+  if (document.getElementById("bumper2").innerText != "") {
+    return false;
+  }
+  console.log(keywordarray);
+
+  $.ajax({
+    type: "post",
+    url: "/user",
+    dataType: "json",
+    traditional: true,
+    data: {
+      password: pw,
+      keywords: keywordarray,
+    },
+
+    error: function (request, status, error) {
+      if (request.status == 400) {
+        var errortext = request.responseText;
+        var errormsg = errortext.replace('{"message":"', "").replace('"}', "");
+        // 실패 시 처리
+        document.getElementById("bumper2").innerText = errormsg;
+      }
+    },
+
+    success: function (response) {
+      location.href = "/dining";
+    },
+  });
+}
+
+function getCheckedCnt() {
+  // 선택된 목록 가져오기
+  const query = 'input[name="keyword-like"]:checked';
+  const selectedElements = document.querySelectorAll(query);
+
+  // 선택된 목록의 갯수 세기
+  const selectedElementsCnt = selectedElements.length;
+
+  // 출력
+  if (selectedElements.length > 9) {
+    document.getElementById("bumper2").innerText =
+      "키워드는 9개까지 선택 가능합니다.";
+  } else {
+    document.getElementById("bumper2").innerText = "";
+  }
+}
