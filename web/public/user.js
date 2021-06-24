@@ -140,6 +140,7 @@ function modifyuserinfo() {
     },
 
     success: function (response) {
+      alert("정보가 수정되었습니다.");
       location.href = "/dining";
     },
   });

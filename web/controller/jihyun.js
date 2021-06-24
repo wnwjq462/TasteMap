@@ -4,16 +4,18 @@ const Keyword = require("../models/keyword");
 
 // 'score' query string 파싱
 const getScore = (score) => {
-  if (score == "total") {
+  if (score === "total") {
     return "totalScore";
-  } else if (score == "taste") {
+  } else if (score === "taste") {
     return "tasteScore";
-  } else if (score == "price") {
+  } else if (score === "price") {
     return "priceScore";
-  } else if (score == "service") {
+  } else if (score === "service") {
     return "serviceScore";
-  } else if (score == "mood") {
+  } else if (score === "mood") {
     return "moodScore";
+  } else {
+    return "totalScore";
   }
 };
 
@@ -27,7 +29,7 @@ const getOffset = async (page, user) => {
   if (user) {
     // /user/like
     try {
-      totalNum = await user.getDinings.count();
+      totalNum = await user.getDinings.length;
     } catch (err) {
       console.error(err);
       return next(err);
@@ -76,14 +78,14 @@ exports.getDining = async (req, res, next) => {
           model: Keyword,
           where: { name: keyword },
         },
-        order: [[score, "DESC"]],
+        order: [[score, "DESC"], ["id"]],
         limit: 6,
         offset: offset,
       });
     } else {
       dinings = await Dining.findAll({
         include: { model: Keyword },
-        order: [[score, "DESC"]],
+        order: [[score, "DESC"], ["id"]],
         limit: 6,
         offset: offset,
       });
@@ -105,7 +107,7 @@ exports.getUserLike = async (req, res, next) => {
       const offset = await getOffset(req.query.page, user);
       const dinings = await user.getDinings({
         include: { model: Keyword },
-        order: [[score, "DESC"]],
+        order: [[score, "DESC"], ["id"]],
         limit: 6,
         offset: offset,
       });
