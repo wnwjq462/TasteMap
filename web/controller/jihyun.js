@@ -1,6 +1,7 @@
 const express = require("express");
 const Dining = require("../models/dining");
 const Keyword = require("../models/keyword");
+const User = require("../models/user");
 
 // 'score' query string 파싱
 const getScore = (score) => {
@@ -70,6 +71,9 @@ exports.getDining = async (req, res, next) => {
   const score = await getScore(req.query.score);
   const keyword = req.query.keyword;
   let dinings;
+  let keywordValue = [{ name: keyword }];
+  let scoreValue = [{ name: req.query.score }];
+  let pageValue = [{ name: req.query.page }];
 
   try {
     if (keyword) {
@@ -90,7 +94,7 @@ exports.getDining = async (req, res, next) => {
         offset: offset,
       });
     }
-    res.status(200).render("main", { diningList: dinings });
+    res.status(200).render("main", { diningList: dinings, keywords: keywordValue, scores: scoreValue, pages: pageValue });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -106,7 +110,6 @@ exports.getUserLike = async (req, res, next) => {
     if (user) {
       const offset = await getOffset(req.query.page, user);
       const dinings = await user.getDinings({
-        include: { model: Keyword },
         order: [[score, "DESC"], ["id"]],
         limit: 6,
         offset: offset,

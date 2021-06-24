@@ -237,7 +237,7 @@
           <div class="dropdown-content">
             <button
               class="button score-dropdown"
-              onclick="return getPlacesandDisplay(this.value)"
+              onclick="getPlacesandDisplay(this.value)"
               value="taste"
             >
               <span class="buttontext"
@@ -323,6 +323,21 @@
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
+        {% for dining in diningList %}
+          <button id="{{loop.index}}" style="display: none;" value="{{dining.latitude}}/{{dining.longitude}}"></button>
+        {% endfor %}
+        {% for page in pages %}
+          <button id="page" style="display: none;" value="{{page.name}}"></button>
+        {% endfor %}
+        {% for keyword in keywords %}
+          <button id="keyword" style="display: none;" value="{{keyword.name}}"></button>
+        {% endfor %}
+        {% for score in scores %}
+          <button id="score" style="display: none;" value="{{score.name}}"></button>
+        {% endfor %}
+        <button id="page1" style="display: none;"></button>
+        <button id="keyword1" style="display: none;"></button>
+        <button id="score1" style="display: none;"></button>
       </div>
     </div>
     <script>
@@ -353,10 +368,14 @@
         var basickeyword = "전체";
         var basicscore = "total";
 
-        var qs = getQueryStringObject();
-        var page = qs.page;
-        var keyword = qs.keyword;
-        var score = qs.score;
+        // var qs = getQueryStringObject();
+        // var page = qs.page;
+        // var keyword = qs.keyword;
+        // var score = qs.score;
+
+        var page = document.getElementById("page1").innerText;
+        var keyword = document.getElementById("keyword1").innerText;
+        var score = document.getElementById("score1").innerText;
 
         var pattern_num = /[0-9]/; // 숫자
         var pattern_eng = /[a-zA-Z]/; // 문자
@@ -384,7 +403,7 @@
         Parms += "page=" + page;
         Parms += "&keyword=" + keyword;
         Parms += "&score=" + score;
-
+        
         console.log(Parms);
 
         $.ajax({
@@ -402,19 +421,37 @@
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
 
-            for (var i = 0; i < 6; i++) {
+            for (let i = 1; i < 7; i ++) {
+              let latitude = document.getElementById(i).value.split("/")[0];
+              let longitude = document.getElementById(i).value.split("/")[1];
+              console.log(latitude);
+              console.log(longitude);
+
               //마커를 생성하고 지도에 표시
               var placePosition = new kakao.maps.LatLng(
-                37.55710538856513,
-                126.93662151811871
+                latitude,
+                longitude
               );
               var placewholeScore = 0;
-              var marker = displayMarker(placePosition, i, placewholeScore);
+              var marker = displayMarker(placePosition, i-1, placewholeScore);
 
               //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
               bounds.extend(placePosition);
             }
             map.setBounds(bounds);
+            
+            for (let i = 0; i < 1; i++) {
+              let page = document.getElementById("page").value;
+              let keyword = document.getElementById("keyword").value;
+              let score = document.getElementById("score").value;
+            }
+            document.getElementById("page1").innerText = page;
+            document.getElementById("keyword1").innerText = keyword;
+            document.getElementById("score1").innerText = score;
+            
+            console.log(page);
+            console.log(keyword);
+            console.log(score);
           },
         });
       }
