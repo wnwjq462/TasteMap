@@ -14,6 +14,8 @@ const getScore = (score) => {
     return "serviceScore";
   } else if (score === "mood") {
     return "moodScore";
+  } else {
+    return "totalScore";
   }
 };
 
