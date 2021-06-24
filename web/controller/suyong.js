@@ -47,14 +47,16 @@ exports.postUser = async (req, res, next) => {
       user.addKeyword(keyword);
     }
     //update password
-    await User.update(
-      {
-        password: req.body.password,
-      },
-      {
-        where: { id: req.user.id },
-      }
-    );
+    if (req.body.password) {
+      await User.update(
+        {
+          password: req.body.password,
+        },
+        {
+          where: { id: req.user.id },
+        }
+      );
+    }
 
     //error if keyword.len >9
     if (req.body.keywords.length > 9)

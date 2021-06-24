@@ -56,11 +56,7 @@
                     </div>
                     <div class="omrs-input-group">
                       <label class="omrs-input-underlined">
-                        <input
-                          class="pwinput"
-                          id="pwinput"
-                          type="password"
-                        />
+                        <input class="pwinput" id="pwinput" type="password" />
                         <span class="omrs-input-label"
                           >패스워드를 입력해주세요</span
                         >
@@ -80,17 +76,18 @@
                           type="checkbox"
                           id="checkboxOne"
                           name="keyword-like"
-                          onclick="getCheckedCnt()"                          
+                          onclick="getCheckedCnt()"
                           value="맛"
                         />
                         <label for="checkboxOne">맛</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "맛" %}
-                            <script>
-                                document.getElementById("checkboxOne").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "맛" %}
+                        <script>
+                          document
+                            .getElementById("checkboxOne")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -100,13 +97,14 @@
                           onclick="getCheckedCnt()"
                           value="친절"
                         /><label for="checkboxTwo">친절</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "친절" %}
-                            <script>
-                                document.getElementById("checkboxTwo").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "친절" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTwo")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -116,13 +114,14 @@
                           onclick="getCheckedCnt()"
                           value="커피"
                         /><label for="checkboxThree">커피</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "커피" %}
-                            <script>
-                                document.getElementById("checkboxThree").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "커피" %}
+                        <script>
+                          document
+                            .getElementById("checkboxThree")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -132,13 +131,14 @@
                           onclick="getCheckedCnt()"
                           value="분위기"
                         /><label for="checkboxFour">분위기</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "분위기" %}
-                            <script>
-                                document.getElementById("checkboxFour").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "분위기" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFour")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                     </div>
                     <div class="cboxsection2">
@@ -150,13 +150,14 @@
                           onclick="getCheckedCnt()"
                           value="사장"
                         /><label for="checkboxFive">사장</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "사장" %}
-                            <script>
-                                document.getElementById("checkboxFive").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "사장" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFive")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -166,13 +167,14 @@
                           onclick="getCheckedCnt()"
                           value="파스타"
                         /><label for="checkboxSix">파스타</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "파스타" %}
-                            <script>
-                                document.getElementById("checkboxSix").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "파스타" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSix")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -182,13 +184,14 @@
                           onclick="getCheckedCnt()"
                           value="가격"
                         /><label for="checkboxSeven">가격</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "가격" %}
-                            <script>
-                                document.getElementById("checkboxSeven").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "가격" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSeven")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -198,13 +201,14 @@
                           onclick="getCheckedCnt()"
                           value="카페"
                         /><label for="checkboxEight">카페</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "카페" %}
-                            <script>
-                                document.getElementById("checkboxEight").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "카페" %}
+                        <script>
+                          document
+                            .getElementById("checkboxEight")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                     </div>
                     <div class="cboxsection3">
@@ -216,13 +220,14 @@
                           onclick="getCheckedCnt()"
                           value="밥"
                         /><label for="checkboxNine">밥</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "밥" %}
-                            <script>
-                                document.getElementById("checkboxNine").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "밥" %}
+                        <script>
+                          document
+                            .getElementById("checkboxNine")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -232,13 +237,14 @@
                           onclick="getCheckedCnt()"
                           value="고기"
                         /><label for="checkboxTen">고기</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "고기" %}
-                            <script>
-                                document.getElementById("checkboxTen").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "고기" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li class="ks-selected">
                         <input
@@ -248,13 +254,14 @@
                           onclick="getCheckedCnt()"
                           value="직원"
                         /><label for="checkboxEleven">직원</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "직원" %}
-                            <script>
-                                document.getElementById("checkboxEleven").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "직원" %}
+                        <script>
+                          document
+                            .getElementById("checkboxEleven")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -264,13 +271,14 @@
                           onclick="getCheckedCnt()"
                           value="연희동"
                         /><label for="checkboxTwelve">연희동</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "연희동" %}
-                            <script>
-                                document.getElementById("checkboxTwelve").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "연희동" %}
+                        <script>
+                          document
+                            .getElementById("checkboxTwelve")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                     </div>
                     <div class="cboxsection4">
@@ -282,13 +290,14 @@
                           onclick="getCheckedCnt()"
                           value="추천"
                         /><label for="checkboxThirteen">추천</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "추천" %}
-                            <script>
-                                document.getElementById("checkboxThirteen").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "추천" %}
+                        <script>
+                          document
+                            .getElementById("checkboxThirteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -298,13 +307,14 @@
                           onclick="getCheckedCnt()"
                           value="크림"
                         /><label for="checkboxFourteen">크림</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "크림" %}
-                            <script>
-                                document.getElementById("checkboxFourteen").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "크림" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFourteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -314,13 +324,14 @@
                           onclick="getCheckedCnt()"
                           value="연어"
                         /><label for="checkboxFifteen">연어</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "연어" %}
-                            <script>
-                                document.getElementById("checkboxFifteen").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "연어" %}
+                        <script>
+                          document
+                            .getElementById("checkboxFifteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                       <li>
                         <input
@@ -330,13 +341,14 @@
                           onclick="getCheckedCnt()"
                           value="빵"
                         /><label for="checkboxSixteen">빵</label>
-                        {% for keyword in userInfo.Keywords %}
-                            {% if keyword.name === "빵" %}
-                            <script>
-                                document.getElementById("checkboxSixteen").setAttribute('checked', 'checked');
-                            </script>
-                            {% endif %}
-                        {% endfor %}
+                        {% for keyword in userInfo.Keywords %} {% if
+                        keyword.name === "빵" %}
+                        <script>
+                          document
+                            .getElementById("checkboxSixteen")
+                            .setAttribute("checked", "checked");
+                        </script>
+                        {% endif %} {% endfor %}
                       </li>
                     </div>
                   </ul>
@@ -366,6 +378,5 @@
         </div>
       </div>
     </div>
-
   </body>
 </html>

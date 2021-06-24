@@ -38,6 +38,12 @@
   <body>
     <div class="container">
       <div class="info-container">
+        <div id="wrap">
+          <nav id="sidebar">
+            <button onclick="remove_dininginfo()">닫기 버튼</button>
+          </nav>
+          <div class="overlay"></div>
+        </div>
         <div class="logo-box">
           <img src="../public/img/logo1.png" class="logo" />
           <span class="tastemap">Taste<strong>Map</strong></span>
@@ -60,7 +66,71 @@
           </div>
         </div>
 
-        <div class="keyword_wc"></div>
+        <div class="keyword_wc">
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="맛"
+          >
+            <span>맛</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="친절"
+          >
+            <span>친절</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="커피"
+          >
+            <span>커피</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="분위기"
+          >
+            <span>분위기</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="사장"
+          >
+            <span>사장</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="파스타"
+          >
+            <span>파스타</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="가격"
+          >
+            <span>가격</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="카페"
+          >
+            <span>카페</span>
+          </button>
+          <button
+            class="button keyword_plus"
+            onclick="getPlacesandDisplay(this.value)"
+            value="밥"
+          >
+            <span>밥</span>
+          </button>
+        </div>
         <div class="etc"></div>
         <div class="etc_keyword">
           <div class="cbox-container">
@@ -68,60 +138,60 @@
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="고기"
               >
-                <span>냉면</span>
+                <span>고기</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="직원"
               >
-                <span>냉면</span>
+                <span>직원</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="연희동"
               >
-                <span>냉면</span>
+                <span>연희동</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="추천"
               >
-                <span>냉면</span>
+                <span>추천</span>
               </button>
             </div>
             <div class="cboxsection2">
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="크림"
               >
-                <span>냉면</span>
+                <span>크림</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="연어"
               >
-                <span>냉면</span>
+                <span>연어</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="빵"
               >
-                <span>냉면</span>
+                <span>빵</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="냉면"
+                value="치즈"
               >
-                <span>냉면</span>
+                <span>치즈</span>
               </button>
             </div>
           </div>
@@ -181,49 +251,49 @@
         </div>
         <div class="loginsection">
           {% if user and user.id %}
-            <div class="modify-user">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 95px"
-                onclick="location.href='/user'"
+          <div class="modify-user">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/userInfo.png" class="icon" /> 정보
+                수정</span
               >
-                <span class="buttontext"
-                  ><img src="../public/img/userInfo.png" class="icon" /> 정보
-                  수정</span
-                >
-              </button>
-            </div>
-            <div class="dining-like">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 95px"
-                onclick="location.href='/user/like'"
+            </button>
+          </div>
+          <div class="dining-like">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user/like'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/like.png" class="icon" /> 찜한
+                식당</span
               >
-                <span class="buttontext"
-                  ><img src="../public/img/like.png" class="icon" /> 찜한
-                  식당</span
-                >
-              </button>
-            </div>
-            <div class="loginout">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 80px"
-                onclick="location.href='/auth/logout'"
-              >
-                <span class="buttontext">로그아웃</span>
-              </button>
-            </div>
+            </button>
+          </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/logout'"
+            >
+              <span class="buttontext">로그아웃</span>
+            </button>
+          </div>
           {% else %}
-            <div class="loginout">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 80px"
-                onclick="location.href='/auth/login'"
-              >
-                <span class="buttontext">로그인</span>
-              </button>
-            </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/login'"
+            >
+              <span class="buttontext">로그인</span>
+            </button>
+          </div>
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
@@ -339,6 +409,7 @@
 
       //마커를 생성하고 지도 위에 마커를 표시하는 함수
       function displayMarker(position, idx, score) {
+        show_dininginfo();
         var normalOrigin = new kakao.maps.Point(0, idx * 46 + 10), //스프라이트 이미지 중 사용할 영역 좌표. idx에는 0~5가 들어가면 됨.
           markerImage = createMarkerImage(normalOrigin),
           marker = new kakao.maps.Marker({
@@ -365,6 +436,24 @@
         var infowindow = new kakao.maps.infowindow({ content: scorecontent });
         infowindow.open(map, marker);
       }
+
+      function show_dininginfo() {
+        $("#sidebar").addClass("active");
+        // $(".overlay").fadeIn();
+      }
+
+      function remove_dininginfo() {
+        $("#sidebar").removeClass("active");
+        // $(".overlay").fadeOut();
+      }
+    </script>
+
+    <!— sidebar —>
+    <script>
+      // $(".overlay").on("click", function () {
+      //   $("#sidebar").removeClass("active");
+      //   $(".overlay").fadeOut();
+      // });
     </script>
   </body>
 </html>
