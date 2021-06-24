@@ -36,14 +36,40 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
+    <div id="wrap">
+      <nav id="sidebar">
+        <div class="dinings">
+          {% for dining in dininglist %}
+          <div class="one_dining">
+            <img
+              src="../public/img/bg.jpeg"
+              style="width: 100px; height: 100px"
+            />
+            <div class="dining_name">
+              <span>A.</span><span>{{dining.name}}</span
+              ><img
+                src="../public/img/like-disabled.png"
+                style="width: 20px"
+                class="heart"
+              />
+            </div>
+            <div class="dining_total_score">
+              <img
+                src="../public/img/total.png"
+                style="width: 12px"
+                class="totalimg"
+              /><span>{{dining.totalScore}}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <button onclick="remove_dininginfo()">닫기 버튼</button>
+      </nav>
+      <div class="overlay"></div>
+    </div>
     <div class="container">
       <div class="info-container">
-        <div id="wrap">
-          <nav id="sidebar">
-            <button onclick="remove_dininginfo()">닫기 버튼</button>
-          </nav>
-          <div class="overlay"></div>
-        </div>
         <div class="logo-box">
           <img src="../public/img/logo1.png" class="logo" />
           <span class="tastemap">Taste<strong>Map</strong></span>
