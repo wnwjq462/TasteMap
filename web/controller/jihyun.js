@@ -115,6 +115,7 @@ exports.getDining = async (req, res, next) => {
         keywords: keywordValue,
         scores: scoreValue,
         pages: pageValue,
+        userInfo: req.user,
       });
     } else {
       res.status(200).json({
@@ -122,6 +123,7 @@ exports.getDining = async (req, res, next) => {
         keywords: keywordValue,
         scores: scoreValue,
         pages: pageValue,
+        userInfo: req.user,
       });
     }
   } catch (error) {
@@ -159,12 +161,14 @@ exports.getUserLike = async (req, res, next) => {
           diningList: dinings,
           scores: scoreValue,
           pages: pageValue,
+          userInfo: req.user,
         });
       } else {
         res.status(200).json({
           diningList: dinings,
           scores: scoreValue,
           pages: pageValue,
+          userInfo: req.user,
         });
       }
     } else {

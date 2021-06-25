@@ -394,10 +394,10 @@
             //markers = [];
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
-            show_dininginfo(response.diningList, response.pages[0].name, response.pages[0].last);
-            for (let i = 0; i < response.diningList.length; i ++) {
+            show_dininginfo(response.diningList, response.userInfo, response.pages[0].name, response.pages[0].last);
+            for (let i = 0; i < response.diningList.length; i++) {
               let tempString = '<button id="';
-              let findString = tempString + (i+1) + '"';
+              let findString = tempString + i+1 + '"';
               //let findIndex = response.indexOf(findString);
               //let tempCoord = response.slice(findIndex+45,findIndex+73);
               //let latitude = tempCoord.split("/")[0];
@@ -483,35 +483,42 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo(diningList, page, lastPage) {
+      function show_dininginfo(diningList, userInfo, page, lastPage) {
         if (parseInt(page) > lastPage) {
           alert("마지막 페이지입니다.");
           return;
         }
 
-        if (document.getElementById("sidebar")) {
-          tmp = document.getElementById("sidebar");
-          tmp.parentNode.removeChild(tmp);
-        }
+        forDelete = document.getElementById("sidebar");
+        if (forDelete)
+          forDelete.parentNode.removeChild(forDelete);
         sb = document.createElement("nav");
         sb.setAttribute("id","sidebar");
         diningsDiv = document.createElement("div");
         diningsDiv.setAttribute("class","dinings");
         sb.appendChild(diningsDiv);
         let number = 1;
+        let loginCheck = 0;
+        
+        if ("{{ user }}" && "{{ user.id }}") {
+          loginCheck = 1;
+        }
         for (const dining of diningList) {
+          let likeCheck = 0;
           console.log(dining.name);
           oneDining = document.createElement("span");
           oneDining.setAttribute("class","one_dining");
           diningImg = document.createElement("img");
           diningImg.setAttribute("src","../public/img/bg.jpeg");
           diningImg.setAttribute("style","width: 100px; height: 100px");
-          diningImg.setAttribute("onclick","open_detail_tab(dining.name)");
+          //diningImg.setAttribute("onclick","open_detail_tab(dining.name)");
+          diningImg.addEventListener("click",function(){open_detail_tab(dining.name)},false);
           oneDining.appendChild(diningImg);
           diningsDiv.appendChild(oneDining);
           diningName = document.createElement("span");
           diningName.setAttribute("class","dining_name");
           aTag = document.createElement("a");
+          aTag.addEventListener("click",function(){open_detail_tab(dining.name)},false);
           diningNameNumber = document.createElement("span");
           diningNameNumber.textContent = number++;
           diningNameName = document.createElement("span");
@@ -520,6 +527,45 @@
           aTag.appendChild(diningNameName);
           diningName.appendChild(aTag);
           oneDining.appendChild(diningName);
+          heartIcon = document.createElement("i");
+          heartIcon.setAttribute("id",dining.id);
+          
+          if (loginCheck) {
+            userDinings = userInfo.Dinings;
+            for (const userDining of userDinings) {
+              console.log("userDining: "+ userDining.name);
+              if (userDining.id === dining.id) {
+                likeCheck = 1;
+              }
+            }
+
+            if(likeCheck) {
+              heartIcon.setAttribute("class","fas fa-heart");
+              heartIcon.addEventListener("click",function(){dislike_dining(dining.id)},false);
+            } else {
+              heartIcon.setAttribute("class","far fa-heart");
+              heartIcon.addEventListener("click",function(){like_dining(dining.id)}, false);
+            }
+
+
+          } else {
+            heartIcon.setAttribute("class","far fa-heart");
+            heartIcon.addEventListener("click",function(){like_dining(dining.id)}, false);
+          }
+          aTag.appendChild(heartIcon);
+          totalScore = document.createElement("span");
+          totalScore.setAttribute("class","dining_total_score");
+          totalImg = document.createElement("img");
+          totalImg.setAttribute("src","../public/img/total.png");
+          totalImg.style.width = "12px";
+          totalImg.setAttribute("class","totalimg");
+          totalSpan = document.createElement("span");
+          totalSpan.innerText = dining.totalScore;
+          totalScore.appendChild(totalImg);
+          totalScore.appendChild(totalSpan);
+          oneDining.appendChild(totalScore);
+
+          
 
         }
         wrapDiv = document.getElementById("wrap");
@@ -567,16 +613,13 @@
       }
     </script>
 
-    {% for dining in diningList %}
+    
     <script>
       function open_detail_tab(dining_name) {
-        if (dining_name == "{{dining.name}}") {
-          console.log(dining_name);
-          document.getElementById("dining_name").addClass("active");
-        }
+        
       }
     </script>
-    {% endfor %}
+    
 
     <script>
       function like_dining(dining_id) {
@@ -592,12 +635,17 @@
             account: useraccount,
           },
           error: function (request, status, error) {
-            if (request.status == 404) {
+            if (request.status == 403) {
               // 실패 시 처리, responseText 반환
               alert(request.responseText);
             }
           },
-          success: function (response) {},
+          success: function (response) {
+            heartIcon = document.getElementById(dining_id);
+            heartIcon.setAttribute("class","fas fa-heart");
+            heartIcon.removeEventListener("click",function(){like_dining(dining_id)}, false);
+            heartIcon.addEventListener("click",function(){dislike_dining(dining_id)},false);
+          },
         });
       }
 
@@ -613,12 +661,17 @@
             account: useraccount,
           },
           error: function (request, status, error) {
-            if (request.status == 404) {
+            if (request.status == 403) {
               // 실패 시 처리, responseText 반환
               alert(request.responseText);
             }
           },
-          success: function (response) {},
+          success: function (response) {
+            heartIcon = document.getElementById(dining_id);
+            heartIcon.setAttribute("class","far fa-heart");
+            heartIcon.removeEventListener("click",function(){dislike_dining(dining_id)}, false);
+            heartIcon.addEventListener("click",function(){like_dining(dining_id)},false);
+          },
         });
       }
     </script>
