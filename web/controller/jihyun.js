@@ -45,7 +45,7 @@ const getOffset = async (page, user, keyword) => {
           include: {
             model: Keyword,
             where: { name: keyword },
-          }
+          },
         });
       } else {
         dinings = await Dining.findAll();
@@ -74,7 +74,7 @@ const getOffset = async (page, user, keyword) => {
       offset = (pageNum - 1) * limit;
     }
   }
-  return {offset: offset, lastPage: lastPage};
+  return { offset: offset, lastPage: lastPage };
 };
 
 // /dining
@@ -84,7 +84,11 @@ exports.getDining = async (req, res, next) => {
   if (keyword === "전체") {
     keyword = undefined;
   }
-  const { offset, lastPage } = await getOffset(req.query.page, undefined, keyword);
+  const { offset, lastPage } = await getOffset(
+    req.query.page,
+    undefined,
+    keyword
+  );
   let dinings;
   let keywordValue = [{ name: keyword }];
   let scoreValue = [{ name: req.query.score }];
@@ -140,7 +144,11 @@ exports.getUserLike = async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { id: req.user.id } });
     if (user) {
-      const { offset, lastPage } = await getOffset(req.query.page, user, undefined);
+      const { offset, lastPage } = await getOffset(
+        req.query.page,
+        user,
+        undefined
+      );
       let pageValue = [{ name: req.query.page, last: lastPage }];
       const dinings = await Dining.findAll({
         include: [
@@ -149,7 +157,7 @@ exports.getUserLike = async (req, res, next) => {
             model: User,
             where: { id: req.user.id },
             attributes: [],
-          }
+          },
         ],
         order: [[score, "DESC"], ["id"]],
         limit: 6,
@@ -160,7 +168,7 @@ exports.getUserLike = async (req, res, next) => {
         res.status(200).render("like", {
           diningList: dinings,
           scores: scoreValue,
-          pages: pageValue,
+          pages: 1,
           userInfo: req.user,
         });
       } else {

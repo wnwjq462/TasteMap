@@ -36,7 +36,6 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
-    <div id="wrap"></div>
     <div class="container">
       <div class="info-container">
         <div class="logo-box">
@@ -309,6 +308,7 @@
         <button id="score1" style="display: none;"></button>
       </div>
     </div>
+    <div id="wrap"></div>
     <script>
       markers = [];
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
@@ -316,23 +316,11 @@
           center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
         };
-      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      // 지도를 표시할 div와 지도 옵션으로  지도를 생성합니다
       var map = new kakao.maps.Map(mapContainer, mapOption);
     </script>
 
     <script>
-      function getQueryStringObject() {
-        var a = window.location.search.substr(1).split("&");
-        if (a == "") return {};
-        var b = {};
-        for (var i = 0; i < a.length; ++i) {
-          var p = a[i].split("=", 2);
-          if (p.length == 1) b[p[0]] = "";
-          else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-        }
-        return b;
-      }
-
       function getPlacesandDisplay(val) {
         if (val == 0) {
           alert("첫번째 페이지입니다.");
@@ -340,11 +328,6 @@
         var basicpage = 1;
         var basickeyword = "전체";
         var basicscore = "total";
-        
-        // var qs = getQueryStringObject();
-        // var page = qs.page;
-        // var keyword = qs.keyword;
-        // var score = qs.score;
 
         var page = document.getElementById("page1").innerText;
         var keyword = document.getElementById("keyword1").innerText;
@@ -389,27 +372,16 @@
             }
           },
           success: function (response) {
-            
-            console.log(response);
-            //markers = [];
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
             show_dininginfo(response.diningList, response.userInfo, response.pages[0].name, response.pages[0].last);
             for (let i = 0; i < response.diningList.length; i++) {
               let tempString = '<button id="';
               let findString = tempString + i+1 + '"';
-              //let findIndex = response.indexOf(findString);
-              //let tempCoord = response.slice(findIndex+45,findIndex+73);
-              //let latitude = tempCoord.split("/")[0];
-              //let longitude = tempCoord.split("/")[1];
               let latitude = response.diningList[i].latitude;
               let longitude = response.diningList[i].longitude;
-              
-              //console.log(latitude);
-              //console.log(longitude);
 
               //마커를 생성하고 지도에 표시
-              
               var placePosition = new kakao.maps.LatLng(
                 latitude,
                 longitude
@@ -431,10 +403,6 @@
             document.getElementById("page1").innerText = page;
             document.getElementById("keyword1").innerText = keyword;
             document.getElementById("score1").innerText = score;
-            
-            console.log(page);
-            console.log(keyword);
-            console.log(score);
           },
         });
       }
@@ -492,11 +460,14 @@
         forDelete = document.getElementById("sidebar");
         if (forDelete)
           forDelete.parentNode.removeChild(forDelete);
+        
         sb = document.createElement("nav");
         sb.setAttribute("id","sidebar");
+
         diningsDiv = document.createElement("div");
         diningsDiv.setAttribute("class","dinings");
         sb.appendChild(diningsDiv);
+
         let number = 1;
         let loginCheck = 0;
         
@@ -505,30 +476,34 @@
         }
         for (const dining of diningList) {
           let likeCheck = 0;
-          console.log(dining.name);
-          oneDining = document.createElement("span");
-          oneDining.setAttribute("class","one_dining");
+          oneDining = document.createElement("div");
+          oneDining.setAttribute("class", "one_dining");
+
           diningImg = document.createElement("img");
-          diningImg.setAttribute("src","../public/img/bg.jpeg");
-          diningImg.setAttribute("style","width: 100px; height: 100px");
-          //diningImg.setAttribute("onclick","open_detail_tab(dining.name)");
-          diningImg.addEventListener("click",function(){open_detail_tab(dining.name)},false);
+          diningImg.setAttribute("src", "../public/img/bg.jpeg");
+          diningImg.setAttribute("style", "width: 100px; height: 100px");
+          diningImg.addEventListener("click", function(){open_detail_tab(dining)}, false);
           oneDining.appendChild(diningImg);
           diningsDiv.appendChild(oneDining);
-          diningName = document.createElement("span");
-          diningName.setAttribute("class","dining_name");
+
+          diningName = document.createElement("div");
+          diningName.setAttribute("class", "dining_name");
+
           aTag = document.createElement("a");
-          aTag.addEventListener("click",function(){open_detail_tab(dining.name)},false);
+          aTag.addEventListener("click", function(){open_detail_tab(dining)}, false);
+          
           diningNameNumber = document.createElement("span");
           diningNameNumber.textContent = number++;
+
           diningNameName = document.createElement("span");
           diningNameName.textContent = dining.name;
           aTag.appendChild(diningNameNumber);
           aTag.appendChild(diningNameName);
           diningName.appendChild(aTag);
           oneDining.appendChild(diningName);
+
           heartIcon = document.createElement("i");
-          heartIcon.setAttribute("id",dining.id);
+          heartIcon.setAttribute("id", dining.id);
           
           if (loginCheck) {
             userDinings = userInfo.Dinings;
@@ -538,35 +513,32 @@
                 likeCheck = 1;
               }
             }
-
             if(likeCheck) {
-              heartIcon.setAttribute("class","fas fa-heart");
-              heartIcon.addEventListener("click",function(){dislike_dining(dining.id)},false);
+              heartIcon.setAttribute("class", "fas fa-heart");
+              heartIcon.addEventListener("click", function(){dislike_dining(dining.id)}, false);
             } else {
-              heartIcon.setAttribute("class","far fa-heart");
-              heartIcon.addEventListener("click",function(){like_dining(dining.id)}, false);
+              heartIcon.setAttribute("class", "far fa-heart");
+              heartIcon.addEventListener("click", function(){like_dining(dining.id)},  false);
             }
-
-
           } else {
-            heartIcon.setAttribute("class","far fa-heart");
-            heartIcon.addEventListener("click",function(){like_dining(dining.id)}, false);
+            heartIcon.setAttribute("class", "far fa-heart");
+            heartIcon.addEventListener("click", function(){like_dining(dining.id)},  false);
           }
           aTag.appendChild(heartIcon);
-          totalScore = document.createElement("span");
-          totalScore.setAttribute("class","dining_total_score");
+
+          totalScore = document.createElement("div");
+          totalScore.setAttribute("class", "dining_total_score");
+
           totalImg = document.createElement("img");
-          totalImg.setAttribute("src","../public/img/total.png");
+          totalImg.setAttribute("src", "../public/img/total.png");
           totalImg.style.width = "12px";
-          totalImg.setAttribute("class","totalimg");
+          totalImg.setAttribute("class", "totalimg");
+
           totalSpan = document.createElement("span");
           totalSpan.innerText = dining.totalScore;
           totalScore.appendChild(totalImg);
           totalScore.appendChild(totalSpan);
           oneDining.appendChild(totalScore);
-
-          
-
         }
         wrapDiv = document.getElementById("wrap");
         wrapDiv.appendChild(sb);
@@ -612,15 +584,145 @@
         $("#detailsidebar").removeClass("active");
       }
     </script>
-
-    
+ 
     <script>
-      function open_detail_tab(dining_name) {
-        
+      function open_detail_tab(dining) {
+        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
+        if (forDelete)
+          forDelete.parentNode.removeChild(forDelete);
+        diningsDiv = document.getElementsByClassName("dinings")[0];
+        detailWrap = document.createElement("div");
+        detailWrap.setAttribute("class","detailslidebar_wrap");
+        diningsDiv.appendChild(detailWrap);
+        detailNav = document.createElement("nav");
+        detailNav.setAttribute("class","detailsidebar");
+        detailNav.setAttribute("id",dining.id);
+        detailWrap.appendChild(detailNav);
+
+        detailDiningDiv = document.createElement("div");
+        detailDiningDiv.setAttribute("class","detail_dining");
+        detailNav.appendChild(detailDiningDiv);
+
+        detailOneDining = document.createElement("div");
+        detailOneDining.setAttribute("class","detail_one_dining");
+        detailDiningDiv.appendChild(detailOneDining);
+
+        detailImg = document.createElement("img");
+        detailImg.setAttribute("src","../public/img/bg.jpeg");
+        detailImg.style.width = "100px";
+        detailImg.style.height = "100px";
+        detailOneDining.appendChild(detailImg);
+
+        detailDiningName = document.createElement("div");
+        detailDiningName.setAttribute("class","dining_name");
+        detailDiningName.innerText = dining.name;
+        detailOneDining.appendChild(detailDiningName);
+
+        detailDiningScore = document.createElement("div");
+        detailDiningScore.setAttribute("class","dining_score");
+        detailOneDining.appendChild(detailDiningScore);
+
+        detailScoreMent = document.createElement("div");
+        detailScoreMent.setAttribute("class","score_ment");
+        detailScoreMent.innerHTML = "<b>감성점수</b>* 표시는 산출되지 않는 점수";
+        detailDiningScore.appendChild(detailScoreMent);
+
+        detailTotalImg = document.createElement("img");
+        detailTotalImg.setAttribute("src","../public/img/total.png");
+        detailTotalImg.setAttribute("class","totalimg");
+        detailTotalImg.style.width = "12px";
+        detailDiningScore.appendChild(detailTotalImg);
+
+        detailTotalScore = document.createElement("span");
+        detailTotalScore.innerText = dining.totalScore;
+        detailDiningScore.appendChild(detailTotalScore);
+
+        detailTasteImg = document.createElement("img");
+        detailTasteImg.setAttribute("src","../public/img/dish.png");
+        detailTasteImg.setAttribute("class","tasteimg");
+        detailTasteImg.style.width = "12px";
+        detailDiningScore.appendChild(detailTasteImg);
+
+        detailTasteScore = document.createElement("span");
+        detailTasteScore.innerText = dining.tasteScore;
+        detailDiningScore.appendChild(detailTasteScore);
+
+        detailPriceImg = document.createElement("img");
+        detailPriceImg.setAttribute("src","../public/img/price.png");
+        detailPriceImg.setAttribute("class","priceimg");
+        detailPriceImg.style.width = "12px";
+        detailDiningScore.appendChild(detailPriceImg);
+
+        detailPriceScore = document.createElement("span");
+        detailPriceScore.innerText = dining.priceScore;
+        detailDiningScore.appendChild(detailPriceScore);
+
+        detailServiceImg = document.createElement("img");
+        detailServiceImg.setAttribute("src","../public/img/service.png");
+        detailServiceImg.setAttribute("class","serviceimg");
+        detailServiceImg.style.width = "12px";
+        detailDiningScore.appendChild(detailServiceImg);
+
+        detailServiceScore = document.createElement("span");
+        detailServiceScore.innerText = dining.serviceScore;
+        detailDiningScore.appendChild(detailServiceScore);
+
+        detailMoodImg = document.createElement("img");
+        detailMoodImg.setAttribute("src","../public/img/coffee.png");
+        detailMoodImg.setAttribute("class","moodimg");
+        detailMoodImg.style.width = "12px";
+        detailDiningScore.appendChild(detailMoodImg);
+
+        detailMoodScore = document.createElement("span");
+        detailMoodScore.innerText = dining.moodScore;
+        detailDiningScore.appendChild(detailMoodScore);
+
+        detailInfo = document.createElement("div");
+        detailInfo.setAttribute("class","detail_info_dining");
+        detailInfo.innerHTML = "<div><b>상세정보</b></div>";
+        detailOneDining.appendChild(detailInfo);
+
+        detailDiningLoc = document.createElement("div");
+        detailDiningLoc.setAttribute("class","dining_loc");
+        detailDiningLoc.innerHTML = '<img src="../public/img/address.png" style="width: 12px" class="locimg"/>';
+
+        detailDiningAddress = document.createElement("span");
+        detailDiningAddress.innerText = dining.address;
+        detailDiningLoc.appendChild(detailDiningAddress);
+        detailInfo.appendChild(detailDiningLoc);
+
+        detailDiningContact = document.createElement("div");
+        detailDiningContact.setAttribute("class","dining_Contact");
+        detailDiningContact.innerHTML = '<img src="../public/img/contact.png" style="width: 12px" class="contactimg"/>';
+
+        detailDiningContactSpan = document.createElement("span");
+        detailDiningContactSpan.innerText = dining.contact;
+        detailDiningContact.appendChild(detailDiningContactSpan);
+        detailInfo.appendChild(detailDiningContact);
+
+        detailDiningOperatingHour = document.createElement("div");
+        detailDiningOperatingHour.setAttribute("class","dining_operatinghour");
+        detailDiningOperatingHour.innerHTML = '<img src="../public/img/time.png" style="width: 12px" class="timeimg"/>';
+
+        detailDiningOperatingHourSpan = document.createElement("span");
+        detailDiningOperatingHourSpan.innerText = dining.operatingHour;
+        detailDiningOperatingHour.appendChild(detailDiningOperatingHourSpan);
+        detailInfo.appendChild(detailDiningOperatingHour);
+
+        keywordInfo = document.createElement("div");
+        keywordInfo.setAttribute("class","keyword_info_dining");
+        keywordInfo.innerHTML = "<div><b>이 식당의 키워드</b></div>";
+        console.log(dining.Keywords);
+        for (const keyword of dining.Keywords) {
+          keywordSpan = document.createElement("span");
+          keywordSpan.setAttribute("id",keyword.id);
+          keywordSpan.innerText = keyword.name;
+          keywordInfo.appendChild(keywordSpan);
+        }
+        detailOneDining.appendChild(keywordInfo);
       }
     </script>
     
-
     <script>
       function like_dining(dining_id) {
         console.log(dining_id);
