@@ -7,6 +7,7 @@
     <title>TasteMap</title>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="../public/main.css" />
+    <link rel="stylesheet" type="text/css" href="../public/main2.css" />
     <!-- 웹 폰트 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
@@ -36,38 +37,6 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
-    <div id="wrap">
-      <nav id="sidebar">
-        <div class="dinings">
-          {% for dining in diningList %}
-          <div class="one_dining">
-            <img
-              src="../public/img/bg.jpeg"
-              style="width: 100px; height: 100px"
-            />
-            <div class="dining_name">
-              <span>A.</span><span>{{dining.name}}</span
-              ><img
-                src="../public/img/like-disabled.png"
-                style="width: 20px"
-                class="heart"
-              />
-            </div>
-            <div class="dining_total_score">
-              <img
-                src="../public/img/total.png"
-                style="width: 12px"
-                class="totalimg"
-              /><span>{{dining.totalScore}}</span>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-
-        <button onclick="remove_dininginfo()">닫기 버튼</button>
-      </nav>
-      <div class="overlay"></div>
-    </div>
     <div class="container">
       <div class="info-container">
         <div class="logo-box">
@@ -75,10 +44,9 @@
           <span class="tastemap">Taste<strong>Map</strong></span>
         </div>
 
-        <div class="dropdown">
+        <div class="dropdown dropdownleft">
           <button
             class="dropbtn button kwmenu"
-            onclick="location.href='/keyword'"
           >
             <span class="buttontext"><b>연세대</b> 의 키워드</span>
           </button>
@@ -93,131 +61,260 @@
         </div>
 
         <div class="keyword_wc">
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="맛"
-          >
-            <span>맛</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="친절"
-          >
-            <span>친절</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="커피"
-          >
-            <span>커피</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="분위기"
-          >
-            <span>분위기</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="사장"
-          >
-            <span>사장</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="파스타"
-          >
-            <span>파스타</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="가격"
-          >
-            <span>가격</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="카페"
-          >
-            <span>카페</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="밥"
-          >
-            <span>밥</span>
-          </button>
+          <div class="cbox-container">
+            <ul class="ks-cboxtags">
+              <div class="cboxsection1">
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      type="checkbox"
+                      id="맛"
+                      disabled
+                      name="keyword-like"
+                      value="맛"
+                    /><label for="맛">맛</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="친절"
+                      name="keyword-like"
+                      value="친절"
+                    /><label for="친절">친절</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="커피"
+                      name="keyword-like"
+                      value="커피"
+                    /><label for="커피">커피</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="분위기"
+                      name="keyword-like"
+                      value="분위기"
+                    /><label for="분위기">분위기</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection2">
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="사장"
+                      name="keyword-like"
+                      value="사장"
+                    /><label for="사장">사장</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="파스타"
+                      name="keyword-like"
+                      value="파스타"
+                    /><label for="파스타">파스타</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="가격"
+                      name="keyword-like"
+                      value="가격"
+                    /><label for="가격">가격</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="카페"
+                      name="keyword-like"
+                      value="카페"
+                    /><label for="카페">카페</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection3">
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="밥"
+                      name="keyword-like"
+                      value="밥"
+                    /><label for="밥">밥</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="고기"
+                      name="keyword-like"
+                      value="고기"
+                    /><label for="고기">고기</label>
+                  </a>
+                </li>
+                <li class="ks-selected">
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="직원"
+                      name="keyword-like"
+                      value="직원"
+                    /><label for="직원">직원</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="연희동"
+                      name="keyword-like"
+                      value="연희동"
+                    /><label for="연희동">연희동</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection4">
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="추천"
+                      name="keyword-like"
+                      value="추천"
+                    /><label for="추천">추천</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="크림"
+                      name="keyword-like"
+                      value="크림"
+                    /><label for="크림">크림</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="연어"
+                      name="keyword-like"
+                      value="연어"
+                    /><label for="연어">연어</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay(this)">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="빵"
+                      name="keyword-like"
+                      value="빵"
+                    /><label for="빵">빵</label>
+                  </a>
+                </li>
+              </div>
+            </ul>
+          </div>
         </div>
-        <div class="etc"></div>
+        <div class="etc">
+          <div>.</div>
+          <div>.</div>
+          <div style="margin-bottom: 10%">.</div>
+        </div>
         <div class="etc_keyword">
           <div class="cbox-container">
             <div class="cboxsection1">
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="고기"
+                value="치즈"
               >
-                <span>고기</span>
+                <span>치즈</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="직원"
+                value="튀김"
               >
-                <span>직원</span>
+                <span>튀김</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="연희동"
+                value="피자"
               >
-                <span>연희동</span>
+                <span>피자</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="추천"
+                value="케이크"
               >
-                <span>추천</span>
+                <span>케이크</span>
               </button>
             </div>
             <div class="cboxsection2">
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="크림"
+                value="면"
               >
-                <span>크림</span>
+                <span>면</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="연어"
+                value="새우"
               >
-                <span>연어</span>
+                <span>새우</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="빵"
+                value="치킨"
               >
-                <span>빵</span>
+                <span>치킨</span>
               </button>
               <button
                 class="button keyword_plus"
                 onclick="getPlacesandDisplay(this.value)"
-                value="치즈"
+                value="짬뽕"
               >
-                <span>치즈</span>
+                <span>짬뽕</span>
               </button>
             </div>
           </div>
@@ -237,7 +334,7 @@
           <div class="dropdown-content">
             <button
               class="button score-dropdown"
-              onclick="return getPlacesandDisplay(this.value)"
+              onclick="getPlacesandDisplay(this.value)"
               value="taste"
             >
               <span class="buttontext"
@@ -323,9 +420,37 @@
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
+        {% for dining in diningList %}
+        <button
+          id="{{loop.index}}"
+          style="display: none"
+          value="{{dining.latitude}}/{{dining.longitude}}"
+        >
+          {{dining.name}}
+        </button>
+        {% endfor %} {% for page in pages %}
+        <button id="page" style="display: none" value="{{page.name}}"></button>
+        {% endfor %} {% for keyword in keywords %}
+        <button
+          id="keyword"
+          style="display: none"
+          value="{{keyword.name}}"
+        ></button>
+        {% endfor %} {% for score in scores %}
+        <button
+          id="score"
+          style="display: none"
+          value="{{score.name}}"
+        ></button>
+        {% endfor %}
+        <button id="page1" style="display: none"></button>
+        <button id="keyword1" style="display: none"></button>
+        <button id="score1" style="display: none"></button>
       </div>
     </div>
+    <div id="wrap"></div>
     <script>
+      markers = [];
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
@@ -349,14 +474,21 @@
       }
 
       function getPlacesandDisplay(val) {
+        if (typeof val == "object") {
+          val = val.innerText;
+          val = val.replace(/^\s+|\s+$/g, "");
+        }
+
+        if (val == 0) {
+          alert("첫번째 페이지입니다.");
+        }
         var basicpage = 1;
         var basickeyword = "전체";
         var basicscore = "total";
 
-        var qs = getQueryStringObject();
-        var page = qs.page;
-        var keyword = qs.keyword;
-        var score = qs.score;
+        var page = document.getElementById("page1").innerText;
+        var keyword = document.getElementById("keyword1").innerText;
+        var score = document.getElementById("score1").innerText;
 
         var pattern_num = /[0-9]/; // 숫자
         var pattern_eng = /[a-zA-Z]/; // 문자
@@ -397,24 +529,40 @@
             }
           },
           success: function (response) {
-            console.log(response);
-            markers = [];
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
+            show_dininginfo(
+              response.diningList,
+              response.userInfo,
+              response.pages[0].name,
+              response.pages[0].last
+            );
+            for (let i = 0; i < response.diningList.length; i++) {
+              let tempString = '<button id="';
+              let findString = tempString + i + 1 + '"';
+              let latitude = response.diningList[i].latitude;
+              let longitude = response.diningList[i].longitude;
 
-            for (var i = 0; i < 6; i++) {
+              //console.log(latitude);
+              //console.log(longitude);
+
               //마커를 생성하고 지도에 표시
-              var placePosition = new kakao.maps.LatLng(
-                37.55710538856513,
-                126.93662151811871
-              );
+
+              var placePosition = new kakao.maps.LatLng(latitude, longitude);
               var placewholeScore = 0;
               var marker = displayMarker(placePosition, i, placewholeScore);
-
-              //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
               bounds.extend(placePosition);
             }
             map.setBounds(bounds);
+
+            for (let i = 0; i < 1; i++) {
+              let page = document.getElementById("page").value;
+              let keyword = document.getElementById("keyword").value;
+              let score = document.getElementById("score").value;
+            }
+            document.getElementById("page1").innerText = page;
+            document.getElementById("keyword1").innerText = keyword;
+            document.getElementById("score1").innerText = score;
           },
         });
       }
@@ -435,7 +583,7 @@
 
       //마커를 생성하고 지도 위에 마커를 표시하는 함수
       function displayMarker(position, idx, score) {
-        show_dininginfo();
+        //show_dininginfo();
         var normalOrigin = new kakao.maps.Point(0, idx * 46 + 10), //스프라이트 이미지 중 사용할 영역 좌표. idx에는 0~5가 들어가면 됨.
           markerImage = createMarkerImage(normalOrigin),
           marker = new kakao.maps.Marker({
@@ -463,23 +611,455 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo() {
-        $("#sidebar").addClass("active");
-        // $(".overlay").fadeIn();
+      function show_dininginfo(diningList, userInfo, page, lastPage) {
+        if (parseInt(page) > lastPage) {
+          alert("마지막 페이지입니다.");
+          return;
+        }
+
+        forDelete = document.getElementById("sidebar");
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+        removeDiningInfo = document.createElement("button");
+        removeDiningInfo.innerText = "닫기 버튼";
+        removeDiningInfo.addEventListener("click", remove_dininginfo, false);
+
+        infoContainer = document.createElement("div");
+        infoContainer.setAttribute("class","info-container");
+        infoContainer.innerHTML = '<div class="logo-box"> \
+          <img src="../public/img/logo1.png" class="logo" />  \
+          <span class="tastemap">Taste<strong>Map</strong></span> \
+        </div>  \
+        <div class="dropdown">  \
+          <button \
+            class="dropbtn button kwmenu" \
+            onclick="location.href=\'/keyword\'"  \
+          > \
+            <span class="buttontext"><b>연세대</b> 의 키워드</span> \
+          </button> \
+          <div class="dropdown-content"> \
+            <button \
+              class="button kwmenu" \
+              onclick="location.href=\'/user/keyword\'"  \
+            > \
+              <span class="buttontext"><b>관심</b> 키워드</span> \
+            </button> \
+          </div> \
+        </div>'
+
+        sb = document.createElement("nav");
+        sb.setAttribute("id", "sidebar");
+        sb.appendChild(infoContainer);
+        sb.appendChild(removeDiningInfo);
+        logoDiv = document.createElement("div");
+        logoDiv.setAttribute("class", "logo-box");
+
+        diningsDiv = document.createElement("div");
+        diningsDiv.setAttribute("class", "dinings");
+        sb.appendChild(diningsDiv);
+
+        let number = 1;
+        let loginCheck = 0;
+
+        if ("{{ user }}" && "{{ user.id }}") {
+          loginCheck = 1;
+        }
+        for (const dining of diningList) {
+          let likeCheck = 0;
+          oneDining = document.createElement("div");
+          oneDining.setAttribute("class", "one_dining");
+          oneDining.setAttribute("id", dining.name);
+
+          newUrl = decodeURIComponent(dining.imgUrl);
+          fnameIndex = newUrl.indexOf("fname");
+          newUrl = newUrl.slice(46,);
+          diningImg = document.createElement("img");
+          diningImg.setAttribute("src", newUrl);
+          diningImg.setAttribute("style", "width: 100px; height: 100px");
+          diningImg.addEventListener(
+            "click",
+            function () {
+              open_detail_tab(dining);
+            },
+            false
+          );
+          oneDining.appendChild(diningImg);
+          diningsDiv.appendChild(oneDining);
+
+          diningName = document.createElement("div");
+          diningName.setAttribute("class", "dining_name");
+
+          aTag = document.createElement("a");
+          aTag.addEventListener(
+            "click",
+            function () {
+              open_detail_tab(dining);
+            },
+            false
+          );
+
+          diningNameNumber = document.createElement("span");
+          diningNameNumber.textContent = number++;
+
+          diningNameName = document.createElement("span");
+          diningNameName.textContent = dining.name;
+          aTag.appendChild(diningNameNumber);
+          aTag.appendChild(diningNameName);
+          diningName.appendChild(aTag);
+          oneDining.appendChild(diningName);
+
+          heartIcon = document.createElement("i");
+          heartIcon.setAttribute("id", dining.id);
+
+          if (loginCheck) {
+            userDinings = userInfo.Dinings;
+            for (const userDining of userDinings) {
+              console.log("userDining: " + userDining.name);
+              if (userDining.id === dining.id) {
+                likeCheck = 1;
+              }
+            }
+            if (likeCheck) {
+              heartIcon.setAttribute("class", "fas fa-heart");
+              heartIcon.addEventListener(
+                "click",
+                function () {
+                  dislike_dining(dining.id);
+                },
+                false
+              );
+            } else {
+              heartIcon.setAttribute("class", "far fa-heart");
+              heartIcon.addEventListener(
+                "click",
+                function () {
+                  like_dining(dining.id);
+                },
+                false
+              );
+            }
+          } else {
+            heartIcon.setAttribute("class", "far fa-heart");
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                like_dining(dining.id);
+              },
+              false
+            );
+          }
+          aTag.appendChild(heartIcon);
+
+          totalScore = document.createElement("div");
+          totalScore.setAttribute("class", "dining_total_score");
+
+          totalImg = document.createElement("img");
+          totalImg.setAttribute("src", "../public/img/total.png");
+          totalImg.style.width = "12px";
+          totalImg.setAttribute("class", "totalimg");
+
+          totalSpan = document.createElement("span");
+          totalSpan.innerText = dining.totalScore;
+          totalScore.appendChild(totalImg);
+          totalScore.appendChild(totalSpan);
+          oneDining.appendChild(totalScore);
+        }
+        wrapDiv = document.getElementById("wrap");
+        wrapDiv.appendChild(sb);
+        wrapDiv.style.zIndex = "10";
+
+        if (document.getElementById("pagnation")) {
+          tmp = document.getElementById("pagnation");
+          tmp.parentNode.removeChild(tmp);
+        }
+
+        pageBar = document.createElement("div");
+        pageBar.setAttribute("id", "pagnation");
+        pageBar.setAttribute("style", "text-align:center;");
+
+        previous = document.createElement("a");
+        previous.addEventListener(
+          "click",
+          function () {
+            getPlacesandDisplay(parseInt(page) - 1);
+          },
+          false
+        );
+
+        prevImg = document.createElement("img");
+        prevImg.setAttribute("src", "../public/img/previous.png");
+        previous.appendChild(prevImg);
+        pageBar.appendChild(previous);
+
+        currentPage = document.createElement("span");
+        currentPage.textContent = page;
+        pageBar.appendChild(currentPage);
+
+        next = document.createElement("a");
+        next.addEventListener(
+          "click",
+          function () {
+            getPlacesandDisplay(parseInt(page) + 1);
+          },
+          false
+        );
+
+        nextImg = document.createElement("img");
+        nextImg.setAttribute("src", "../public/img/next.png");
+        next.appendChild(nextImg);
+        pageBar.appendChild(next);
+
+        sb.appendChild(pageBar);
       }
 
       function remove_dininginfo() {
-        $("#sidebar").removeClass("active");
-        // $(".overlay").fadeOut();
+        forDelete = document.getElementById("sidebar");
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+      }
+
+      function close_detail_tab() {
+        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+      }
+    </script>
+    <script>
+      var url = window.location.href;
+      var parsedUrl = url.split("isInterest=")[1];
+      if (parsedUrl && parsedUrl === "true") {
+        var keywordIndex = url.indexOf("keyword=");
+        var keywordEndIndex = url.indexOf("&score");
+        var keyword = decodeURI(url.slice(keywordIndex+8, keywordEndIndex));
+        getPlacesandDisplay(keyword);
+      }
+    </script>
+    <script>
+      function open_detail_tab(dining) {
+        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+        diningsDiv = document.getElementsByClassName("dinings")[0];
+        detailWrap = document.createElement("div");
+        detailWrap.setAttribute("class", "detailslidebar_wrap");
+        diningsDiv.appendChild(detailWrap);
+        detailNav = document.createElement("nav");
+        detailNav.setAttribute("class", "detailsidebar");
+        detailNav.setAttribute("id", dining.id);
+        detailWrap.appendChild(detailNav);
+
+        closeDetailTab = document.createElement("button");
+        closeDetailTab.addEventListener("click", close_detail_tab, false);
+        closeDetailTab.innerText = "닫기 버튼";
+        detailNav.appendChild(closeDetailTab);
+
+        detailDiningDiv = document.createElement("div");
+        detailDiningDiv.setAttribute("class", "detail_dining");
+        detailNav.appendChild(detailDiningDiv);
+
+        
+        
+
+        detailOneDining = document.createElement("div");
+        detailOneDining.setAttribute("class", "detail_one_dining");
+        detailDiningDiv.appendChild(detailOneDining);
+
+        newUrl = decodeURIComponent(dining.imgUrl);
+        fnameIndex = newUrl.indexOf("fname");
+        newUrl = newUrl.slice(46,);
+        detailImg = document.createElement("img");
+        detailImg.setAttribute("src", newUrl);
+        detailImg.style.width = "100px";
+        detailImg.style.height = "100px";
+        detailOneDining.appendChild(detailImg);
+
+        detailDiningName = document.createElement("div");
+        detailDiningName.setAttribute("class", "dining_name");
+        detailDiningName.innerText = dining.name;
+        detailOneDining.appendChild(detailDiningName);
+
+        detailDiningScore = document.createElement("div");
+        detailDiningScore.setAttribute("class", "dining_score");
+        detailOneDining.appendChild(detailDiningScore);
+
+        detailScoreMent = document.createElement("div");
+        detailScoreMent.setAttribute("class", "score_ment");
+        detailScoreMent.innerHTML =
+          "<b>감성점수</b>* 표시는 산출되지 않는 점수";
+        detailDiningScore.appendChild(detailScoreMent);
+
+        detailTotalImg = document.createElement("img");
+        detailTotalImg.setAttribute("src", "../public/img/total.png");
+        detailTotalImg.setAttribute("class", "totalimg");
+        detailTotalImg.style.width = "12px";
+        detailDiningScore.appendChild(detailTotalImg);
+
+        detailTotalScore = document.createElement("span");
+        detailTotalScore.innerText = dining.totalScore;
+        detailDiningScore.appendChild(detailTotalScore);
+
+        detailTasteImg = document.createElement("img");
+        detailTasteImg.setAttribute("src", "../public/img/dish.png");
+        detailTasteImg.setAttribute("class", "tasteimg");
+        detailTasteImg.style.width = "12px";
+        detailDiningScore.appendChild(detailTasteImg);
+
+        detailTasteScore = document.createElement("span");
+        detailTasteScore.innerText = dining.tasteScore;
+        detailDiningScore.appendChild(detailTasteScore);
+
+        detailPriceImg = document.createElement("img");
+        detailPriceImg.setAttribute("src", "../public/img/price.png");
+        detailPriceImg.setAttribute("class", "priceimg");
+        detailPriceImg.style.width = "12px";
+        detailDiningScore.appendChild(detailPriceImg);
+
+        detailPriceScore = document.createElement("span");
+        detailPriceScore.innerText = dining.priceScore;
+        detailDiningScore.appendChild(detailPriceScore);
+
+        detailServiceImg = document.createElement("img");
+        detailServiceImg.setAttribute("src", "../public/img/service.png");
+        detailServiceImg.setAttribute("class", "serviceimg");
+        detailServiceImg.style.width = "12px";
+        detailDiningScore.appendChild(detailServiceImg);
+
+        detailServiceScore = document.createElement("span");
+        detailServiceScore.innerText = dining.serviceScore;
+        detailDiningScore.appendChild(detailServiceScore);
+
+        detailMoodImg = document.createElement("img");
+        detailMoodImg.setAttribute("src", "../public/img/coffee.png");
+        detailMoodImg.setAttribute("class", "moodimg");
+        detailMoodImg.style.width = "12px";
+        detailDiningScore.appendChild(detailMoodImg);
+
+        detailMoodScore = document.createElement("span");
+        detailMoodScore.innerText = dining.moodScore;
+        detailDiningScore.appendChild(detailMoodScore);
+
+        detailInfo = document.createElement("div");
+        detailInfo.setAttribute("class", "detail_info_dining");
+        detailInfo.innerHTML = "<div><b>상세정보</b></div>";
+        detailOneDining.appendChild(detailInfo);
+
+        detailDiningLoc = document.createElement("div");
+        detailDiningLoc.setAttribute("class", "dining_loc");
+        detailDiningLoc.innerHTML =
+          '<img src="../public/img/address.png" style="width: 12px" class="locimg"/>';
+
+        detailDiningAddress = document.createElement("span");
+        detailDiningAddress.innerText = dining.address;
+        detailDiningLoc.appendChild(detailDiningAddress);
+        detailInfo.appendChild(detailDiningLoc);
+
+        detailDiningContact = document.createElement("div");
+        detailDiningContact.setAttribute("class", "dining_Contact");
+        detailDiningContact.innerHTML =
+          '<img src="../public/img/contact.png" style="width: 12px" class="contactimg"/>';
+
+        detailDiningContactSpan = document.createElement("span");
+        detailDiningContactSpan.innerText = dining.contact;
+        detailDiningContact.appendChild(detailDiningContactSpan);
+        detailInfo.appendChild(detailDiningContact);
+
+        detailDiningOperatingHour = document.createElement("div");
+        detailDiningOperatingHour.setAttribute("class", "dining_operatinghour");
+        detailDiningOperatingHour.innerHTML =
+          '<img src="../public/img/time.png" style="width: 12px" class="timeimg"/>';
+
+        detailDiningOperatingHourSpan = document.createElement("span");
+        detailDiningOperatingHourSpan.innerText = dining.operatingHour;
+        detailDiningOperatingHour.appendChild(detailDiningOperatingHourSpan);
+        detailInfo.appendChild(detailDiningOperatingHour);
+
+        keywordInfo = document.createElement("div");
+        keywordInfo.setAttribute("class", "keyword_info_dining");
+        keywordInfo.innerHTML = "<div><b>이 식당의 키워드</b></div>";
+        console.log(dining.Keywords);
+        for (const keyword of dining.Keywords) {
+          keywordSpan = document.createElement("span");
+          keywordSpan.setAttribute("id", keyword.id);
+          keywordSpan.innerText = keyword.name;
+          keywordInfo.appendChild(keywordSpan);
+        }
+        detailOneDining.appendChild(keywordInfo);
       }
     </script>
 
-    <!— sidebar —>
     <script>
-      // $(".overlay").on("click", function () {
-      //   $("#sidebar").removeClass("active");
-      //   $(".overlay").fadeOut();
-      // });
+      function like_dining(dining_id) {
+        console.log(dining_id);
+        console.log("like");
+        var userid = Number("{{user.id}}");
+        var useraccount = "{{user.account}}";
+        $.ajax({
+          type: "post",
+          url: "/user/like/" + dining_id,
+          data: {
+            id: userid,
+            account: useraccount,
+          },
+          error: function (request, status, error) {
+            if (request.status == 403) {
+              // 실패 시 처리, responseText 반환
+              alert(request.responseText);
+            }
+          },
+          success: function (response) {
+            heartIcon = document.getElementById(dining_id);
+            heartIcon.setAttribute("class", "fas fa-heart");
+            heartIcon.removeEventListener(
+              "click",
+              function () {
+                like_dining(dining_id);
+              },
+              false
+            );
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                dislike_dining(dining_id);
+              },
+              false
+            );
+          },
+        });
+      }
+
+      function dislike_dining(dining_id) {
+        console.log(dining_id);
+        var userid = Number("{{user.id}}");
+        var useraccount = "{{user.account}}";
+        $.ajax({
+          type: "delete",
+          url: "/user/like/" + dining_id,
+          data: {
+            id: userid,
+            account: useraccount,
+          },
+          error: function (request, status, error) {
+            if (request.status == 403) {
+              // 실패 시 처리, responseText 반환
+              alert(request.responseText);
+            }
+          },
+          success: function (response) {
+            heartIcon = document.getElementById(dining_id);
+            heartIcon.setAttribute("class", "far fa-heart");
+            heartIcon.removeEventListener(
+              "click",
+              function () {
+                dislike_dining(dining_id);
+              },
+              false
+            );
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                like_dining(dining_id);
+              },
+              false
+            );
+          },
+        });
+      }
     </script>
   </body>
 </html>

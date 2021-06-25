@@ -13,6 +13,7 @@ module.exports = class Dining extends Sequelize.Model {
           type: Sequelize.STRING(50),
           allowNull: false,
         },
+        imgUrl: Sequelize.STRING(500),
         totalScore: Sequelize.DECIMAL(3, 2),
         tasteScore: Sequelize.DECIMAL(3, 2),
         priceScore: Sequelize.DECIMAL(3, 2),
