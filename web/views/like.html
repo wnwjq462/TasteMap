@@ -7,6 +7,7 @@
     <title>TasteMap</title>
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="../public/main.css" />
+    <link rel="stylesheet" type="text/css" href="../public/main2.css" />
     <!-- 웹 폰트 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
@@ -36,25 +37,15 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="info-container">
-        <div class="logo-box">
-          <img src="../public/img/logo1.png" class="logo" />
-          <span class="tastemap">Taste<strong>Map</strong></span>
-        </div>
+    {% if user.Dinings[0] %}
+    {% else %}
+    <script>
+      alert("찜한 식당이 없습니다.");
+      window.location.href = '/dining';
+    </script>
+    {% endif %}
 
-        <div class="dropdown">
-          <button
-            class="dropbtn button kwmenu"
-            onclick="location.href='/keyword'"
-          >
-            <span class="buttontext"><b>찜한</b> 식당</span>
-          </button>
-          <button class="button kwmenu" onclick="location.href='/user/keyword'">
-            <span class="buttontext"><b>맛집</b> 리스트</span>
-          </button>
-        </div>
-      </div>
+    <div class="container">
       <div class="map-container">
         <div class="dropdown scoremenu">
           <button
@@ -172,6 +163,25 @@
     </div>
     <div id="wrap">
       <nav id="sidebar">
+        <div class="info-container">
+            <div class="logo-box">
+              <img src="../public/img/logo1.png" class="logo" />
+              <span class="tastemap">Taste<strong>Map</strong></span>
+            </div>
+    
+            <div class="dropdown dropdownleft">
+              <button
+                class="dropbtn button kwmenu"
+              >
+                <span class="buttontext"><b>찜한</b> 식당</span>
+              </button>
+              <div class="dropdown-content">
+              <button class="button kwmenu" onclick="location.href='/dining'">
+                <span class="buttontext"><b>맛집</b> 리스트</span>
+              </button>
+              </div>
+            </div>
+          </div>
         <div class="dinings">
           {% for dining in diningList %}
             <div class="one_dining">
@@ -355,8 +365,32 @@
           forDelete.parentNode.removeChild(forDelete);
         }
         
+
+        infoContainer = document.createElement("div");
+        infoContainer.setAttribute("class","info-container");
+        infoContainer.innerHTML = '<div class="logo-box"> \
+          <img src="../public/img/logo1.png" class="logo" />  \
+          <span class="tastemap">Taste<strong>Map</strong></span> \
+        </div>  \
+        <div class="dropdown">  \
+          <button \
+            class="dropbtn button kwmenu" \
+          > \
+            <span class="buttontext"><b>찜한</b> 식당</span> \
+          </button> \
+          <div class="dropdown-content"> \
+            <button \
+              class="button kwmenu" \
+              onclick="location.href=\'/dining\'"  \
+            > \
+              <span class="buttontext"><b>맛집</b> 리스트</span> \
+            </button> \
+          </div> \
+        </div>'
+
         sb = document.createElement("nav");
         sb.setAttribute("id", "sidebar");
+        sb.appendChild(infoContainer);
 
         diningsDiv = document.createElement("div");
         diningsDiv.setAttribute("class", "dinings");
@@ -478,11 +512,13 @@
       }
 
       function remove_dininginfo() {
-        $("#sidebar").removeClass("active");
+        forDelete = document.getElementById("sidebar");
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
       }
 
       function close_detail_tab() {
-        $("#detailsidebar").removeClass("active");
+        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
       }
     </script>
 
@@ -531,6 +567,11 @@
         detailNav.setAttribute("class","detailsidebar");
         detailNav.setAttribute("id",diningId);
         detailWrap.appendChild(detailNav);
+
+        closeDetailTab = document.createElement("button");
+        closeDetailTab.addEventListener("click", close_detail_tab, false);
+        closeDetailTab.innerText = "닫기 버튼";
+        detailNav.appendChild(closeDetailTab);
 
         detailDiningDiv = document.createElement("div");
         detailDiningDiv.setAttribute("class","detail_dining");

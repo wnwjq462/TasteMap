@@ -532,6 +532,7 @@
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
             show_dininginfo(
+              keyword,
               response.diningList,
               response.userInfo,
               response.pages[0].name,
@@ -611,7 +612,7 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo(diningList, userInfo, page, lastPage) {
+      function show_dininginfo(keyword, diningList, userInfo, page, lastPage) {
         if (parseInt(page) > lastPage) {
           alert("마지막 페이지입니다.");
           return;
@@ -625,6 +626,50 @@
 
         infoContainer = document.createElement("div");
         infoContainer.setAttribute("class","info-container");
+
+        logoBox = document.createElement("div");
+        logoBox.setAttribute("class","logo-box");
+        infoContainer.appendChild(logoBox);
+
+        logoImg = document.createElement("img");
+        logoImg.setAttribute("src","../public/img/logo1.png");
+        logoImg.setAttribute("class","logo");
+
+        tasteMap = document.createElement("span");
+        tasteMap.setAttribute("class","tastemap");
+        tasteMap.innerHTML = "Taste<strong>Map</strong>";
+
+        logoBox.appendChild(logoImg);
+        logoBox.appendChild(tasteMap);
+
+        dropDown = document.createElement("div");
+        dropDown.setAttribute("class","dropdown");
+        infoContainer.appendChild(dropDown);
+        
+        dropBtn = document.createElement("button");
+        dropBtn.setAttribute("class","dropbtn button kwmenu");
+
+        buttonText = document.createElement("span");
+        buttonText.setAttribute("class","buttontext");
+        buttonText.innerHTML = "<b>" + keyword + "<b>" + " 키워드";
+        dropBtn.appendChild(buttonText);
+        dropDown.appendChild(dropBtn);
+
+        dropDownContent = document.createElement("div");
+        dropDownContent.setAttribute("class","dropdown-content");
+        
+        buttonKW = document.createElement("button");
+        buttonKW.setAttribute("class","button kwmenu");
+        //buttonKW.addEventListener("click","location.href='/dining'", false);
+        buttonKW.setAttribute("onclick","location.href='/dining'");
+        buttonKW.innerHTML = '<span class=buttontext><b>맛집</b> 리스트</span>';
+        dropDownContent.appendChild(buttonKW);
+
+        dropDown.appendChild(dropDownContent);
+
+
+
+        /*
         infoContainer.innerHTML = '<div class="logo-box"> \
           <img src="../public/img/logo1.png" class="logo" />  \
           <span class="tastemap">Taste<strong>Map</strong></span> \
@@ -644,7 +689,7 @@
             </button> \
           </div> \
         </div>'
-
+        */
         sb = document.createElement("nav");
         sb.setAttribute("id", "sidebar");
         sb.appendChild(infoContainer);
