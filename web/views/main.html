@@ -334,7 +334,9 @@
       }
 
       function getPlacesandDisplay(val) {
-        
+        if (val == 0) {
+          alert("첫번째 페이지입니다.");
+        }
         var basicpage = 1;
         var basickeyword = "전체";
         var basicscore = "total";
@@ -392,16 +394,16 @@
             //markers = [];
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
-            show_dininginfo(response.diningList);
-            for (let i = 1; i < 7; i ++) {
+            show_dininginfo(response.diningList, response.pages[0].name, response.pages[0].last);
+            for (let i = 0; i < response.diningList.length; i ++) {
               let tempString = '<button id="';
-              let findString = tempString + i + '"';
+              let findString = tempString + (i+1) + '"';
               //let findIndex = response.indexOf(findString);
               //let tempCoord = response.slice(findIndex+45,findIndex+73);
               //let latitude = tempCoord.split("/")[0];
               //let longitude = tempCoord.split("/")[1];
-              let latitude = response.diningList[i-1].latitude;
-              let longitude = response.diningList[i-1].longitude;
+              let latitude = response.diningList[i].latitude;
+              let longitude = response.diningList[i].longitude;
               
               //console.log(latitude);
               //console.log(longitude);
@@ -413,7 +415,7 @@
                 longitude
               );
               var placewholeScore = 0;
-              var marker = displayMarker(placePosition, i-1, placewholeScore);
+              var marker = displayMarker(placePosition, i, placewholeScore);
               //$('#sidebar').load(window.location.href + '#sidebar');
               //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
               bounds.extend(placePosition);
@@ -481,7 +483,16 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo(diningList) {
+      function show_dininginfo(diningList, page, lastPage) {
+        if (parseInt(page) > lastPage) {
+          alert("마지막 페이지입니다.");
+          return;
+        }
+
+        if (document.getElementById("sidebar")) {
+          tmp = document.getElementById("sidebar");
+          tmp.parentNode.removeChild(tmp);
+        }
         sb = document.createElement("nav");
         sb.setAttribute("id","sidebar");
         diningsDiv = document.createElement("div");
@@ -490,7 +501,7 @@
         let number = 1;
         for (const dining of diningList) {
           console.log(dining.name);
-          oneDining = document.createElement("div");
+          oneDining = document.createElement("span");
           oneDining.setAttribute("class","one_dining");
           diningImg = document.createElement("img");
           diningImg.setAttribute("src","../public/img/bg.jpeg");
@@ -498,7 +509,7 @@
           diningImg.setAttribute("onclick","open_detail_tab(dining.name)");
           oneDining.appendChild(diningImg);
           diningsDiv.appendChild(oneDining);
-          diningName = document.createElement("div");
+          diningName = document.createElement("span");
           diningName.setAttribute("class","dining_name");
           aTag = document.createElement("a");
           diningNameNumber = document.createElement("span");
@@ -515,6 +526,36 @@
         wrapDiv.appendChild(sb);
         wrapDiv.style.zIndex = "10";
         
+        if (document.getElementById("pagnation")) {
+          tmp = document.getElementById("pagnation");
+          tmp.parentNode.removeChild(tmp);
+        }
+
+        pageBar = document.createElement("div");
+        pageBar.setAttribute("id", "pagnation");
+        pageBar.setAttribute("style", "text-align:center;");
+
+        previous = document.createElement("a");
+        previous.addEventListener("click", function() {getPlacesandDisplay(parseInt(page)-1)}, false);
+
+        prevImg = document.createElement("img");
+        prevImg.setAttribute("src", "../public/img/previous.png");
+        previous.appendChild(prevImg);
+        pageBar.appendChild(previous);
+
+        currentPage = document.createElement("span");
+        currentPage.textContent = page;
+        pageBar.appendChild(currentPage);
+
+        next = document.createElement("a");
+        next.addEventListener("click", function() {getPlacesandDisplay(parseInt(page)+1)}, false);
+
+        nextImg = document.createElement("img");
+        nextImg.setAttribute("src", "../public/img/next.png");
+        next.appendChild(nextImg);
+        pageBar.appendChild(next);
+
+        sb.appendChild(pageBar);
       }
 
       function remove_dininginfo() {
