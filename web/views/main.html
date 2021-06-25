@@ -36,38 +36,7 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
-    <div id="wrap">
-      <nav id="sidebar">
-        <div class="dinings">
-          {% for dining in diningList %}
-          <div class="one_dining">
-            <img
-              src="../public/img/bg.jpeg"
-              style="width: 100px; height: 100px"
-            />
-            <div class="dining_name">
-              <span>A.</span><span>{{dining.name}}</span
-              ><img
-                src="../public/img/like-disabled.png"
-                style="width: 20px"
-                class="heart"
-              />
-            </div>
-            <div class="dining_total_score">
-              <img
-                src="../public/img/total.png"
-                style="width: 12px"
-                class="totalimg"
-              /><span>{{dining.totalScore}}</span>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-
-        <button onclick="remove_dininginfo()">닫기 버튼</button>
-      </nav>
-      <div class="overlay"></div>
-    </div>
+    <div id="wrap"></div>
     <div class="container">
       <div class="info-container">
         <div class="logo-box">
@@ -324,7 +293,7 @@
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
         {% for dining in diningList %}
-          <button id="{{loop.index}}" style="display: none;" value="{{dining.latitude}}/{{dining.longitude}}"></button>
+          <button id="{{loop.index}}" style="display: none;" value="{{dining.latitude}}/{{dining.longitude}}">{{dining.name}}</button>
         {% endfor %}
         {% for page in pages %}
           <button id="page" style="display: none;" value="{{page.name}}"></button>
@@ -341,6 +310,7 @@
       </div>
     </div>
     <script>
+      markers = [];
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
@@ -364,10 +334,11 @@
       }
 
       function getPlacesandDisplay(val) {
+        
         var basicpage = 1;
         var basickeyword = "전체";
         var basicscore = "total";
-
+        
         // var qs = getQueryStringObject();
         // var page = qs.page;
         // var keyword = qs.keyword;
@@ -388,7 +359,7 @@
         } else if (pattern_kor.test(val)) {
           keyword = val;
         }
-
+      
         if (!page) {
           page = basicpage;
         }
@@ -398,7 +369,7 @@
         if (!score) {
           score = basicscore;
         }
-
+        
         var Parms = "?";
         Parms += "page=" + page;
         Parms += "&keyword=" + keyword;
@@ -416,27 +387,37 @@
             }
           },
           success: function (response) {
+            
             console.log(response);
-            markers = [];
+            //markers = [];
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
-
+            show_dininginfo(response.diningList);
             for (let i = 1; i < 7; i ++) {
-              let latitude = document.getElementById(i).value.split("/")[0];
-              let longitude = document.getElementById(i).value.split("/")[1];
-              console.log(latitude);
-              console.log(longitude);
+              let tempString = '<button id="';
+              let findString = tempString + i + '"';
+              //let findIndex = response.indexOf(findString);
+              //let tempCoord = response.slice(findIndex+45,findIndex+73);
+              //let latitude = tempCoord.split("/")[0];
+              //let longitude = tempCoord.split("/")[1];
+              let latitude = response.diningList[i-1].latitude;
+              let longitude = response.diningList[i-1].longitude;
+              
+              //console.log(latitude);
+              //console.log(longitude);
 
               //마커를 생성하고 지도에 표시
+              
               var placePosition = new kakao.maps.LatLng(
                 latitude,
                 longitude
               );
               var placewholeScore = 0;
               var marker = displayMarker(placePosition, i-1, placewholeScore);
-
+              //$('#sidebar').load(window.location.href + '#sidebar');
               //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
               bounds.extend(placePosition);
+              
             }
             map.setBounds(bounds);
             
@@ -472,7 +453,7 @@
 
       //마커를 생성하고 지도 위에 마커를 표시하는 함수
       function displayMarker(position, idx, score) {
-        show_dininginfo();
+        //show_dininginfo();
         var normalOrigin = new kakao.maps.Point(0, idx * 46 + 10), //스프라이트 이미지 중 사용할 영역 좌표. idx에는 0~5가 들어가면 됨.
           markerImage = createMarkerImage(normalOrigin),
           marker = new kakao.maps.Marker({
@@ -500,23 +481,105 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo() {
-        $("#sidebar").addClass("active");
-        // $(".overlay").fadeIn();
+      function show_dininginfo(diningList) {
+        sb = document.createElement("nav");
+        sb.setAttribute("id","sidebar");
+        diningsDiv = document.createElement("div");
+        diningsDiv.setAttribute("class","dinings");
+        sb.appendChild(diningsDiv);
+        let number = 1;
+        for (const dining of diningList) {
+          console.log(dining.name);
+          oneDining = document.createElement("div");
+          oneDining.setAttribute("class","one_dining");
+          diningImg = document.createElement("img");
+          diningImg.setAttribute("src","../public/img/bg.jpeg");
+          diningImg.setAttribute("style","width: 100px; height: 100px");
+          diningImg.setAttribute("onclick","open_detail_tab(dining.name)");
+          oneDining.appendChild(diningImg);
+          diningsDiv.appendChild(oneDining);
+          diningName = document.createElement("div");
+          diningName.setAttribute("class","dining_name");
+          aTag = document.createElement("a");
+          diningNameNumber = document.createElement("span");
+          diningNameNumber.textContent = number++;
+          diningNameName = document.createElement("span");
+          diningNameName.textContent = dining.name;
+          aTag.appendChild(diningNameNumber);
+          aTag.appendChild(diningNameName);
+          diningName.appendChild(aTag);
+          oneDining.appendChild(diningName);
+
+        }
+        wrapDiv = document.getElementById("wrap");
+        wrapDiv.appendChild(sb);
+        wrapDiv.style.zIndex = "10";
+        
       }
 
       function remove_dininginfo() {
         $("#sidebar").removeClass("active");
-        // $(".overlay").fadeOut();
+      }
+
+      function close_detail_tab() {
+        $("#detailsidebar").removeClass("active");
       }
     </script>
 
-    <!— sidebar —>
+    {% for dining in diningList %}
     <script>
-      // $(".overlay").on("click", function () {
-      //   $("#sidebar").removeClass("active");
-      //   $(".overlay").fadeOut();
-      // });
+      function open_detail_tab(dining_name) {
+        if (dining_name == "{{dining.name}}") {
+          console.log(dining_name);
+          document.getElementById("dining_name").addClass("active");
+        }
+      }
+    </script>
+    {% endfor %}
+
+    <script>
+      function like_dining(dining_id) {
+        console.log(dining_id);
+        console.log("like");
+        var userid = Number("{{user.id}}");
+        var useraccount = "{{user.account}}";
+        $.ajax({
+          type: "post",
+          url: "/user/like/" + dining_id,
+          data: {
+            id: userid,
+            account: useraccount,
+          },
+          error: function (request, status, error) {
+            if (request.status == 404) {
+              // 실패 시 처리, responseText 반환
+              alert(request.responseText);
+            }
+          },
+          success: function (response) {},
+        });
+      }
+
+      function dislike_dining(dining_id) {
+        console.log(dining_id);
+        var userid = Number("{{user.id}}");
+        var useraccount = "{{user.account}}";
+        $.ajax({
+          type: "delete",
+          url: "/user/like/" + dining_id,
+          data: {
+            id: userid,
+            account: useraccount,
+          },
+          error: function (request, status, error) {
+            if (request.status == 404) {
+              // 실패 시 처리, responseText 반환
+              alert(request.responseText);
+            }
+          },
+          success: function (response) {},
+        });
+      }
     </script>
   </body>
 </html>

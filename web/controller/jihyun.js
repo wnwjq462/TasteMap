@@ -95,7 +95,21 @@ exports.getDining = async (req, res, next) => {
         offset: offset,
       });
     }
-    res.status(200).render("main", { diningList: dinings, keywords: keywordValue, scores: scoreValue, pages: pageValue });
+    if (!req.query.keyword || !req.query.score) {
+      res.status(200).render("main", {
+        diningList: dinings,
+        keywords: keywordValue,
+        scores: scoreValue,
+        pages: pageValue,
+      });
+    } else {
+      res.status(200).json({
+        diningList: dinings,
+        keywords: keywordValue,
+        scores: scoreValue,
+        pages: pageValue,
+      });
+    }
   } catch (error) {
     console.error(error);
     return next(error);
