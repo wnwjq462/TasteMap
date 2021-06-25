@@ -30,7 +30,8 @@ const getOffset = async (page, user) => {
   if (user) {
     // /user/like
     try {
-      totalNum = await user.getDinings.length;
+      let dinings = await user.getDinings();
+      totalNum = dinings.length;
     } catch (err) {
       console.error(err);
       return next(err);
@@ -109,7 +110,15 @@ exports.getUserLike = async (req, res, next) => {
     const user = await User.findOne({ where: { id: req.user.id } });
     if (user) {
       const offset = await getOffset(req.query.page, user);
-      const dinings = await user.getDinings({
+      const dinings = await Dining.findAll({
+        include: [
+          { model: Keyword },
+          {
+            model: User,
+            where: { id: req.user.id },
+            attributes: [],
+          }
+        ],
         order: [[score, "DESC"], ["id"]],
         limit: 6,
         offset: offset,
