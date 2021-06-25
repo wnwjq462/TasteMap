@@ -48,147 +48,11 @@
             class="dropbtn button kwmenu"
             onclick="location.href='/keyword'"
           >
-            <span class="buttontext"><b>연세대</b> 의 키워드</span>
+            <span class="buttontext"><b>찜한</b> 식당</span>
           </button>
-          <div class="dropdown-content">
-            <button
-              class="button kwmenu"
-              onclick="location.href='/user/keyword'"
-            >
-              <span class="buttontext"><b>관심</b> 키워드</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="keyword_wc">
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="맛"
-          >
-            <span>맛</span>
+          <button class="button kwmenu" onclick="location.href='/user/keyword'">
+            <span class="buttontext"><b>맛집</b> 리스트</span>
           </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="친절"
-          >
-            <span>친절</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="커피"
-          >
-            <span>커피</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="분위기"
-          >
-            <span>분위기</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="사장"
-          >
-            <span>사장</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="파스타"
-          >
-            <span>파스타</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="가격"
-          >
-            <span>가격</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="카페"
-          >
-            <span>카페</span>
-          </button>
-          <button
-            class="button keyword_plus"
-            onclick="getPlacesandDisplay(this.value)"
-            value="밥"
-          >
-            <span>밥</span>
-          </button>
-        </div>
-        <div class="etc"></div>
-        <div class="etc_keyword">
-          <div class="cbox-container">
-            <div class="cboxsection1">
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="고기"
-              >
-                <span>고기</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="직원"
-              >
-                <span>직원</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="연희동"
-              >
-                <span>연희동</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="추천"
-              >
-                <span>추천</span>
-              </button>
-            </div>
-            <div class="cboxsection2">
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="크림"
-              >
-                <span>크림</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="연어"
-              >
-                <span>연어</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="빵"
-              >
-                <span>빵</span>
-              </button>
-              <button
-                class="button keyword_plus"
-                onclick="getPlacesandDisplay(this.value)"
-                value="치즈"
-              >
-                <span>치즈</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
       <div class="map-container">
@@ -291,80 +155,99 @@
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
+        {% set diningNum = 0 %}
         {% for dining in diningList %}
+          {% set diningNum = diningNum + 1 %}
           <button id="{{loop.index}}" style="display: none;" value="{{dining.latitude}}/{{dining.longitude}}">{{dining.name}}</button>
         {% endfor %}
         {% for page in pages %}
           <button id="page" style="display: none;" value="{{page.name}}"></button>
         {% endfor %}
-        {% for keyword in keywords %}
-          <button id="keyword" style="display: none;" value="{{keyword.name}}"></button>
-        {% endfor %}
         {% for score in scores %}
           <button id="score" style="display: none;" value="{{score.name}}"></button>
         {% endfor %}
         <button id="page1" style="display: none;"></button>
-        <button id="keyword1" style="display: none;"></button>
         <button id="score1" style="display: none;"></button>
       </div>
     </div>
-    <div id="wrap"></div>
-    <script>
-      markers = [];
-      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-        mapOption = {
-          center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
-          level: 3, // 지도의 확대 레벨
-        };
-      // 지도를 표시할 div와 지도 옵션으로  지도를 생성합니다
-      var map = new kakao.maps.Map(mapContainer, mapOption);
-    </script>
+    <div id="wrap">
+      <nav id="sidebar">
+        <div class="dinings">
+          {% for dining in diningList %}
+            <div class="one_dining">
+              <img
+                src="../public/img/bg.jpeg"
+                style="width: 100px; height: 100px"
+                onclick="open_detail_tab('{{dining.name}}')"
+              />
+              <div class="dining_name">
+                <a onclick="open_detail_tab('{{dining.name}}')">
+                  <span>{{loop.index}}</span><span>{{dining.name}}</span>
+                  <i
+                    class="fas fa-heart"
+                    onclick="dislike_dining('{{dining.id}}')"
+                  ></i>
+                </a>
+              </div>
+              <div class="dining_total_score">
+                <img
+                  src="../public/img/total.png"
+                  class="totalimg"
+                  style="width: 12px"
+                /><span>{{dining.totalScore}}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div id="pagination" style="text-align: center">
+          <a onclick="getPlacesandDisplay('{{pages-1}}')">
+            <img src="../public/img/previous.png" />
+          </a>
+          <span>{{ pages }}</span>
+          <a onclick="getPlacesandDisplay('{{pages+1}}')">
+            <img src="../public/img/next.png" />
+          </a>
+        </div>
+      </nav>
+    </div>
 
     <script>
       function getPlacesandDisplay(val) {
         if (val == 0) {
           alert("첫번째 페이지입니다.");
+          return;
         }
         var basicpage = 1;
-        var basickeyword = "전체";
         var basicscore = "total";
 
         var page = document.getElementById("page1").innerText;
-        var keyword = document.getElementById("keyword1").innerText;
         var score = document.getElementById("score1").innerText;
 
         var pattern_num = /[0-9]/; // 숫자
         var pattern_eng = /[a-zA-Z]/; // 문자
-        var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글체크
 
         if (pattern_num.test(val)) {
           page = val;
         } else if (pattern_eng.test(val)) {
           score = val;
-        } else if (pattern_kor.test(val)) {
-          keyword = val;
         }
-      
+
         if (!page) {
           page = basicpage;
-        }
-        if (!keyword) {
-          keyword = basickeyword;
         }
         if (!score) {
           score = basicscore;
         }
-        
+
         var Parms = "?";
         Parms += "page=" + page;
-        Parms += "&keyword=" + keyword;
         Parms += "&score=" + score;
-        
+
         console.log(Parms);
 
         $.ajax({
           type: "get",
-          url: "/dining" + Parms,
+          url: "/user/like" + Parms,
           error: function (request, status, error) {
             if (request.status == 400) {
               // 실패 시 처리, responseText 반환
@@ -377,6 +260,8 @@
             show_dininginfo(response.diningList, response.userInfo, response.pages[0].name, response.pages[0].last);
 
             for (let i = 0; i < response.diningList.length; i++) {
+              let tempString = '<button id="';
+              let findString = tempString + i+1 + '"';
               let latitude = response.diningList[i].latitude;
               let longitude = response.diningList[i].longitude;
 
@@ -395,11 +280,9 @@
             
             for (let i = 0; i < 1; i++) {
               let page = document.getElementById("page").value;
-              let keyword = document.getElementById("keyword").value;
               let score = document.getElementById("score").value;
             }
             document.getElementById("page1").innerText = page;
-            document.getElementById("keyword1").innerText = keyword;
             document.getElementById("score1").innerText = score;
           },
         });
@@ -461,10 +344,10 @@
         }
         
         sb = document.createElement("nav");
-        sb.setAttribute("id","sidebar");
+        sb.setAttribute("id", "sidebar");
 
         diningsDiv = document.createElement("div");
-        diningsDiv.setAttribute("class","dinings");
+        diningsDiv.setAttribute("class", "dinings");
         sb.appendChild(diningsDiv);
 
         let number = 1;
@@ -507,12 +390,12 @@
           if (loginCheck) {
             userDinings = userInfo.Dinings;
             for (const userDining of userDinings) {
-              console.log("userDining: "+ userDining.name);
+              console.log("userDining: " + userDining.name);
               if (userDining.id === dining.id) {
                 likeCheck = 1;
               }
             }
-            if(likeCheck) {
+            if (likeCheck) {
               heartIcon.setAttribute("class", "fas fa-heart");
               heartIcon.addEventListener("click", function(){dislike_dining(dining.id)}, false);
             } else {
@@ -583,7 +466,37 @@
         $("#detailsidebar").removeClass("active");
       }
     </script>
- 
+
+    <script>
+      markers = [];
+      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+      // 지도를 표시할 div와 지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+
+      var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
+      for (let i = 0; i < "{{diningNum}}"; i++) {
+        let tmp = document.getElementById(i+1).value;
+        let latitude = tmp.split("/")[0];
+        let longitude = tmp.split("/")[1];
+
+        //마커를 생성하고 지도에 표시
+        var placePosition = new kakao.maps.LatLng(
+          latitude,
+          longitude
+        );
+        var placewholeScore = 0;
+        var marker = displayMarker(placePosition, i, placewholeScore);
+        //$('#sidebar').load(window.location.href + '#sidebar');
+        //latlngBounds 객체에 좌표를 추가합니다(서버에서 받은 장소위치 기준 지도 범위 재설정)
+        bounds.extend(placePosition);
+      }
+      map.setBounds(bounds);
+    </script>
+
     <script>
       function open_detail_tab(dining) {
         forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
