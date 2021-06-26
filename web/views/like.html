@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TasteMap</title>
     <!-- css -->
-    <link rel="stylesheet" type="text/css" href="../public/main.css" />
+    <link rel="stylesheet" type="text/css" href="../public/like.css" />
     <link rel="stylesheet" type="text/css" href="../public/main2.css" />
     <!-- 웹 폰트 -->
     <link
@@ -37,11 +37,10 @@
     <script src="../public/main.js"></script>
   </head>
   <body>
-    {% if user.Dinings[0] %}
-    {% else %}
+    {% if user.Dinings[0] %} {% else %}
     <script>
       alert("찜한 식당이 없습니다.");
-      window.location.href = '/dining';
+      window.location.href = "/dining";
     </script>
     {% endif %}
 
@@ -100,134 +99,152 @@
         </div>
         <div class="loginsection">
           {% if user and user.id %}
-            <div class="modify-user">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 95px"
-                onclick="location.href='/user'"
+          <div class="modify-user">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/userInfo.png" class="icon" /> 정보
+                수정</span
               >
-                <span class="buttontext"
-                  ><img src="../public/img/userInfo.png" class="icon" /> 정보
-                  수정</span
-                >
-              </button>
-            </div>
-            <div class="dining-like">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 95px"
-                onclick="location.href='/user/like'"
+            </button>
+          </div>
+          <div class="dining-like">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user/like'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/like.png" class="icon" /> 찜한
+                식당</span
               >
-                <span class="buttontext"
-                  ><img src="../public/img/like.png" class="icon" /> 찜한
-                  식당</span
-                >
-              </button>
-            </div>
-            <div class="loginout">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 80px"
-                onclick="location.href='/auth/logout'"
-              >
-                <span class="buttontext">로그아웃</span>
-              </button>
-            </div>
+            </button>
+          </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/logout'"
+            >
+              <span class="buttontext">로그아웃</span>
+            </button>
+          </div>
           {% else %}
-            <div class="loginout">
-              <button
-                class="dropbtn button loginsectionbtn"
-                style="width: 80px"
-                onclick="location.href='/auth/login'"
-              >
-                <span class="buttontext">로그인</span>
-              </button>
-            </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/login'"
+            >
+              <span class="buttontext">로그인</span>
+            </button>
+          </div>
           {% endif %}
         </div>
         <div id="map" class="map" style="width: 100%; height: 100%"></div>
-        {% set diningNum = 0 %}
-        {% for dining in diningList %}
-          {% set diningNum = diningNum + 1 %}
-          <button id="{{loop.index}}" style="display: none;" value="{{dining.latitude}}/{{dining.longitude}}">{{dining.name}}</button>
+        {% set diningNum = 0 %} {% for dining in diningList %} {% set diningNum
+        = diningNum + 1 %}
+        <button
+          id="{{loop.index}}"
+          style="display: none"
+          value="{{dining.latitude}}/{{dining.longitude}}"
+        >
+          {{dining.name}}
+        </button>
+        {% endfor %} {% for page in pages %}
+        <button id="page" style="display: none" value="{{page.name}}"></button>
+        {% endfor %} {% for score in scores %}
+        <button
+          id="score"
+          style="display: none"
+          value="{{score.name}}"
+        ></button>
         {% endfor %}
-        {% for page in pages %}
-          <button id="page" style="display: none;" value="{{page.name}}"></button>
-        {% endfor %}
-        {% for score in scores %}
-          <button id="score" style="display: none;" value="{{score.name}}"></button>
-        {% endfor %}
-        <button id="page1" style="display: none;"></button>
-        <button id="score1" style="display: none;"></button>
+        <button id="page1" style="display: none"></button>
+        <button id="score1" style="display: none"></button>
       </div>
     </div>
     <div id="wrap">
       <nav id="sidebar">
         <div class="info-container">
-            <div class="logo-box">
-              <img src="../public/img/logo1.png" class="logo" />
-              <span class="tastemap">Taste<strong>Map</strong></span>
-            </div>
-    
-            <div class="dropdown dropdownleft">
-              <button
-                class="dropbtn button kwmenu"
-              >
-                <span class="buttontext"><b>찜한</b> 식당</span>
-              </button>
-              <div class="dropdown-content">
-              <button class="button kwmenu" onclick="location.href='/dining'">
-                <span class="buttontext"><b>맛집</b> 리스트</span>
-              </button>
-              </div>
-            </div>
+          <div class="logo-box" onclick="location.href='/dining'">
+            <img src="../public/img/logo1.png" class="logo" />
+            <span class="tastemap">Taste<strong>Map</strong></span>
           </div>
+
+          <div class="dropdown dropdownleft">
+            <button class="dropbtn button kwmenu">
+              <span class="buttontext"><b>찜한</b> 식당</span>
+            </button>
+            <button class="button kwmenu coloredbutton">
+              <span class="buttontext"><b>맛집</b> 리스트</span>
+            </button>
+          </div>
+        </div>
         <div class="dinings">
           {% for dining in diningList %}
-            <div class="one_dining">
-              <script>
+          <div class="one_dining">
+            <script>
               newUrl = decodeURIComponent("{{ dining.imgUrl }}");
               fnameIndex = newUrl.indexOf("fname");
-              newUrl = newUrl.slice(46,);
-              </script>
-              <img
-                class="{{dining.id}}"
-                style="width: 100px; height: 100px"
-              />
-              <script>
-                imgTag = document.getElementsByClassName("{{dining.id}}")[0];
-                imgTag.setAttribute("src",newUrl);
-                imgTag.addEventListener("click", function(){ open_detail_tab("{{ dining.id }}", "{{ dining.name}}", "{{ dining.imgUrl}}",
-                "{{dining.totalScore}}","{{dining.tasteScroe}}", "{{dining.priceScore}}", "{{dining.serviceScore}}",
-                "{{dining.moodScore}}","{{dining.address}}","{{dining.contact}}","{{dining.operatingHour}}")}, false);
-              </script>
-              <div class="dining_name">
-                <a >
-                  <span>{{loop.index}}</span><span>{{dining.name}}</span>
-                  <i
-                    id="{{dining.id}}"
-                    class="fas fa-heart"
-                    onclick="dislike_dining('{{dining.id}}')"
-                  ></i>
-                </a>
-              </div>
-              <div class="dining_total_score">
-                <img
-                  src="../public/img/total.png"
-                  class="totalimg"
-                  style="width: 12px"
-                /><span>{{dining.totalScore}}</span>
-              </div>
+              newUrl = newUrl.slice(46);
+            </script>
+            <img class="{{dining.id}}" style="width: 100px; height: 100px" />
+            <script>
+              imgTag = document.getElementsByClassName("{{dining.id}}")[0];
+              imgTag.setAttribute("src", newUrl);
+              imgTag.setAttribute("style", "width: 130px; height: 130px");
+              imgTag.setAttribute("class", "six_diningimg");
+              imgTag.addEventListener(
+                "click",
+                function () {
+                  open_detail_tab(
+                    "{{ dining.id }}",
+                    "{{ dining.name}}",
+                    "{{ dining.imgUrl}}",
+                    "{{dining.totalScore}}",
+                    "{{dining.tasteScroe}}",
+                    "{{dining.priceScore}}",
+                    "{{dining.serviceScore}}",
+                    "{{dining.moodScore}}",
+                    "{{dining.address}}",
+                    "{{dining.contact}}",
+                    "{{dining.operatingHour}}"
+                  );
+                },
+                false
+              );
+            </script>
+            <div class="dining_name">
+              <a>
+                <span>{{loop.index}}</span><span>{{dining.name}}</span>
+                <i
+                  id="{{dining.id}}"
+                  class="fas fa-heart"
+                  onclick="dislike_dining('{{dining.id}}')"
+                ></i>
+              </a>
             </div>
+            <div class="dining_total_score">
+              <img
+                src="../public/img/total.png"
+                class="totalimg"
+                style="width: 12px"
+              /><span>{{dining.totalScore}}</span>
+            </div>
+          </div>
           {% endfor %}
         </div>
         <div id="pagination" style="text-align: center">
           <a onclick="getPlacesandDisplay('{{pages-1}}')">
-            <img src="../public/img/previous.png" />
+            <img class="previous" src="../public/img/previous.png" />
           </a>
           <span>{{ pages }}</span>
           <a onclick="getPlacesandDisplay('{{pages+1}}')">
-            <img src="../public/img/next.png" />
+            <img class="next" src="../public/img/next.png" />
           </a>
         </div>
       </nav>
@@ -279,19 +296,21 @@
           success: function (response) {
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
-            show_dininginfo(response.diningList, response.userInfo, response.pages[0].name, response.pages[0].last);
+            show_dininginfo(
+              response.diningList,
+              response.userInfo,
+              response.pages[0].name,
+              response.pages[0].last
+            );
 
             for (let i = 0; i < response.diningList.length; i++) {
               let tempString = '<button id="';
-              let findString = tempString + i+1 + '"';
+              let findString = tempString + i + 1 + '"';
               let latitude = response.diningList[i].latitude;
               let longitude = response.diningList[i].longitude;
 
               //마커를 생성하고 지도에 표시
-              var placePosition = new kakao.maps.LatLng(
-                latitude,
-                longitude
-              );
+              var placePosition = new kakao.maps.LatLng(latitude, longitude);
               var placewholeScore = 0;
               var marker = displayMarker(placePosition, i, placewholeScore);
               //$('#sidebar').load(window.location.href + '#sidebar');
@@ -299,7 +318,7 @@
               bounds.extend(placePosition);
             }
             map.setBounds(bounds);
-            
+
             for (let i = 0; i < 1; i++) {
               let page = document.getElementById("page").value;
               let score = document.getElementById("score").value;
@@ -364,33 +383,32 @@
         if (forDelete) {
           forDelete.parentNode.removeChild(forDelete);
         }
-        
 
         infoContainer = document.createElement("div");
-        infoContainer.setAttribute("class","info-container");
-        infoContainer.innerHTML = '<div class="logo-box"> \
+        infoContainer.setAttribute("class", "info-container");
+        infoContainer.innerHTML =
+          '<div class="logo-box" onclick="location.href=\'/dining\'"  \> \
           <img src="../public/img/logo1.png" class="logo" />  \
           <span class="tastemap">Taste<strong>Map</strong></span> \
         </div>  \
-        <div class="dropdown">  \
+        <div class="dropdown dropdownleft">  \
           <button \
             class="dropbtn button kwmenu" \
           > \
             <span class="buttontext"><b>찜한</b> 식당</span> \
           </button> \
-          <div class="dropdown-content"> \
             <button \
               class="button kwmenu" \
-              onclick="location.href=\'/dining\'"  \
             > \
               <span class="buttontext"><b>맛집</b> 리스트</span> \
             </button> \
-          </div> \
-        </div>'
+        </div>';
 
         sb = document.createElement("nav");
         sb.setAttribute("id", "sidebar");
         sb.appendChild(infoContainer);
+        logoDiv = document.createElement("div");
+        logoDiv.setAttribute("class", "logo-box");
 
         diningsDiv = document.createElement("div");
         diningsDiv.setAttribute("class", "dinings");
@@ -398,7 +416,7 @@
 
         let number = 1;
         let loginCheck = 0;
-        
+
         if ("{{ user }}" && "{{ user.id }}") {
           loginCheck = 1;
         }
@@ -409,13 +427,31 @@
 
           newUrl = decodeURIComponent(dining.imgUrl);
           fnameIndex = newUrl.indexOf("fname");
-          newUrl = newUrl.slice(46,);
+          newUrl = newUrl.slice(46);
           diningImg = document.createElement("img");
           diningImg.setAttribute("src", newUrl);
-          diningImg.setAttribute("style", "width: 100px; height: 100px");
-          diningImg.addEventListener("click", function(){open_detail_tab(dining.id, dining.name, dining.imgUrl,
-            dining.totalScore, dining.tasteScore, dining.priceScore, dining.serviceScore, dining.moodScore,
-            dining.address, dining.contact, dining.operatingHour)}, false);
+
+          diningImg.setAttribute("style", "width: 130px; height: 130px");
+          diningImg.setAttribute("class", "six_diningimg");
+          diningImg.addEventListener(
+            "click",
+            function () {
+              open_detail_tab(
+                dining.id,
+                dining.name,
+                dining.imgUrl,
+                dining.totalScore,
+                dining.tasteScore,
+                dining.priceScore,
+                dining.serviceScore,
+                dining.moodScore,
+                dining.address,
+                dining.contact,
+                dining.operatingHour
+              );
+            },
+            false
+          );
           oneDining.appendChild(diningImg);
           diningsDiv.appendChild(oneDining);
 
@@ -423,14 +459,31 @@
           diningName.setAttribute("class", "dining_name");
 
           aTag = document.createElement("a");
-          aTag.addEventListener("click", function(){open_detail_tab(dining.id, dining.name, 
-            dining.totalScore, dining.tasteScore, dining.priceScore, dining.serviceScore, dining.moodScore,
-            dining.address, dining.contact, dining.operatingHour)}, false);
-          
+          aTag.addEventListener(
+            "click",
+            function () {
+              open_detail_tab(
+                dining.id,
+                dining.name,
+                dining.totalScore,
+                dining.tasteScore,
+                dining.priceScore,
+                dining.serviceScore,
+                dining.moodScore,
+                dining.address,
+                dining.contact,
+                dining.operatingHour
+              );
+            },
+            false
+          );
+
           diningNameNumber = document.createElement("span");
+          diningNameNumber.setAttribute("class", "diningnumbering");
           diningNameNumber.textContent = number++;
 
           diningNameName = document.createElement("span");
+          diningNameName.setAttribute("class", "diningNaming");
           diningNameName.textContent = dining.name;
           aTag.appendChild(diningNameNumber);
           aTag.appendChild(diningNameName);
@@ -439,7 +492,7 @@
 
           heartIcon = document.createElement("i");
           heartIcon.setAttribute("id", dining.id);
-          
+
           if (loginCheck) {
             userDinings = userInfo.Dinings;
             for (const userDining of userDinings) {
@@ -450,14 +503,32 @@
             }
             if (likeCheck) {
               heartIcon.setAttribute("class", "fas fa-heart");
-              heartIcon.addEventListener("click", function(){dislike_dining(dining.id)}, false);
+              heartIcon.addEventListener(
+                "click",
+                function () {
+                  dislike_dining(dining.id);
+                },
+                false
+              );
             } else {
               heartIcon.setAttribute("class", "far fa-heart");
-              heartIcon.addEventListener("click", function(){like_dining(dining.id)},  false);
+              heartIcon.addEventListener(
+                "click",
+                function () {
+                  like_dining(dining.id);
+                },
+                false
+              );
             }
           } else {
             heartIcon.setAttribute("class", "far fa-heart");
-            heartIcon.addEventListener("click", function(){like_dining(dining.id)},  false);
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                like_dining(dining.id);
+              },
+              false
+            );
           }
           aTag.appendChild(heartIcon);
 
@@ -478,7 +549,7 @@
         wrapDiv = document.getElementById("wrap");
         wrapDiv.appendChild(sb);
         wrapDiv.style.zIndex = "10";
-        
+
         if (document.getElementById("pagnation")) {
           tmp = document.getElementById("pagnation");
           tmp.parentNode.removeChild(tmp);
@@ -489,36 +560,56 @@
         pageBar.setAttribute("style", "text-align:center;");
 
         previous = document.createElement("a");
-        previous.addEventListener("click", function() {getPlacesandDisplay(parseInt(page)-1)}, false);
+        previous.addEventListener(
+          "click",
+          function () {
+            getPlacesandDisplay(parseInt(page) - 1);
+          },
+          false
+        );
 
         prevImg = document.createElement("img");
         prevImg.setAttribute("src", "../public/img/previous.png");
+        prevImg.setAttribute("class", "previous");
         previous.appendChild(prevImg);
         pageBar.appendChild(previous);
 
         currentPage = document.createElement("span");
+        currentPage.setAttribute("class", "nowpagenum");
         currentPage.textContent = page;
         pageBar.appendChild(currentPage);
 
         next = document.createElement("a");
-        next.addEventListener("click", function() {getPlacesandDisplay(parseInt(page)+1)}, false);
+        next.addEventListener(
+          "click",
+          function () {
+            getPlacesandDisplay(parseInt(page) + 1);
+          },
+          false
+        );
 
         nextImg = document.createElement("img");
         nextImg.setAttribute("src", "../public/img/next.png");
+        nextImg.setAttribute("class", "next");
         next.appendChild(nextImg);
         pageBar.appendChild(next);
 
         sb.appendChild(pageBar);
       }
 
-      function remove_dininginfo() {
-        forDelete = document.getElementById("sidebar");
-        if (forDelete) forDelete.parentNode.removeChild(forDelete);
-      }
-
       function close_detail_tab() {
-        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
-        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+        $(".detailslidebar_wrap").animate(
+          {
+            opacity: 0.1,
+          },
+          200,
+          function () {
+            forDelete = document.getElementsByClassName(
+              "detailslidebar_wrap"
+            )[0];
+            if (forDelete) forDelete.parentNode.removeChild(forDelete);
+          }
+        );
       }
     </script>
 
@@ -534,15 +625,12 @@
 
       var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
       for (let i = 0; i < "{{diningNum}}"; i++) {
-        let tmp = document.getElementById(i+1).value;
+        let tmp = document.getElementById(i + 1).value;
         let latitude = tmp.split("/")[0];
         let longitude = tmp.split("/")[1];
 
         //마커를 생성하고 지도에 표시
-        var placePosition = new kakao.maps.LatLng(
-          latitude,
-          longitude
-        );
+        var placePosition = new kakao.maps.LatLng(latitude, longitude);
         var placewholeScore = 0;
         var marker = displayMarker(placePosition, i, placewholeScore);
         //$('#sidebar').load(window.location.href + '#sidebar');
@@ -553,60 +641,72 @@
     </script>
 
     <script>
-      function open_detail_tab(diningId, diningName, imgUrl, totalScore, tasteScore, priceScore, serviceScore, moodScore, 
-      address, contact, operatingHour) {
-        
+      function open_detail_tab(
+        diningId,
+        diningName,
+        imgUrl,
+        totalScore,
+        tasteScore,
+        priceScore,
+        serviceScore,
+        moodScore,
+        address,
+        contact,
+        operatingHour
+      ) {
         forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
-        if (forDelete)
-          forDelete.parentNode.removeChild(forDelete);
+        if (forDelete) forDelete.parentNode.removeChild(forDelete);
         diningsDiv = document.getElementsByClassName("dinings")[0];
         detailWrap = document.createElement("div");
-        detailWrap.setAttribute("class","detailslidebar_wrap");
+        detailWrap.setAttribute("class", "detailslidebar_wrap");
         diningsDiv.appendChild(detailWrap);
         detailNav = document.createElement("nav");
-        detailNav.setAttribute("class","detailsidebar");
-        detailNav.setAttribute("id",diningId);
+        detailNav.setAttribute("class", "detailsidebar");
+        detailNav.setAttribute("id", diningId);
         detailWrap.appendChild(detailNav);
 
-        closeDetailTab = document.createElement("button");
+        closeDetailTab = document.createElement("div");
+        closeDetailTab.innerHTML = '<i class="fas fa-times"></i>';
+        closeDetailTab.setAttribute("class", "detailquitbtn");
         closeDetailTab.addEventListener("click", close_detail_tab, false);
-        closeDetailTab.innerText = "닫기 버튼";
         detailNav.appendChild(closeDetailTab);
 
         detailDiningDiv = document.createElement("div");
-        detailDiningDiv.setAttribute("class","detail_dining");
+        detailDiningDiv.setAttribute("class", "detail_dining");
         detailNav.appendChild(detailDiningDiv);
 
         detailOneDining = document.createElement("div");
-        detailOneDining.setAttribute("class","detail_one_dining");
+        detailOneDining.setAttribute("class", "detail_one_dining");
         detailDiningDiv.appendChild(detailOneDining);
 
         newUrl = decodeURIComponent(imgUrl);
         fnameIndex = newUrl.indexOf("fname");
-        newUrl = newUrl.slice(46,);
+        newUrl = newUrl.slice(46);
         detailImg = document.createElement("img");
-        detailImg.setAttribute("src",newUrl);
-        detailImg.style.width = "100px";
-        detailImg.style.height = "100px";
+        detailImg.setAttribute("src", newUrl);
+        detailImg.style.width = "200px";
+        detailImg.style.height = "200px";
+        detailImg.setAttribute("class", "detaildiningimg");
         detailOneDining.appendChild(detailImg);
 
         detailDiningName = document.createElement("div");
-        detailDiningName.setAttribute("class","dining_name");
+        detailDiningName.setAttribute("class", "dining_name");
         detailDiningName.innerText = diningName;
         detailOneDining.appendChild(detailDiningName);
 
         detailDiningScore = document.createElement("div");
-        detailDiningScore.setAttribute("class","dining_score");
+        detailDiningScore.setAttribute("class", "dining_score");
         detailOneDining.appendChild(detailDiningScore);
 
         detailScoreMent = document.createElement("div");
-        detailScoreMent.setAttribute("class","score_ment");
-        detailScoreMent.innerHTML = "<b>감성점수</b>* 표시는 산출되지 않는 점수";
+        detailScoreMent.setAttribute("class", "score_ment");
+        detailScoreMent.innerHTML =
+          "<b>감성점수</b>* 표시는 산출되지 않는 점수";
         detailDiningScore.appendChild(detailScoreMent);
 
         detailTotalImg = document.createElement("img");
-        detailTotalImg.setAttribute("src","../public/img/total.png");
-        detailTotalImg.setAttribute("class","totalimg");
+        detailTotalImg.setAttribute("src", "../public/img/total.png");
+        detailTotalImg.setAttribute("class", "totalimg");
         detailTotalImg.style.width = "12px";
         detailDiningScore.appendChild(detailTotalImg);
 
@@ -615,8 +715,8 @@
         detailDiningScore.appendChild(detailTotalScore);
 
         detailTasteImg = document.createElement("img");
-        detailTasteImg.setAttribute("src","../public/img/dish.png");
-        detailTasteImg.setAttribute("class","tasteimg");
+        detailTasteImg.setAttribute("src", "../public/img/dish.png");
+        detailTasteImg.setAttribute("class", "tasteimg");
         detailTasteImg.style.width = "12px";
         detailDiningScore.appendChild(detailTasteImg);
 
@@ -625,8 +725,8 @@
         detailDiningScore.appendChild(detailTasteScore);
 
         detailPriceImg = document.createElement("img");
-        detailPriceImg.setAttribute("src","../public/img/price.png");
-        detailPriceImg.setAttribute("class","priceimg");
+        detailPriceImg.setAttribute("src", "../public/img/price.png");
+        detailPriceImg.setAttribute("class", "priceimg");
         detailPriceImg.style.width = "12px";
         detailDiningScore.appendChild(detailPriceImg);
 
@@ -634,9 +734,12 @@
         detailPriceScore.innerText = priceScore;
         detailDiningScore.appendChild(detailPriceScore);
 
+        onediv = document.createElement("div");
+        detailDiningScore.appendChild(onediv);
+
         detailServiceImg = document.createElement("img");
-        detailServiceImg.setAttribute("src","../public/img/service.png");
-        detailServiceImg.setAttribute("class","serviceimg");
+        detailServiceImg.setAttribute("src", "../public/img/service.png");
+        detailServiceImg.setAttribute("class", "serviceimg");
         detailServiceImg.style.width = "12px";
         detailDiningScore.appendChild(detailServiceImg);
 
@@ -645,8 +748,8 @@
         detailDiningScore.appendChild(detailServiceScore);
 
         detailMoodImg = document.createElement("img");
-        detailMoodImg.setAttribute("src","../public/img/coffee.png");
-        detailMoodImg.setAttribute("class","moodimg");
+        detailMoodImg.setAttribute("src", "../public/img/coffee.png");
+        detailMoodImg.setAttribute("class", "moodimg");
         detailMoodImg.style.width = "12px";
         detailDiningScore.appendChild(detailMoodImg);
 
@@ -655,13 +758,14 @@
         detailDiningScore.appendChild(detailMoodScore);
 
         detailInfo = document.createElement("div");
-        detailInfo.setAttribute("class","detail_info_dining");
+        detailInfo.setAttribute("class", "detail_info_dining");
         detailInfo.innerHTML = "<div><b>상세정보</b></div>";
         detailOneDining.appendChild(detailInfo);
 
         detailDiningLoc = document.createElement("div");
-        detailDiningLoc.setAttribute("class","dining_loc");
-        detailDiningLoc.innerHTML = '<img src="../public/img/address.png" style="width: 12px" class="locimg"/>';
+        detailDiningLoc.setAttribute("class", "dining_loc");
+        detailDiningLoc.innerHTML =
+          '<img src="../public/img/address.png" style="width: 12px" class="locimg"/>';
 
         detailDiningAddress = document.createElement("span");
         detailDiningAddress.innerText = address;
@@ -669,8 +773,9 @@
         detailInfo.appendChild(detailDiningLoc);
 
         detailDiningContact = document.createElement("div");
-        detailDiningContact.setAttribute("class","dining_Contact");
-        detailDiningContact.innerHTML = '<img src="../public/img/contact.png" style="width: 12px" class="contactimg"/>';
+        detailDiningContact.setAttribute("class", "dining_Contact");
+        detailDiningContact.innerHTML =
+          '<img src="../public/img/contact.png" style="width: 12px" class="contactimg"/>';
 
         detailDiningContactSpan = document.createElement("span");
         detailDiningContactSpan.innerText = contact;
@@ -678,17 +783,24 @@
         detailInfo.appendChild(detailDiningContact);
 
         detailDiningOperatingHour = document.createElement("div");
-        detailDiningOperatingHour.setAttribute("class","dining_operatinghour");
-        detailDiningOperatingHour.innerHTML = '<img src="../public/img/time.png" style="width: 12px" class="timeimg"/>';
+        detailDiningOperatingHour.setAttribute("class", "dining_operatinghour");
+        detailDiningOperatingHour.innerHTML =
+          '<img src="../public/img/time.png" style="width: 12px" class="timeimg"/>';
 
         detailDiningOperatingHourSpan = document.createElement("span");
         detailDiningOperatingHourSpan.innerText = operatingHour;
         detailDiningOperatingHour.appendChild(detailDiningOperatingHourSpan);
         detailInfo.appendChild(detailDiningOperatingHour);
 
+        $(".detailslidebar_wrap").animate(
+          {
+            opacity: 0.9,
+          },
+          200
+        );
       }
     </script>
-    
+
     <script>
       function like_dining(dining_id) {
         console.log(dining_id);
@@ -710,9 +822,21 @@
           },
           success: function (response) {
             heartIcon = document.getElementById(dining_id);
-            heartIcon.setAttribute("class","fas fa-heart");
-            heartIcon.removeEventListener("click",function(){like_dining(dining_id)}, false);
-            heartIcon.addEventListener("click",function(){dislike_dining(dining_id)},false);
+            heartIcon.setAttribute("class", "fas fa-heart");
+            heartIcon.removeEventListener(
+              "click",
+              function () {
+                like_dining(dining_id);
+              },
+              false
+            );
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                dislike_dining(dining_id);
+              },
+              false
+            );
           },
         });
       }
@@ -736,9 +860,21 @@
           },
           success: function (response) {
             heartIcon = document.getElementById(dining_id);
-            heartIcon.setAttribute("class","far fa-heart");
-            heartIcon.removeEventListener("click",function(){dislike_dining(dining_id)}, false);
-            heartIcon.addEventListener("click",function(){like_dining(dining_id)},false);
+            heartIcon.setAttribute("class", "far fa-heart");
+            heartIcon.removeEventListener(
+              "click",
+              function () {
+                dislike_dining(dining_id);
+              },
+              false
+            );
+            heartIcon.addEventListener(
+              "click",
+              function () {
+                like_dining(dining_id);
+              },
+              false
+            );
           },
         });
       }

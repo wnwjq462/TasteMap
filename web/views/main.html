@@ -45,9 +45,7 @@
         </div>
 
         <div class="dropdown dropdownleft">
-          <button
-            class="dropbtn button kwmenu"
-          >
+          <button class="dropbtn button kwmenu">
             <span class="buttontext"><b>연세대</b> 의 키워드</span>
           </button>
           <div class="dropdown-content">
@@ -532,7 +530,6 @@
             var bounds = new kakao.maps.LatLngBounds(); //서버에서 받은 장소 위치를 기준으로 지도 범위 재설정 위해 6개의 latlng를 저장하기위한 bounds.
             removeMarker(markers);
             show_dininginfo(
-              keyword,
               response.diningList,
               response.userInfo,
               response.pages[0].name,
@@ -564,6 +561,9 @@
             document.getElementById("page1").innerText = page;
             document.getElementById("keyword1").innerText = keyword;
             document.getElementById("score1").innerText = score;
+
+            console.log(keyword);
+            document.getElementById("variablekw").innerText = keyword;
           },
         });
       }
@@ -612,7 +612,7 @@
         infowindow.open(map, marker);
       }
 
-      function show_dininginfo(keyword, diningList, userInfo, page, lastPage) {
+      function show_dininginfo(diningList, userInfo, page, lastPage) {
         if (parseInt(page) > lastPage) {
           alert("마지막 페이지입니다.");
           return;
@@ -620,80 +620,37 @@
 
         forDelete = document.getElementById("sidebar");
         if (forDelete) forDelete.parentNode.removeChild(forDelete);
-        removeDiningInfo = document.createElement("button");
-        removeDiningInfo.innerText = "닫기 버튼";
+
+        removeDiningInfo = document.createElement("div");
+        removeDiningInfo.innerHTML = '<i class="fas fa-arrow-left"></i>';
+        removeDiningInfo.setAttribute("class", "diningsquitbtn");
         removeDiningInfo.addEventListener("click", remove_dininginfo, false);
 
         infoContainer = document.createElement("div");
-        infoContainer.setAttribute("class","info-container");
-
-        logoBox = document.createElement("div");
-        logoBox.setAttribute("class","logo-box");
-        infoContainer.appendChild(logoBox);
-
-        logoImg = document.createElement("img");
-        logoImg.setAttribute("src","../public/img/logo1.png");
-        logoImg.setAttribute("class","logo");
-
-        tasteMap = document.createElement("span");
-        tasteMap.setAttribute("class","tastemap");
-        tasteMap.innerHTML = "Taste<strong>Map</strong>";
-
-        logoBox.appendChild(logoImg);
-        logoBox.appendChild(tasteMap);
-
-        dropDown = document.createElement("div");
-        dropDown.setAttribute("class","dropdown");
-        infoContainer.appendChild(dropDown);
-        
-        dropBtn = document.createElement("button");
-        dropBtn.setAttribute("class","dropbtn button kwmenu");
-
-        buttonText = document.createElement("span");
-        buttonText.setAttribute("class","buttontext");
-        buttonText.innerHTML = "<b>" + keyword + "<b>" + " 키워드";
-        dropBtn.appendChild(buttonText);
-        dropDown.appendChild(dropBtn);
-
-        dropDownContent = document.createElement("div");
-        dropDownContent.setAttribute("class","dropdown-content");
-        
-        buttonKW = document.createElement("button");
-        buttonKW.setAttribute("class","button kwmenu");
-        //buttonKW.addEventListener("click","location.href='/dining'", false);
-        buttonKW.setAttribute("onclick","location.href='/dining'");
-        buttonKW.innerHTML = '<span class=buttontext><b>맛집</b> 리스트</span>';
-        dropDownContent.appendChild(buttonKW);
-
-        dropDown.appendChild(dropDownContent);
-
-
-
-        /*
-        infoContainer.innerHTML = '<div class="logo-box"> \
+        infoContainer.setAttribute("class", "info-container");
+        infoContainer.innerHTML =
+          '<div class="logo-box"> \
           <img src="../public/img/logo1.png" class="logo" />  \
           <span class="tastemap">Taste<strong>Map</strong></span> \
         </div>  \
-        <div class="dropdown">  \
+        <div class="dropdown dropdownleft">  \
           <button \
             class="dropbtn button kwmenu" \
           > \
-            <span class="buttontext"><b>연세대</b> 의 키워드</span> \
+            <span class="buttontext"><b id="variablekw"></b> 키워드</span> \
           </button> \
-          <div class="dropdown-content"> \
             <button \
-              class="button kwmenu" \
-              onclick="location.href=\'/user/keyword\'"  \
+              class="button kwmenu coloredbutton" \
             > \
-              <span class="buttontext"><b>관심</b> 키워드</span> \
+              <span class="buttontext"><b>맛집</b> 리스트</span> \
             </button> \
-          </div> \
-        </div>'
-        */
+        </div>';
+
         sb = document.createElement("nav");
         sb.setAttribute("id", "sidebar");
-        sb.appendChild(infoContainer);
+        sb.setAttribute("style", "left: 0");
         sb.appendChild(removeDiningInfo);
+        sb.appendChild(infoContainer);
         logoDiv = document.createElement("div");
         logoDiv.setAttribute("class", "logo-box");
 
@@ -716,9 +673,11 @@
           newUrl = decodeURIComponent(dining.imgUrl);
           fnameIndex = newUrl.indexOf("fname");
           newUrl = newUrl.slice(46,);
+
           diningImg = document.createElement("img");
           diningImg.setAttribute("src", newUrl);
-          diningImg.setAttribute("style", "width: 100px; height: 100px");
+          diningImg.setAttribute("style", "width: 130px; height: 130px");
+          diningImg.setAttribute("class", "six_diningimg");
           diningImg.addEventListener(
             "click",
             function () {
@@ -742,9 +701,11 @@
           );
 
           diningNameNumber = document.createElement("span");
+          diningNameNumber.setAttribute("class", "diningnumbering");
           diningNameNumber.textContent = number++;
 
           diningNameName = document.createElement("span");
+          diningNameName.setAttribute("class", "diningNaming");
           diningNameName.textContent = dining.name;
           aTag.appendChild(diningNameNumber);
           aTag.appendChild(diningNameName);
@@ -831,10 +792,12 @@
 
         prevImg = document.createElement("img");
         prevImg.setAttribute("src", "../public/img/previous.png");
+        prevImg.setAttribute("class", "previous");
         previous.appendChild(prevImg);
         pageBar.appendChild(previous);
 
         currentPage = document.createElement("span");
+        currentPage.setAttribute("class", "nowpagenum");
         currentPage.textContent = page;
         pageBar.appendChild(currentPage);
 
@@ -849,6 +812,7 @@
 
         nextImg = document.createElement("img");
         nextImg.setAttribute("src", "../public/img/next.png");
+        nextImg.setAttribute("class", "next");
         next.appendChild(nextImg);
         pageBar.appendChild(next);
 
@@ -856,25 +820,36 @@
       }
 
       function remove_dininginfo() {
-        forDelete = document.getElementById("sidebar");
-        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+        close_detail_tab();
+        $("#sidebar").animate(
+          {
+            left: -400,
+          },
+          200,
+          function () {
+            delay(200);
+            forDelete = document.getElementById("sidebar");
+            if (forDelete) forDelete.parentNode.removeChild(forDelete);
+          }
+        );
       }
 
       function close_detail_tab() {
-        forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
-        if (forDelete) forDelete.parentNode.removeChild(forDelete);
+        $(".detailslidebar_wrap").animate(
+          {
+            opacity: 0.1,
+          },
+          200,
+          function () {
+            forDelete = document.getElementsByClassName(
+              "detailslidebar_wrap"
+            )[0];
+            if (forDelete) forDelete.parentNode.removeChild(forDelete);
+          }
+        );
       }
     </script>
-    <script>
-      var url = window.location.href;
-      var parsedUrl = url.split("isInterest=")[1];
-      if (parsedUrl && parsedUrl === "true") {
-        var keywordIndex = url.indexOf("keyword=");
-        var keywordEndIndex = url.indexOf("&score");
-        var keyword = decodeURI(url.slice(keywordIndex+8, keywordEndIndex));
-        getPlacesandDisplay(keyword);
-      }
-    </script>
+
     <script>
       function open_detail_tab(dining) {
         forDelete = document.getElementsByClassName("detailslidebar_wrap")[0];
@@ -888,17 +863,15 @@
         detailNav.setAttribute("id", dining.id);
         detailWrap.appendChild(detailNav);
 
-        closeDetailTab = document.createElement("button");
+        closeDetailTab = document.createElement("div");
+        closeDetailTab.innerHTML = '<i class="fas fa-times"></i>';
+        closeDetailTab.setAttribute("class", "detailquitbtn");
         closeDetailTab.addEventListener("click", close_detail_tab, false);
-        closeDetailTab.innerText = "닫기 버튼";
         detailNav.appendChild(closeDetailTab);
 
         detailDiningDiv = document.createElement("div");
         detailDiningDiv.setAttribute("class", "detail_dining");
         detailNav.appendChild(detailDiningDiv);
-
-        
-        
 
         detailOneDining = document.createElement("div");
         detailOneDining.setAttribute("class", "detail_one_dining");
@@ -907,10 +880,12 @@
         newUrl = decodeURIComponent(dining.imgUrl);
         fnameIndex = newUrl.indexOf("fname");
         newUrl = newUrl.slice(46,);
+
         detailImg = document.createElement("img");
         detailImg.setAttribute("src", newUrl);
-        detailImg.style.width = "100px";
-        detailImg.style.height = "100px";
+        detailImg.style.width = "200px";
+        detailImg.style.height = "200px";
+        detailImg.setAttribute("class", "detaildiningimg");
         detailOneDining.appendChild(detailImg);
 
         detailDiningName = document.createElement("div");
@@ -925,7 +900,7 @@
         detailScoreMent = document.createElement("div");
         detailScoreMent.setAttribute("class", "score_ment");
         detailScoreMent.innerHTML =
-          "<b>감성점수</b>* 표시는 산출되지 않는 점수";
+          "<b>감성점수   </b>*표시는 산출되지 않는 점수";
         detailDiningScore.appendChild(detailScoreMent);
 
         detailTotalImg = document.createElement("img");
@@ -957,6 +932,9 @@
         detailPriceScore = document.createElement("span");
         detailPriceScore.innerText = dining.priceScore;
         detailDiningScore.appendChild(detailPriceScore);
+
+        onediv = document.createElement("div");
+        detailDiningScore.appendChild(onediv);
 
         detailServiceImg = document.createElement("img");
         detailServiceImg.setAttribute("src", "../public/img/service.png");
@@ -1016,17 +994,35 @@
         keywordInfo = document.createElement("div");
         keywordInfo.setAttribute("class", "keyword_info_dining");
         keywordInfo.innerHTML = "<div><b>이 식당의 키워드</b></div>";
+
         console.log(dining.Keywords);
         for (const keyword of dining.Keywords) {
-          keywordSpan = document.createElement("span");
+          keywordSpan = document.createElement("button");
           keywordSpan.setAttribute("id", keyword.id);
+          keywordSpan.setAttribute("class", "button2");
           keywordSpan.innerText = keyword.name;
           keywordInfo.appendChild(keywordSpan);
         }
         detailOneDining.appendChild(keywordInfo);
+
+        $(".detailslidebar_wrap").animate(
+          {
+            opacity: 0.9,
+          },
+          200
+        );
       }
     </script>
-
+    <script>
+      var url = window.location.href;
+      var parsedUrl = url.split("isInterest=")[1];
+      if (parsedUrl && parsedUrl === "true") {
+        var keywordIndex = url.indexOf("keyword=");
+        var keywordEndIndex = url.indexOf("&score");
+        var keyword = decodeURI(url.slice(keywordIndex+8, keywordEndIndex));
+        getPlacesandDisplay(keyword);
+      }
+    </script>
     <script>
       function like_dining(dining_id) {
         console.log(dining_id);
@@ -1105,5 +1101,7 @@
         });
       }
     </script>
+    <script></script>
   </body>
+  <script></script>
 </html>
