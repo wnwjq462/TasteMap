@@ -1,0 +1,346 @@
+/* media 설정(깨짐방지) */
+@media screen and (max-width: 1000px) {
+  .text-container {
+    display: none;
+  }
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.bgcontainer {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.bgcontainer::after {
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: url("./img/bg.jpeg");
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.25;
+}
+
+.outer-container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.8fr 1.1fr;
+  grid-template-rows: 0.6fr 1.8fr 0.6fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . ."
+    "info-text-box login-container ."
+    ". . .";
+  width: 100%;
+  height: 100%;
+}
+
+.login-container {
+  grid-area: login-container;
+  display: center;
+  display: flex;
+}
+
+.inner-login-container {
+  margin: auto;
+}
+
+.info-text-box {
+  grid-area: info-text-box;
+  display: flex;
+}
+
+.text-container {
+  margin: auto;
+  font-size: 45px;
+  text-align: left;
+}
+
+.logo {
+  width: 67px;
+  vertical-align: middle;
+}
+
+.logo-box {
+  margin-bottom: 5%;
+}
+
+.tastemap {
+  font-size: 50px;
+  line-height: 90px;
+  vertical-align: middle;
+  margin-bottom: 50%;
+}
+
+.bumper {
+  margin-top: 5%;
+  height: 40px;
+  margin-bottom: 5%;
+  color: rgb(185, 0, 0);
+}
+
+.bumper1 {
+  height: 20px;
+  margin-bottom: 2%;
+  color: rgb(185, 0, 0);
+}
+
+.bumper2 {
+  height: 20px;
+  margin-bottom: 4%;
+  color: rgb(185, 0, 0);
+}
+
+@keyframes goUp {
+  from {
+    opacity: 0;
+    transform: translateY(120px);
+  }
+  to {
+    opacity: 3;
+    transform: none;
+  }
+}
+
+@keyframes goDown {
+  from {
+    opacity: 0;
+    transform: translateY(-110px);
+  }
+  to {
+    opacity: 3;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cbox-container {
+  animation: fade-in 1s;
+}
+
+.box-upper-signup {
+  animation: goUp 0.5s ease-in-out;
+}
+
+.box-lower-signup {
+  animation: goDown 0.5s ease-in-out;
+}
+
+.cbox-textbox {
+  text-align: left;
+  font-size: 14px;
+  margin-left: 5%;
+}
+
+.cbox-textbox b {
+  font-size: 12px;
+}
+
+/* checkbox css code from https://freefrontend.com/css-input-text/ */
+
+.cbox-container {
+  font-size: 13px;
+  max-width: 400px;
+}
+ul.ks-cboxtags {
+  list-style: none;
+  padding: 20px 20px 0px 20px;
+}
+ul.ks-cboxtags li {
+  display: inline;
+}
+ul.ks-cboxtags li label {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(139, 139, 139, 0.3);
+  color: #adadad;
+  border-radius: 25px;
+  white-space: nowrap;
+  margin: 3px 0px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s;
+}
+
+ul.ks-cboxtags li label {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 12px;
+  padding: 2px 6px 2px 2px;
+  content: "\f067";
+  transition: transform 0.3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+  content: "\f00c";
+  transform: rotate(-360deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+  border: 2px solid #1bdbf8;
+  background-color: #12bbd4;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+  display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+
+/* css code from https://freefrontend.com/css-input-text/ */
+
+/** BEGIN: Non Openmrs CSS **/
+:root {
+  --omrs-color-ink-lowest-contrast: rgba(47, 60, 85, 0.18);
+  --omrs-color-ink-low-contrast: rgba(60, 60, 67, 0.3);
+  --omrs-color-ink-medium-contrast: rgba(19, 19, 21, 0.6);
+  --omrs-color-interaction: #1e4bd1;
+  --omrs-color-interaction-minus-two: rgba(73, 133, 224, 0.12);
+  --omrs-color-ink-high-contrast: #121212;
+  --omrs-color-bg-high-contrast: #ffffff6e;
+}
+/** END: Non Openmrs CSS **/
+div.omrs-input-group {
+  margin-bottom: 0.5rem;
+  position: relative;
+  width: 20.4375rem;
+  margin: 0 auto;
+}
+
+/* Input*/
+.omrs-input-underlined > input,
+.omrs-input-filled > input {
+  border: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 0.125rem solid var(--omrs-color-ink-medium-contrast);
+  width: 94%;
+  height: 2rem;
+  font-size: 1rem;
+  line-height: 147.6%;
+  padding-top: 0.825rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
+}
+
+.omrs-input-underlined > input:focus,
+.omrs-input-filled > input:focus {
+  outline: none;
+}
+
+.omrs-input-underlined > .omrs-input-label,
+.omrs-input-filled > .omrs-input-label {
+  position: absolute;
+  top: 0.9375rem;
+  left: 0.8rem;
+  line-height: 147.6%;
+  color: rgb(146, 146, 146);
+  transition: top 0.2s;
+  font-size: 0.9rem;
+}
+
+.omrs-input-underlined > input:hover,
+.omrs-input-filled > input:hover {
+  background: var(--omrs-color-interaction-minus-two);
+  border-color: var(--omrs-color-ink-high-contrast);
+}
+
+.omrs-input-underlined > input:focus + .omrs-input-label,
+.omrs-input-underlined > input:valid + .omrs-input-label,
+.omrs-input-filled > input:focus + .omrs-input-label,
+.omrs-input-filled > input:valid + .omrs-input-label {
+  top: 3px;
+  font-size: 0.7375rem;
+  margin-bottom: 32px;
+}
+
+.omrs-input-underlined > input {
+  background: var(--omrs-color-bg-high-contrast);
+}
+.omrs-input-filled > input {
+  background: var(--omrs-color-bg-low-contrast);
+}
+
+.omrs-input-underlined > i,
+.omrs-input-filled > i {
+  position: absolute;
+  top: 0.9375rem;
+  right: 0.675rem;
+  fill: var(--omrs-color-ink-medium-contrast);
+}
+
+/* css button design */
+
+.button {
+  border: 0;
+  border-radius: 28px;
+  display: block;
+  font-size: 16px;
+  height: 40px;
+  margin: 0 auto;
+  max-width: 300px;
+  outline: none !important;
+  transition: box-shadow 150ms;
+  width: 100%;
+  margin-bottom: 0.1rem;
+}
+
+.signin {
+  background-color: #ffafaf;
+}
+
+.signup {
+  background-color: #ffd5d5;
+}
+
+.button:active {
+  box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.3);
+}
+
+.sign-in {
+  color: white;
+  opacity: 0.6;
+}

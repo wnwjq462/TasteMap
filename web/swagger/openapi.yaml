@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: TasteMap API docs
+  description: TasteMap API 명세서 입니다. 다들 화이팅 ^^
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/
+    description: TasteMap Server
+tags:
+  - name: user
+    description: About user info / keyword / like
+    url: http://localhost:3000/user
+  - name: dining
+    description: About dining info
+    url: http://localhost:3000/dining
+  - name: keyword
+    description: About yonsei's keywords
+    url: http://localhost:3000/keyword
+  - name: join
+    description: Sign in URL
+    url: http://localhost:3000/join
+  - name: login
+    description: Login URL
+    url: http://localhost:3000/login
+  - name: logout
+    description: Logout URL
+    url: http://localhost:3000/logout
+
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: Returns information of user
+      description: 내 정보 수정 페이지에서 유저 기본 정보를 가져올 때 사용됨. 고유식별아이디, 회원아이디, 관심 키워드를 리턴
+      requestBody:
+        $ref: "./schemas/reqUserSchema.yaml"
+      responses:
+        '200':    # status code
+          description: 아이디와 관심 키워드 배열이 json 형태로 주어진다.
+          content:
+            application/json:
+              schema: 
+                $ref: "./schemas/userSchema.yaml"
+        '400':
+          description: Client Error -> 메시지에 내용 명시해주세요
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+    post:
+      tags:
+        - user
+      summary: modify user info (password, like-keyword)   
+      description: 내 정보 수정에서 정보 수정 버튼을 눌렀을 때 호출, Password와 관심키워드를 서버로 보낸다. / req.userId 도 같이 주어진다.
+      requestBody:
+        description: 정보 form 데이터
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                keywords:
+                  type: array
+                  items:
+                    keyword: string
+              
+      responses:
+        '200':
+          description: 저장 성공
+        '400':
+          description: client error 저장한 키워드가 9개가 넘어감 -> message 에 명시
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+  
+  /user/keyword:
+    get:
+      tags:
+        - user
+      summary: Returns user's like-keyword list
+      description: 관심 키워드와 유저 정보에서 호출함, 유저의 관심 키워드 목록을 반환한다.
+      requestBody:
+        $ref: "./schemas/reqUserSchema.yaml"
+      responses:
+        '200':
+          description: 호출 성공, 유저의 관심 키워드 목록 반환
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keywords: 
+                    type: array
+                    items:
+                      keyword: string
+        '400':
+          description: Client error. 메시지에 이유 명시
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+
+  /user/like:
+    get:
+      tags:
+        - user
+      summary: Returns user-like dining list
+      description: 유저가 찜한 식당 목록을 페이지,점수에 따라 다르게 가져온다. /dining 과 상당히 유사함.
+      requestBody:
+        $ref: "./schemas/reqUserSchema.yaml"
+      parameters:
+        - name: page
+          in: query
+          description: pagination 을 위한 page 번호, 없으면 기본이 1
+          schema:
+            type: integer
+        - name: score
+          in: query
+          description: 점수 지표에 따라 높은 순으로 가져온다.
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: 호출 성공, 찜한 식당 목록 반환
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/diningSchema.yaml"
+        '400':
+          description: Client error. 메시지에 이유 명시
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+        '404':
+          description: 유저 정보가 없을 때
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+
+  /user/like/{diningId}:
+    post:
+      tags:
+        - user
+      summary: Saves user-like dining
+      description: 식당 목록에서 하트 버튼을 눌렀을 때 찜한 식당에 저장
+      requestBody:
+        $ref: "./schemas/reqUserSchema.yaml"
+      parameters:
+        - name: diningId
+          in: path
+          required: true
+          description: 해당 식당의 고유 식별자
+          schema:
+            type: integer
+          
+      responses:
+        "200":
+          description: 저장 성공
+        '404':
+          description: 유저 정보가 없을 때
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+
+    delete:
+      tags:
+        - user
+      summary: Deletes user-like dining
+      description: 식당 목록에서 눌려져있는 하트 버튼을 눌렀을 때 찜한 식당에서 삭제
+      requestBody:
+        $ref: "./schemas/reqUserSchema.yaml"
+      parameters:
+        - name: diningId
+          in: path
+          required: true
+          description: 해당 식당의 고유 식별자
+          schema:
+            type: integer
+          
+      responses:
+        "200":
+          description: 삭제 성공
+        '404':
+          description: 유저 정보가 없을 때
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+
+  /dining:
+    get:
+      tags:
+        - dining
+      summary: Returns dining list
+      description: 식당 목록을 페이지,키워드,점수에 따라 다르게 가져온다. /user/like 과 상당히 유사함.
+      parameters:
+        - name: page
+          in: query
+          description: pagination 을 위한 page 번호, 없으면 기본이 1
+          schema:
+            type: integer
+        - name: keyword
+          in: query
+          description: 유저가 누른 키워드 이름, 없으면 기본이 '전체' 이다.
+          schema:
+            type: string
+        - name: score
+          in: query
+          description: 점수 지표에 따라 높은 순으로 가져온다.
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: 호출 성공, 식당 목록 반환
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/diningSchema.yaml"
+        '400':
+          description: Client error. 메시지에 이유 명시
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"
+
+  /keyword:
+    get:
+      tags:
+        - keyword
+      summary: Returns total keyword list
+      description: 연세대의 키워드 버튼을 누르거나, 정보 수정, 또는 회원 가입시 키워드 목록을 봐야할 때 호출
+      responses:
+        '200':
+          description: 호풀 성공, 키워드 목록 반환
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keywords:
+                    type: array
+                    items:
+                      keyword: string
+        '400':
+          description: Client error. 메시지에 이유 명시
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/400Error.yaml"

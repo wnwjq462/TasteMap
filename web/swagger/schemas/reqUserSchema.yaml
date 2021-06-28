@@ -1,0 +1,10 @@
+description: 로그인한 회원 정보가 req.user에 담겨져 있음.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        id: 
+          type: integer
+        account:
+          type: string

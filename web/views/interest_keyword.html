@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TasteMap</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../public/main.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../public/interest_keyword.css"
+    />
+    <!-- 웹 폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+    <!-- kakaomap api -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bbe25b33a22112fe71e17584ce53c75b"
+    ></script>
+
+    <!-- js -->
+    <script src="../public/main.js"></script>
+  </head>
+  <body>
+    <div id="wrap"></div>
+    <div class="container">
+      <div class="info-container">
+        <div class="logo-box">
+          <img src="../public/img/logo1.png" class="logo" />
+          <span class="tastemap">Taste<strong>Map</strong></span>
+        </div>
+        <div class="dropdown dropdownleft">
+          <button class="dropbtn button kwmenu">
+            <span class="buttontext"><b>관심</b> 키워드</span>
+          </button>
+          <div class="dropdown-content">
+            <button class="button kwmenu" onclick="location.href='/dining'">
+              <span class="buttontext"><b>연세대</b> 의 키워드</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="keyword_wc">
+          <div class="cbox-container">
+            <ul class="ks-cboxtags">
+              <div class="cboxsection1">
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="맛">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="맛"
+                      name="keyword-like"
+                      value="맛"
+                    /><label for="맛">맛</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="친절">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="친절"
+                      name="keyword-like"
+                      value="친절"
+                    /><label for="친절">친절</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="커피">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="커피"
+                      name="keyword-like"
+                      value="커피"
+                    /><label for="커피">커피</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="분위기">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="분위기"
+                      name="keyword-like"
+                      value="분위기"
+                    /><label for="분위기">분위기</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection2">
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="사장">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="사장"
+                      name="keyword-like"
+                      value="사장"
+                    /><label for="사장">사장</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="파스타">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="파스타"
+                      name="keyword-like"
+                      value="파스타"
+                    /><label for="파스타">파스타</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="가격">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="가격"
+                      name="keyword-like"
+                      value="가격"
+                    /><label for="가격">가격</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="카페">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="카페"
+                      name="keyword-like"
+                      value="카페"
+                    /><label for="카페">카페</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection3">
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="밥">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="밥"
+                      name="keyword-like"
+                      value="밥"
+                    /><label for="밥">밥</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="고기">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="고기"
+                      name="keyword-like"
+                      value="고기"
+                    /><label for="고기">고기</label>
+                  </a>
+                </li>
+                <li class="ks-selected">
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="직원">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="직원"
+                      name="keyword-like"
+                      value="직원"
+                    /><label for="직원">직원</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="연희동">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="연희동"
+                      name="keyword-like"
+                      value="연희동"
+                    /><label for="연희동">연희동</label>
+                  </a>
+                </li>
+              </div>
+              <div class="cboxsection4">
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="추천">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="추천"
+                      name="keyword-like"
+                      value="추천"
+                    /><label for="추천">추천</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="크림">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="크림"
+                      name="keyword-like"
+                      value="크림"
+                    /><label for="크림">크림</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="연어">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="연어"
+                      name="keyword-like"
+                      value="연어"
+                    /><label for="연어">연어</label>
+                  </a>
+                </li>
+                <li>
+                  <a onclick="getPlacesandDisplay_keyword(this)" value="빵">
+                    <input
+                      disabled
+                      type="checkbox"
+                      id="빵"
+                      name="keyword-like"
+                      value="빵"
+                    /><label for="빵">빵</label>
+                  </a>
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="map-container">
+        <div class="dropdown scoremenu">
+          <button
+            class="dropbtn button score-dropdown"
+            onclick="getPlacesandDisplay_score(this.value)"
+            value="total"
+          >
+            <span class="buttontext"
+              ><img src="../public/img/total.png" class="icon" /> 종합</span
+            >
+          </button>
+          <div class="dropdown-content">
+            <button
+              class="button score-dropdown"
+              onclick="getPlacesandDisplay_score(this.value)"
+              value="taste"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/dish.png" class="icon" /> 맛</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="getPlacesandDisplay_score(this.value)"
+              value="price"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/price.png" class="icon" /> 가격</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="getPlacesandDisplay_score(this.value)"
+              value="service"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/service.png" class="icon" />
+                서비스</span
+              >
+            </button>
+            <button
+              class="button score-dropdown"
+              onclick="getPlacesandDisplay_score(this.value)"
+              value="mood"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/coffee.png" class="icon" />
+                분위기</span
+              >
+            </button>
+          </div>
+        </div>
+        <div class="loginsection">
+          {% if user and user.id %}
+          <div class="modify-user">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/userInfo.png" class="icon" /> 정보
+                수정</span
+              >
+            </button>
+          </div>
+          <div class="dining-like">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 95px"
+              onclick="location.href='/user/like'"
+            >
+              <span class="buttontext"
+                ><img src="../public/img/like.png" class="icon" /> 찜한
+                식당</span
+              >
+            </button>
+          </div>
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/logout'"
+            >
+              <span class="buttontext">로그아웃</span>
+            </button>
+          </div>
+          {% else %}
+          <div class="loginout">
+            <button
+              class="dropbtn button loginsectionbtn"
+              style="width: 80px"
+              onclick="location.href='/auth/login'"
+            >
+              <span class="buttontext">로그인</span>
+            </button>
+          </div>
+          {% endif %}
+        </div>
+        <div id="map" class="map" style="width: 100%; height: 100%"></div>
+      </div>
+    </div>
+    <script>
+      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(37.55710538856513, 126.93662151811871), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+    </script>
+
+    <script>
+      var userkeywordArray = [];
+
+      function getPlacesandDisplay_keyword(val) {
+        var selectedkeyword = val.innerText;
+        if (typeof val == "object") {
+          selectedkeyword = val.innerText;
+          selectedkeyword = selectedkeyword.replace(/^\s+|\s+$/g, "");
+        }
+        var page = 1;
+        var keyword = "전체";
+        var score = "total";
+
+        var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글체크
+
+        if (pattern_kor.test(selectedkeyword)) {
+          keyword = selectedkeyword;
+        }
+
+        var Parms = "?";
+        Parms += "page=" + page;
+        Parms += "&keyword=" + keyword;
+        Parms += "&score=" + score;
+        Parms += "&isInterest=true";
+
+        location.href = "/dining" + Parms;
+      }
+
+      function getPlacesandDisplay_score(val) {
+        var page = 1;
+        var keyword = "전체";
+        var score = "total";
+
+        var pattern_num = /[0-9]/; // 숫자
+        var pattern_eng = /[a-zA-Z]/; // 문자
+        var pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글체크
+
+        if (pattern_num.test(val)) {
+          page = val;
+        } else if (pattern_eng.test(val)) {
+          score = val;
+        } else if (pattern_kor.test(val)) {
+          keyword = val;
+        }
+
+        var Parms = "?";
+        Parms += "page=" + page;
+        Parms += "&keyword=" + keyword;
+        Parms += "&score=" + score;
+        Parms += "&isInterest=true";
+
+        location.href = "/dining" + Parms;
+      }
+    </script>
+
+    {% for keyword in user.Keywords %}
+    <script>
+      userkeywordArray.push("{{keyword.name}}");
+    </script>
+    {% endfor %}
+
+    <script>
+      console.log(userkeywordArray);
+      for (var i = 0; i < userkeywordArray.length; i++) {
+        var userlikekey = document.getElementById(userkeywordArray[i]);
+        userlikekey.setAttribute("checked", true);
+      }
+    </script>
+  </body>
+</html>

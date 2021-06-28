@@ -1,0 +1,10 @@
+type: object
+properties:
+  id:
+    type: integer
+  account:
+    type: string
+  keywords:
+    type: array
+    items:
+      type: string

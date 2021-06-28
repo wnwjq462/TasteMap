@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TasteMap</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../public/user.css" />
+    <!-- 웹 폰트 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?familyhttps://miyakita.tistory.com/149a=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+
+    <!-- js -->
+    <script src="../public/user.js"></script>
+  </head>
+  <body>
+    <div class="bgcontainer">
+      <div class="outer-container">
+        <div class="login-container">
+          <div class="inner-login-container">
+            <div class="container">
+              <form id="FormLogin" name="FormLogin">
+                <div class="box-upper">
+                  <div class="logo-box">
+                    <img src="../public/img/logo1.png" class="logo" />
+                    <span class="tastemap">Taste<strong>Map</strong></span>
+                  </div>
+                  <div class="input-box">
+                    <div class="omrs-input-group">
+                      <label class="omrs-input-underlined">
+                        <input
+                          class="idinput"
+                          id="idinput"
+                          type="text"
+                          required
+                        />
+                        <span class="omrs-input-label"
+                          >아이디를 입력해주세요</span
+                        >
+                      </label>
+                    </div>
+                    <div class="omrs-input-group">
+                      <label class="omrs-input-underlined">
+                        <input
+                          class="pwinput"
+                          id="pwinput"
+                          type="password"
+                          required
+                        />
+                        <span class="omrs-input-label"
+                          >패스워드를 입력해주세요</span
+                        >
+                        <i class="fa fa-eye fa-lg pweyes"></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-lower">
+                  <div class="bumper" id="bumper"></div>
+                  <div>
+                    <button
+                      type="button"
+                      class="button signin"
+                      onclick="return logincheck();"
+                    >
+                      <span class="sign-in">Sign in</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="button signup"
+                      onclick="location.href='/auth/join'"
+                    >
+                      <span class="sign-in">Sign up</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="info-text-box">
+          <div class="text-container">
+            <div>당신이 가는 어디든</div>
+            <div><strong>맛집과 함께</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
